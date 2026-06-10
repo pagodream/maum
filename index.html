@@ -7,6 +7,7 @@
 <title>체질 학습 진단 · 마더클럽</title>
 <meta property="og:title" content="우리 아이는 어떤 결인가요? · 체질 학습 진단">
 <meta property="og:description" content="같은 칭찬인데 왜 우리 아이에겐 안 통할까요? 아이마다 다른 결 — 새·하늘·땅·뿌리 무료 진단.">
+<meta property="og:url" content="https://pagodream.github.io/temperament/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
@@ -307,9 +308,8 @@ function HeroScene({ onStart }) {
         <span style={{ color: F.color, fontWeight: 800, fontSize: 15.5, display: "inline-flex", alignItems: "center", gap: 5, justifyContent: "center" }}><Cico type={focus} size={22} /> ‘{F.name}’ 같은 아이</span>
         <div style={S.heroLineTxt}>{HERO_LINES[focus]}</div>
       </div>
-      <div style={S.heroTapHint}>풍경을 눌러 네 가지 결을 살펴보세요</div>
+      <div style={S.heroTapHint}>풍경 속 네 가지 결을 눌러 살펴보실 수 있습니다</div>
       <button style={S.heroCta} onClick={onStart}>우리 아이 결 알아보기</button>
-      <div style={S.heroCtaSub}>3분 · 무료 · 책 한 권의 깊이로 분석해 드려요</div>
     </div>
   );
 }
@@ -358,7 +358,7 @@ function Intro({ onStart, onBack }) {
       </div>
 
       <IntroSec n="01" title="왜 이 진단을 하나요?">
-        같은 칭찬도, 같은 공부법도 아이마다 다르게 작용해요. 어떤 아이는 알아주지 않으면 열정이 식고, 어떤 아이는 다그치면 더 움츠러듭니다. 아이의 ‘결(기질)’을 먼저 알아야, 칭찬도·충고도·공부법도 그 아이에게 맞게 건넬 수 있어요. 이 진단은 우리 아이가 새·하늘·땅·뿌리 중 어떤 결인지 알아보는 출발점입니다.
+        같은 칭찬도, 같은 공부법도 아이마다 다르게 작용합니다. 어떤 아이는 알아주지 않으면 열정이 식고, 어떤 아이는 다그치면 더 움츠러듭니다. 아이의 ‘결(기질)’을 먼저 이해해야, 칭찬도 충고도 공부법도 그 아이에게 맞게 건넬 수 있습니다. 이 진단은 우리 아이가 새·하늘·땅·뿌리 가운데 어떤 결인지 살펴보는 출발점입니다.
       </IntroSec>
 
       <IntroSec n="02" title="이 책에 대하여">
@@ -378,7 +378,7 @@ function Intro({ onStart, onBack }) {
       </IntroSec>
 
       <IntroSec n="05" title="어떻게 쓰나요">
-        아이를 떠올리며 ‘그렇다’ 싶은 것만 체크하면, 네 결의 비율과 함께 그 아이에 맞는 공부법·부모 가이드가 나옵니다. 단, 결과는 단정이 아니에요. 고문님도 “기질을 아셔야 한다”고 하시면서도 한 가지로 못박지 않으셨습니다. 아이를 더 잘 관찰하는 렌즈로 써주세요.
+        아이를 떠올리며 ‘그렇다’ 싶은 항목을 선택하시면, 네 결의 비율과 함께 그 아이에 맞는 공부법·부모 가이드가 제공됩니다. 다만 결과는 단정이 아닙니다. 고문님께서도 “기질을 아셔야 한다”고 하시면서도 한 가지로 못박지는 않으셨습니다. 아이를 더 깊이 관찰하는 렌즈로 활용해 주세요.
       </IntroSec>
 
       <button style={{ ...S.primary, marginTop: 22 }} onClick={onStart}>진단 시작하기</button>
@@ -513,7 +513,7 @@ function DeepView({ child, type, onBack }) {
         <div style={{ ...S.deepTitle, color: T.color }}>책이 말하는 ‘{T.name}’ 같은 아이</div>
         <div style={S.deepSub}>{T.sasang} · {T.sadan} · 송재희 『사상체질 학습법』 정밀 분석</div>
       </div>
-      <div style={S.deepLead}>{withName(child.name)}는 네 결 중 ‘{T.name}’의 결이에요. {T.sadan}의 마음 — {sadanDesc[top]}. 이 책이 ‘{T.name} 같은 아이’를 풀어가는 순서 그대로, {withName(child.name)}에게 맞춰 짚어볼게요.{child.isParent ? " (이 글은 아이 기준으로 쓰였지만, 부모님 자신의 결을 이해하는 데에도 그대로 통해요.)" : ""}</div>
+      <div style={S.deepLead}>{withName(child.name)}는 네 결 가운데 ‘{T.name}’의 결입니다. {T.sadan}의 마음 — {sadanDesc[top]}. 『사상체질 학습법』이 ‘{T.name} 같은 아이’를 풀어가는 순서 그대로, {withName(child.name)}에 맞추어 정리했습니다.{child.isParent ? " (아이를 기준으로 쓰인 글이지만, 부모님 자신의 결을 이해하는 데에도 그대로 적용됩니다.)" : ""}</div>
       {!D ? (
         <div style={S.deepSoon}>이 결의 정밀 분석은 곧 ‘{T.name}’ 챕터를 같은 깊이로 분석해 채울게요. 지금은 결과지의 요약을 참고해 주세요.</div>
       ) : (
@@ -541,7 +541,7 @@ const sadanDesc = {
 };
 
 const KEY = "cheji:children:v1";
-const SITE_URL = "https://life2radio.github.io/cheji"; // 배포 주소에 맞게 수정
+const SITE_URL = "https://pagodream.github.io/temperament/"; // 배포 주소
 
 // 받침 있는 이름엔 '이'를 붙여 조사가 자연스럽게: 다다→다다, 드림→드림이
 function withName(name) {
@@ -558,9 +558,9 @@ const store = {
 };
 
 // 구글시트(Apps Script 웹앱) 주소 — 배포 후 …/exec URL 붙여넣기 (양쪽 앱 동일하게)
-const SHEET_API = "";
+const SHEET_API = "https://script.google.com/macros/s/AKfycbxkpIeb9FmErkwE1nDvnBa4F9L3hBg295hYd-UWksPAkYwO-MRkjHiojRFfH7thuuPY/exec";
 function deviceId() { try { let id = localStorage.getItem("mc:uid"); if (!id) { id = "u" + Date.now().toString(36) + Math.random().toString(36).slice(2, 7); localStorage.setItem("mc:uid", id); } return id; } catch (e) { return "u0"; } }
-async function postSheet(obj) { if (!SHEET_API) return; try { await fetch(SHEET_API, { method: "POST", body: JSON.stringify(obj) }); } catch (e) {} }
+async function postSheet(obj) { if (!SHEET_API) return; try { await fetch(SHEET_API, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(obj) }); } catch (e) {} }
 function postCheji(child) {
   if (!child || !child.scores) return;
   const t = TYPES[topType(child.scores)];
@@ -578,6 +578,10 @@ function App() {
     setLoaded(true);
   })(); }, []);
   const save = async (list) => { setChildren(list); try { await store.set(KEY, JSON.stringify(list)); } catch (e) {} };
+  const removeChild = async (c) => {
+    save(children.filter((x) => x.id !== c.id));
+    try { await store.set(`cheji:prog:${c.id}:easy`, ""); await store.set(`cheji:prog:${c.id}:full`, ""); } catch (e) {}
+  };
 
   return (
     <div style={S.root}>
@@ -590,6 +594,7 @@ function App() {
         )}
         {view.s === "home" && <Home children={children} loaded={loaded} onIntro={() => setView({ s: "intro" })} onAdd={() => { setName(""); setView({ s: "add" }); }}
           onAddParent={() => { setName(""); setView({ s: "add", parent: true }); }}
+          onDelete={removeChild}
           onPick={(id) => { const ch = children.find((c) => c.id === id); ch && ch.scores ? setView({ s: "result", id }) : setView({ s: "mode", id }); }} />}
         {view.s === "intro" && <Intro onBack={() => setView({ s: "home" })} onStart={() => setView(children.length ? { s: "home" } : { s: "add" })} />}
         {view.s === "add" && <AddChild parent={view.parent} name={name} setName={setName} onBack={() => setView({ s: "home" })}
@@ -610,10 +615,14 @@ function App() {
   );
 }
 
-function Home({ children, loaded, onAdd, onAddParent, onPick, onIntro }) {
+function Home({ children, loaded, onAdd, onAddParent, onPick, onDelete, onIntro }) {
   const parent = children.find((c) => c.isParent);
   const kids = children.filter((c) => !c.isParent);
   const fresh = loaded && children.length === 0; // 첫 방문
+  const askDelete = (c) => {
+    const label = c.scores ? `'${c.name}'의 검사 결과를 지울까요?` : `'${c.name}'의 하던 검사를 지울까요?`;
+    if (window.confirm(label + "\n(이 작업은 되돌릴 수 없어요.)")) onDelete(c);
+  };
   return (
     <div className="fade">
       <div style={S.eyebrow}>마더클럽 · 체질 학습 진단</div>
@@ -661,43 +670,61 @@ function Home({ children, loaded, onAdd, onAddParent, onPick, onIntro }) {
         {kids.map((c) => {
           const top = c.scores ? topType(c.scores) : null;
           return (
-            <button key={c.id} style={S.childCard} onClick={() => onPick(c.id)}>
-              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                <Avatar type={top} size={44} />
-                <div style={{ textAlign: "left" }}>
-                  <div style={S.childName}>{c.name}</div>
-                  <div style={S.childMeta}>{top ? `${TYPES[top].name} · ${TYPES[top].sasang}` : "검사 전 — 눌러서 시작"}</div>
+            <div key={c.id} style={S.childRow}>
+              <button style={S.childMain} onClick={() => onPick(c.id)}>
+                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                  <Avatar type={top} size={44} />
+                  <div style={{ textAlign: "left" }}>
+                    <div style={S.childName}>{c.name}</div>
+                    <div style={S.childMeta}>{top ? `${TYPES[top].name} · ${TYPES[top].sasang}` : "검사 전 — 눌러서 시작"}</div>
+                  </div>
                 </div>
-              </div>
-              <span style={S.chev}>{c.scores ? "결과 ›" : "검사 ›"}</span>
-            </button>
+                <span style={S.chev}>{c.scores ? "결과 ›" : "검사 ›"}</span>
+              </button>
+              <button style={S.delBtn} onClick={() => askDelete(c)} aria-label={`${c.name} 삭제`}>✕</button>
+            </div>
           );
         })}
       </div>
       {!fresh && <button style={S.addBtn} onClick={onAdd}>+ 아이 추가</button>}
 
       <div style={S.parentSec}>
-        <div style={S.parentHead}>👩 부모님의 결 먼저 알기</div>
-        <div style={S.parentSub}>이 책의 결론이에요 — “부모가 자기 결을 먼저 알아야, 아이의 결을 있는 그대로 품을 수 있다.” 부모님 결을 알면 아이 결과에 <b style={{ color: C.gold }}>부모×아이 조합 안내</b>가 함께 떠요.</div>
+        <div style={S.parentHead}>부모님의 결, 먼저 알기</div>
+        <div style={S.parentSub}>부모가 자신의 결을 먼저 이해할 때, 아이의 결도 있는 그대로 품을 수 있습니다. 부모님의 결까지 진단하시면, 아이 결과에 <b style={{ color: C.gold }}>부모–아이 조합 분석</b>이 함께 제공됩니다.</div>
         {parent ? (
-          <button style={S.childCard} onClick={() => onPick(parent.id)}>
-            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-              <Avatar type={parent.scores ? topType(parent.scores) : null} size={44} fallback="👩" />
-              <div style={{ textAlign: "left" }}>
-                <div style={S.childName}>{parent.name}</div>
-                <div style={S.childMeta}>{parent.scores ? `${TYPES[topType(parent.scores)].name} · ${TYPES[topType(parent.scores)].sasang}` : "검사 전 — 눌러서 시작"}</div>
+          <div style={S.childRow}>
+            <button style={S.childMain} onClick={() => onPick(parent.id)}>
+              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                <Avatar type={parent.scores ? topType(parent.scores) : null} size={44} fallback="👩" />
+                <div style={{ textAlign: "left" }}>
+                  <div style={S.childName}>{parent.name}</div>
+                  <div style={S.childMeta}>{parent.scores ? `${TYPES[topType(parent.scores)].name} · ${TYPES[topType(parent.scores)].sasang}` : "검사 전 — 눌러서 시작"}</div>
+                </div>
               </div>
-            </div>
-            <span style={S.chev}>{parent.scores ? "결과 ›" : "검사 ›"}</span>
-          </button>
+              <span style={S.chev}>{parent.scores ? "결과 ›" : "검사 ›"}</span>
+            </button>
+            <button style={S.delBtn} onClick={() => askDelete(parent)} aria-label="삭제">✕</button>
+          </div>
         ) : (
           <button style={S.parentBtn} onClick={onAddParent}>내 결 알아보기 ›</button>
         )}
       </div>
 
       <div style={S.footer}>
-        <div style={S.footNote}>※ 여기서 말하는 ‘체질’은 한방의 체질의학이 아니라 아이의 타고난 ‘기질’이에요. 결과는 단정이 아니라, 아이를 이해하는 출발점으로 봐주세요.</div>
+        <div style={S.footNote}>※ 여기서 말하는 ‘체질’은 한방 체질의학이 아니라, 아이가 타고난 ‘기질’을 뜻합니다.<br />결과는 아이를 규정하는 판정이 아니라, 이해를 돕는 출발점으로 보아 주시기 바랍니다.</div>
         <div style={S.refTxt}>참고문헌 · 송재희 『사상체질 학습법』</div>
+
+        <div style={S.linkLabel}>함께 보면 좋아요</div>
+        <div style={S.linkRow}>
+          <a href="https://youtube.com/@studyforce_lab" target="_blank" rel="noopener noreferrer" style={S.footLink}>언어과학연구소 ↗</a>
+          <a href="https://youtube.com/channel/UCCC3K-S3XU15AfrAgt8Qobw" target="_blank" rel="noopener noreferrer" style={S.footLink}>마더클럽 ↗</a>
+          <a href="https://youtube.com/@pagodream" target="_blank" rel="noopener noreferrer" style={S.footLink}>파고드림 ↗</a>
+        </div>
+
+        <div style={S.madeBy}>
+          <a href="https://youtube.com/@pagodream" target="_blank" rel="noopener noreferrer" style={S.madeByLink}>made by 파고드림</a>
+          <div style={S.madeByDesc}>매주 다른 토끼굴에 빠지는 INTP 엄마, AI와 함께</div>
+        </div>
       </div>
     </div>
   );
@@ -707,7 +734,7 @@ function AddChild({ parent, name, setName, onSave, onBack }) {
   return (
     <div className="fade" style={S.center}>
       <div style={S.h2}>{parent ? "어떻게 불러드릴까요?" : "아이 이름을 알려주세요"}</div>
-      <div style={S.sub2}>{parent ? "부모님 자신의 결을 검사해요. 같은 문항을 ‘나 자신’을 떠올리며 답하면 돼요." : "아이마다 따로 검사하고 저장돼요."}</div>
+      <div style={S.sub2}>{parent ? "부모님 자신의 결을 진단합니다. 같은 문항을 ‘나 자신’을 떠올리며 답해 주세요." : "아이마다 따로 진단하여 저장됩니다."}</div>
       <input autoFocus value={name} onChange={(e) => setName(e.target.value)} onKeyDown={(e) => e.key === "Enter" && onSave()}
         placeholder={parent ? "예) 엄마, 아빠, 지우맘" : "예) 지우"} style={S.input} />
       <button style={{ ...S.primary, opacity: name.trim() ? 1 : 0.5 }} onClick={onSave}>다음</button>
@@ -720,14 +747,14 @@ function ModePick({ child, onPick, onBack }) {
   return (
     <div className="fade" style={S.center}>
       <div style={S.h2}>{child?.name} — 검사 방식</div>
-      <div style={S.sub2}>아이를 떠올리며 ‘그렇다’ 싶은 것만 체크해요.</div>
+      <div style={S.sub2}>아이를 떠올리며 ‘그렇다’ 싶은 항목을 선택해 주세요.</div>
       <button style={S.modeCard} onClick={() => onPick("easy")}>
         <div style={S.modeTitle}>간편 진단</div>
-        <div style={S.modeDesc}>핵심 문항 24개 · 약 2분. 빠르게 결을 잡아봐요.</div>
+        <div style={S.modeDesc}>핵심 문항 24개 · 약 2분. 결을 빠르게 가늠해 봅니다.</div>
       </button>
       <button style={S.modeCard} onClick={() => onPick("full")}>
         <div style={S.modeTitle}>정밀 진단</div>
-        <div style={S.modeDesc}>전체 문항 48개 · 약 5분. 더 또렷하게 봐요.</div>
+        <div style={S.modeDesc}>전체 문항 48개 · 약 5분. 더 또렷하게 살펴봅니다.</div>
       </button>
       <button style={S.text} onClick={onBack}>뒤로</button>
     </div>
@@ -785,7 +812,7 @@ function Test({ child, mode, onDone, onBack }) {
       </div>
       <div style={S.progBg}><div style={{ ...S.progFill, width: `${pct}%` }} /></div>
       {resumed && <div style={S.resumeNote}>이전에 하던 검사를 이어서 진행해요. 답은 그대로 저장돼 있어요.</div>}
-      <div style={S.testHint}>{isP ? "나 자신을 떠올리며 각 문장이 얼마나 맞는지 골라요." : "아이를 떠올리며 각 문장이 얼마나 맞는지 골라요."} 헷갈리면 가운데 ‘보통’, 안 맞으면 ‘전혀’를 눌러도 돼요.</div>
+      <div style={S.testHint}>{isP ? "나 자신을 떠올리며, 각 문장이 얼마나 맞는지 선택해 주세요." : "아이를 떠올리며, 각 문장이 얼마나 맞는지 선택해 주세요."} 망설여지면 가운데 ‘보통’, 맞지 않으면 ‘전혀’를 선택하셔도 됩니다.</div>
       <div style={{ flex: 1 }}>
         {shuffled.map((it) => (
           <div key={it.idx} style={S.qRow2}>
@@ -932,7 +959,7 @@ function Result({ child, parent, kids, onHome, onRetake, onDeep }) {
         <div style={S.warnNote}>응답이 적거나 약하게 나와서 결과가 또렷하지 않을 수 있어요. ‘정밀 진단’으로 다시 해보면 훨씬 정확해져요.</div>
       )}
       {close && (
-        <div style={S.mixNote}>‘{T.name}’과 ‘{T2.name}’의 결이 {gap}%p 차이로 비슷해요. 아이는 한 가지로만 딱 떨어지지 않아요 — 두 결을 <b>함께</b> 봐주세요. 아래에 두 번째 결도 정리했어요.</div>
+        <div style={S.mixNote}>‘{T.name}’과 ‘{T2.name}’의 결이 {gap}%p 차이로 가깝게 나타났습니다. 아이는 한 가지 결로만 나뉘지 않으니, 두 결을 <b>함께</b> 살펴봐 주세요. 아래에 두 번째 결도 정리했습니다.</div>
       )}
       {close && (
         <div style={{ ...S.secondCard, borderColor: T2.color + "55" }}>
@@ -958,7 +985,7 @@ function Result({ child, parent, kids, onHome, onRetake, onDeep }) {
         <ComboBlock key={k.id} p={top} c={topType(k.scores)} pName={child.name} cName={k.name} />
       ))}
       {!child.isParent && (!parent || !parent.scores) && (
-        <div style={S.comboHint}>💡 홈에서 <b style={{ color: C.gold }}>부모님 결</b>도 검사하면, 부모×아이 조합 안내가 여기에 함께 떠요. 책의 결론 — “부모가 자기 결을 먼저 알라.”</div>
+        <div style={S.comboHint}>홈에서 <b style={{ color: C.gold }}>부모님의 결</b>까지 진단하시면, 이 자리에 부모–아이 조합 분석이 함께 제공됩니다.</div>
       )}
 
       <div style={S.coachHook}>
@@ -976,7 +1003,7 @@ function Result({ child, parent, kids, onHome, onRetake, onDeep }) {
 
       <button style={{ ...S.primary, marginTop: 14 }} onClick={onHome}>완료</button>
       <button style={S.text} onClick={onRetake}>다시 검사하기</button>
-      <div style={S.note}>※ 참고용이에요. 단정짓기보다, 아이를 더 잘 관찰하는 렌즈로 써주세요.</div>
+      <div style={S.note}>※ 참고용 자료입니다. 단정하기보다, 아이를 더 깊이 관찰하는 렌즈로 활용해 주세요.</div>
     </div>
   );
 }
@@ -1026,6 +1053,9 @@ const S = {
   sub2: { color: C.mute, fontSize: 13.5, lineHeight: 1.6, marginBottom: 22 },
   empty: { color: C.mute, fontSize: 13.5, lineHeight: 1.7, textAlign: "center", padding: "26px 0" },
   childCard: { width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", background: "rgba(255,255,255,0.04)", border: `1px solid ${C.line}`, borderRadius: 16, padding: "14px 16px", marginBottom: 10, cursor: "pointer" },
+  childRow: { display: "flex", alignItems: "stretch", gap: 8, marginBottom: 10 },
+  childMain: { flex: 1, display: "flex", alignItems: "center", justifyContent: "space-between", background: "rgba(255,255,255,0.04)", border: `1px solid ${C.line}`, borderRadius: 16, padding: "14px 16px", cursor: "pointer", minWidth: 0 },
+  delBtn: { flexShrink: 0, width: 40, background: "rgba(255,255,255,0.03)", border: `1px solid ${C.line}`, borderRadius: 14, color: "rgba(244,239,230,0.45)", fontSize: 15, cursor: "pointer" },
   childAv: { width: 44, height: 44, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22 },
   childName: { color: C.cream, fontSize: 16, fontWeight: 700 },
   childMeta: { color: C.mute, fontSize: 12.5, marginTop: 2 },
@@ -1138,7 +1168,6 @@ const S = {
   heroLineTxt: { color: C.cream, opacity: 0.82, fontSize: 14, marginTop: 6, lineHeight: 1.5 },
   heroTapHint: { color: "rgba(159,166,200,0.7)", fontSize: 11.5, textAlign: "center", marginTop: 10 },
   heroCta: { width: "100%", marginTop: 26, background: "linear-gradient(135deg, #F2C16B, #FF9E6D)", color: "#0C1230", border: "none", borderRadius: 16, padding: "18px", fontSize: 17, fontWeight: 800, cursor: "pointer", boxShadow: "0 8px 28px rgba(242,193,107,0.28)" },
-  heroCtaSub: { color: C.mute, fontSize: 12.5, textAlign: "center", marginTop: 10 },
   orn: { textAlign: "center", color: "rgba(242,193,107,0.55)", fontSize: 12, margin: "52px 0 0", letterSpacing: 4 },
   quoteWrap: { width: "100%", background: "transparent", border: "none", marginTop: 18, textAlign: "center", padding: "0 10px", cursor: "pointer" },
   quoteMark: { fontFamily: "'Gowun Batang',serif", fontSize: 50, color: C.gold, lineHeight: 0.6, opacity: 0.85 },
@@ -1157,6 +1186,12 @@ const S = {
   footer: { marginTop: 60, paddingTop: 24, borderTop: "1px solid rgba(244,239,230,0.1)", textAlign: "center" },
   footNote: { color: C.mute, fontSize: 12, lineHeight: 1.75 },
   refTxt: { marginTop: 16, color: "rgba(244,239,230,0.42)", fontSize: 11.5, letterSpacing: 0.5 },
+  linkLabel: { marginTop: 26, color: C.mute, fontSize: 11.5, letterSpacing: 1, fontWeight: 700 },
+  linkRow: { display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "8px 16px", marginTop: 12 },
+  footLink: { color: C.gold, fontSize: 13, fontWeight: 600, textDecoration: "none", borderBottom: "1px solid transparent", paddingBottom: 1 },
+  madeBy: { marginTop: 26, paddingTop: 18, borderTop: "1px solid rgba(244,239,230,0.08)" },
+  madeByLink: { color: "rgba(244,239,230,0.7)", fontSize: 12.5, fontWeight: 700, textDecoration: "none" },
+  madeByDesc: { marginTop: 5, color: "rgba(244,239,230,0.4)", fontSize: 11, lineHeight: 1.6 },
 };
 
 
