@@ -273,30 +273,6 @@ function HomePage({ onCoach, onTest, onWorld, drawerOpen, setDrawerOpen }) {
           </g>
         )}
 
-        {/* 새 발밑 그림자 (가지 윗면, 높이 맞춤 y≈590) */}
-        <ellipse cx="131" cy="590" rx={33 * bk} ry={6 * bk} fill="url(#bShadow)" style={{ transformBox: "fill-box", transformOrigin: "center", animation: "shJjaek 3.5s ease-in-out infinite" }} />
-        <ellipse cx="268" cy="592" rx={31 * bk} ry={5.5 * bk} fill="url(#bShadow)" style={{ transformBox: "fill-box", transformOrigin: "center", animation: "shJjuk 3.2s ease-in-out infinite" }} />
-        <ellipse cx="201" cy="594" rx={33 * bk} ry={6 * bk} fill="url(#bShadow)" style={{ transformBox: "fill-box", transformOrigin: "center", animation: "shJjok 3.8s ease-in-out infinite" }} />
-
-        {/* 왼쪽 — 정면, 살짝 둥실 (발끝 y≈589) — 폰에서는 발 고정 확대 */}
-        <g transform={`translate(131 589) scale(${bk}) translate(-131 -589)`}>
-          <g onClick={() => chirp("jjuk")} style={{ transformBox: "fill-box", transformOrigin: "bottom center", animation: "mFront 3.5s ease-in-out infinite", cursor: "pointer" }}>
-            <image href={JJUK} x="94" y="474" width="74" height="115" />
-          </g>
-        </g>
-        {/* 오른쪽 — 고개만 갸웃 (회전축=목 부근, 작은 각도) */}
-        <g transform={`translate(268 591) scale(${bk}) translate(-268 -591)`}>
-          <g onClick={() => chirp("jjaek")} style={{ transformBox: "fill-box", transformOrigin: "50% 35%", animation: "mTilt 3.2s ease-in-out infinite", cursor: "pointer" }}>
-            <image href={JJAEK} x="232" y="483" width="72" height="108" />
-          </g>
-        </g>
-        {/* 쪽쪽 가운데 — 맨 앞, 둥실 (발끝 y≈593) */}
-        <g transform={`translate(201 592) scale(${bk}) translate(-201 -592)`}>
-          <g onClick={() => chirp("jjok")} style={{ transformBox: "fill-box", transformOrigin: "bottom center", animation: "mJjok 3.8s ease-in-out infinite", cursor: "pointer" }}>
-            <image href={JJOK} x="165" y="470" width="72" height="122" />
-          </g>
-        </g>
-
         {/* 추가 꽃잎 */}
         {petals.map((p, i) => (
           <g key={i} style={{ animation: `pf${p.type} ${p.dur}s ${p.delay}s linear infinite` }}>
@@ -304,6 +280,35 @@ function HomePage({ onCoach, onTest, onWorld, drawerOpen, setDrawerOpen }) {
               transform={`rotate(${p.rot} ${p.x * 4} -20)`} />
           </g>
         ))}
+      </svg>
+
+      {/* 세 자매 — 화면 하단 고정 레이어 (배경 SVG와 분리: 세로 긴 화면에서도 잘리지 않음) */}
+      <svg viewBox="80 460 240 145" preserveAspectRatio="xMidYMax meet" style={{ position: "absolute", left: 0, right: 0, bottom: 86, width: "100%", height: 168, zIndex: 2, pointerEvents: "none", overflow: "visible" }}>
+        <defs>
+          <radialGradient id="bShadow2"><stop offset="0%" stopColor="#3A2A18" stopOpacity="0.38" /><stop offset="70%" stopColor="#3A2A18" stopOpacity="0.16" /><stop offset="100%" stopColor="#3A2A18" stopOpacity="0" /></radialGradient>
+        </defs>
+        {/* 발밑 그림자 */}
+        <ellipse cx="131" cy="590" rx={33 * bk} ry={6 * bk} fill="url(#bShadow2)" style={{ transformBox: "fill-box", transformOrigin: "center", animation: "shJjaek 3.5s ease-in-out infinite" }} />
+        <ellipse cx="268" cy="592" rx={31 * bk} ry={5.5 * bk} fill="url(#bShadow2)" style={{ transformBox: "fill-box", transformOrigin: "center", animation: "shJjuk 3.2s ease-in-out infinite" }} />
+        <ellipse cx="201" cy="594" rx={33 * bk} ry={6 * bk} fill="url(#bShadow2)" style={{ transformBox: "fill-box", transformOrigin: "center", animation: "shJjok 3.8s ease-in-out infinite" }} />
+        {/* 왼쪽 쭉쭉 — 정면, 살짝 둥실 */}
+        <g transform={`translate(131 589) scale(${bk}) translate(-131 -589)`}>
+          <g onClick={() => chirp("jjuk")} style={{ transformBox: "fill-box", transformOrigin: "bottom center", animation: "mFront 3.5s ease-in-out infinite", cursor: "pointer", pointerEvents: "auto" }}>
+            <image href={JJUK} x="94" y="474" width="74" height="115" />
+          </g>
+        </g>
+        {/* 오른쪽 짹짹 — 고개만 갸웃 */}
+        <g transform={`translate(268 591) scale(${bk}) translate(-268 -591)`}>
+          <g onClick={() => chirp("jjaek")} style={{ transformBox: "fill-box", transformOrigin: "50% 35%", animation: "mTilt 3.2s ease-in-out infinite", cursor: "pointer", pointerEvents: "auto" }}>
+            <image href={JJAEK} x="232" y="483" width="72" height="108" />
+          </g>
+        </g>
+        {/* 가운데 쪽쪽 — 맨 앞, 둥실 */}
+        <g transform={`translate(201 592) scale(${bk}) translate(-201 -592)`}>
+          <g onClick={() => chirp("jjok")} style={{ transformBox: "fill-box", transformOrigin: "bottom center", animation: "mJjok 3.8s ease-in-out infinite", cursor: "pointer", pointerEvents: "auto" }}>
+            <image href={JJOK} x="165" y="470" width="72" height="122" />
+          </g>
+        </g>
       </svg>
 
       {/* 글자(맨위) + 버튼(중간 하늘, 새 위) */}
