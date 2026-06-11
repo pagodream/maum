@@ -41,8 +41,19 @@
 <body>
   <div id="boot"><div class="dot"></div><div class="t">마음 곳간을 여는 중…</div></div>
   <div id="root"></div>
-  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script crossorigin src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.production.min.js"></script>
+  <script crossorigin src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+  <script>
+    // React CDN 로딩 실패 시 안내 (멈춤 방지)
+    window.addEventListener("load", function () {
+      setTimeout(function () {
+        if (typeof React === "undefined" || typeof ReactDOM === "undefined") {
+          var b = document.getElementById("boot");
+          if (b) b.querySelector(".t").textContent = "네트워크가 불안정해요. 새로고침해 주세요.";
+        }
+      }, 6000);
+    });
+  </script>
   <!-- 미리 번역된 앱 (Babel 불필요 → 빠른 로딩) -->
   <script src="app.js"></script>
   <script>
