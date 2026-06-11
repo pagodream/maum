@@ -2126,7 +2126,7 @@ const EMOJI_T = {
 };
 
 // ★ 게시된 클로드 아티팩트 링크 — 앱을 게시한 뒤 그 주소를 여기 붙여넣으면, 깃허브에서 'AI 대화'가 이 링크로 열려요
-const COACH_CHAT_URL = "";
+const COACH_CHAT_URL = "https://claude.ai/public/artifacts/1606187d-a6e5-4a81-84ae-f273f48e305a";
 // 클로드 아티팩트 환경 감지 (클로드 안: AI 즉시 / 밖: 링크 연결 또는 정적 코칭)
 const IN_CLAUDE = typeof window !== "undefined" && !!(window.claude || window.storage);
 
