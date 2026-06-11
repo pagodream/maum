@@ -88,6 +88,11 @@ function HomePage({ onCoach, onTest, onWorld, drawerOpen, setDrawerOpen }) {
   const [stock, setStock] = useState(0);
   const [bubble, setBubble] = useState(null); // {who, text} 클릭된 새 말풍선
   const [showZero, setShowZero] = useState(false); // 제로섬 더 보기 패널
+  const [showBackup, setShowBackup] = useState(false); // 💾 백업/복원 시트
+  const [bkNick, setBkNick] = useState(""); // 백업 별명
+  const [bkMsg, setBkMsg] = useState(null); // 백업 상태 메시지
+  const [bkBusy, setBkBusy] = useState(false);
+  useEffect(() => { (async () => { try { const r = await store.get("maum_backup_nick"); if (r && r.value) setBkNick(r.value); } catch (e) {} })(); }, []);
 
   // 📱 반응형 — 폰(폭 520 이하)에서는 새를 키우고 카드를 컴팩트하게
   const [vw, setVw] = useState(typeof window !== "undefined" ? window.innerWidth : 400);
@@ -387,9 +392,71 @@ function HomePage({ onCoach, onTest, onWorld, drawerOpen, setDrawerOpen }) {
               ? (kidCount > 1 ? "🧭 아이들 기질 보러가기" : homeTemper ? `${({ 새: "🐦", 하늘: "☁️", 땅: "🏔️", 뿌리: "🌱" })[homeTemper] || "🧭"} ${homeTemper} 기질 보러가기` : "🧭 우리 아이 기질 보러가기")
               : "🧭 기질 테스트하기"}
           </button>
+          <button onClick={() => { setBkMsg(null); setShowBackup(true); }} style={S.pill}>💾 백업</button>
         </div>
         <div style={{ height: 16 }} />
       </div>
+
+      {/* 💾 백업 / 복원 — 앱 전체 자료 (세계지도·진단·서랍·설정 모두) */}
+      {showBackup && (
+        <div onClick={() => setShowBackup(false)} style={{ position: "fixed", inset: 0, background: "rgba(8,10,30,0.62)", zIndex: 60, display: "flex", alignItems: "flex-end", justifyContent: "center" }}>
+          <div onClick={(e) => e.stopPropagation()} style={{ width: "100%", maxWidth: 440, background: "#15183A", borderRadius: "22px 22px 0 0", padding: "20px 20px 30px", boxShadow: "0 -10px 40px rgba(0,0,0,0.4)" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
+              <div style={{ color: "#F3EEE3", fontSize: 16, fontWeight: 800 }}>💾 백업 · 복원</div>
+              <button onClick={() => setShowBackup(false)} style={{ background: "none", border: "none", color: "#9AA3C7", fontSize: 18, cursor: "pointer" }}>✕</button>
+            </div>
+            <div style={{ color: "#9AA3C7", fontSize: 12.5, lineHeight: 1.6, marginBottom: 16 }}>세계지도·기질 진단·마음 서랍·설정까지 — 이 앱의 모든 기록을 한 번에 담아요. 기기를 바꿔도 별명으로 되살릴 수 있어요.</div>
+
+            {/* 구글시트(별명) 백업 */}
+            <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 14, padding: "14px", marginBottom: 12 }}>
+              <div style={{ color: "#F2C16B", fontSize: 13, fontWeight: 800, marginBottom: 8 }}>☁️ 별명으로 저장 (추천)</div>
+              <input value={bkNick} onChange={(e) => setBkNick(e.target.value)} placeholder="나만의 별명 (예: 민준맘2018)" maxLength={20}
+                style={{ width: "100%", boxSizing: "border-box", background: "rgba(0,0,0,0.25)", border: "1px solid rgba(255,255,255,0.16)", borderRadius: 10, padding: "10px 12px", color: "#F3EEE3", fontSize: 13.5, fontFamily: "inherit", marginBottom: 10 }} />
+              <div style={{ display: "flex", gap: 8 }}>
+                <button disabled={bkBusy || !bkNick.trim()} onClick={async () => {
+                  setBkBusy(true); setBkMsg(null);
+                  const nick = bkNick.trim(); try { await store.set("maum_backup_nick", nick); } catch (e) {}
+                  const r = await cloudBackup(nick); setBkBusy(false);
+                  setBkMsg(r.ok ? { ok: true, t: "☁️ 저장했어요. 이 별명으로 언제든 되살릴 수 있어요." } : { ok: false, t: "저장에 실패했어요. 잠시 후 다시 시도해 주세요." });
+                }} style={{ flex: 1, background: bkNick.trim() ? "linear-gradient(135deg,#F2C16B,#FF9E6D)" : "rgba(255,255,255,0.1)", color: bkNick.trim() ? "#3A2410" : "#9AA3C7", border: "none", borderRadius: 10, padding: "11px 0", fontSize: 13, fontWeight: 800, cursor: bkNick.trim() ? "pointer" : "default", fontFamily: "inherit" }}>{bkBusy ? "…" : "지금 저장"}</button>
+                <button disabled={bkBusy || !bkNick.trim()} onClick={async () => {
+                  if (!window.confirm("이 별명의 백업으로 되살릴까요?\n지금 기기의 기록은 백업 내용으로 덮어써져요.")) return;
+                  setBkBusy(true); setBkMsg(null);
+                  const r = await cloudRestore(bkNick.trim()); setBkBusy(false);
+                  if (r.ok) { setBkMsg({ ok: true, t: "되살렸어요! 잠시 후 새로고침돼요." }); setTimeout(() => window.location.reload(), 1400); }
+                  else setBkMsg({ ok: false, t: r.reason === "not-found" ? "그 별명으로 저장된 백업이 없어요." : "복원에 실패했어요. 다시 시도해 주세요." });
+                }} style={{ flex: 1, background: "rgba(255,255,255,0.07)", color: "#F3EEE3", border: "1px solid rgba(255,255,255,0.16)", borderRadius: 10, padding: "11px 0", fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "inherit" }}>되살리기</button>
+              </div>
+            </div>
+
+            {/* 파일 백업 */}
+            <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 14, padding: "14px" }}>
+              <div style={{ color: "#9FE1CB", fontSize: 13, fontWeight: 800, marginBottom: 8 }}>📁 파일로 저장 · 불러오기</div>
+              <div style={{ display: "flex", gap: 8 }}>
+                <button onClick={async () => {
+                  const snap = await gatherBackup();
+                  const blob = new Blob([JSON.stringify(snap, null, 2)], { type: "application/json" });
+                  const url = URL.createObjectURL(blob); const a = document.createElement("a");
+                  const d = new Date(); a.href = url; a.download = `마음곳간_백업_${d.getFullYear()}${String(d.getMonth()+1).padStart(2,"0")}${String(d.getDate()).padStart(2,"0")}.json`;
+                  document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+                  setBkMsg({ ok: true, t: "파일을 내려받았어요. 안전한 곳에 보관하세요." });
+                }} style={{ flex: 1, background: "rgba(255,255,255,0.07)", color: "#F3EEE3", border: "1px solid rgba(255,255,255,0.16)", borderRadius: 10, padding: "11px 0", fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "inherit" }}>파일 저장</button>
+                <label style={{ flex: 1, background: "rgba(255,255,255,0.07)", color: "#F3EEE3", border: "1px solid rgba(255,255,255,0.16)", borderRadius: 10, padding: "11px 0", fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "inherit", textAlign: "center" }}>
+                  파일 불러오기
+                  <input type="file" accept="application/json,.json" style={{ display: "none" }} onChange={(e) => {
+                    const f = e.target.files && e.target.files[0]; if (!f) return; const rd = new FileReader();
+                    rd.onload = async () => { try { await applyBackup(JSON.parse(rd.result)); setBkMsg({ ok: true, t: "불러왔어요! 잠시 후 새로고침돼요." }); setTimeout(() => window.location.reload(), 1400); }
+                      catch (err) { setBkMsg({ ok: false, t: "파일을 읽지 못했어요. 백업 파일이 맞는지 확인해 주세요." }); } };
+                    rd.readAsText(f); e.target.value = "";
+                  }} />
+                </label>
+              </div>
+            </div>
+
+            {bkMsg && <div style={{ marginTop: 13, color: bkMsg.ok ? "#9FE1CB" : "#FF9E9E", fontSize: 12.5, lineHeight: 1.6, textAlign: "center" }}>{bkMsg.t}</div>}
+          </div>
+        </div>
+      )}
 
       {/* 말풍선 — 배경과 동일 좌표계의 최상위 SVG 레이어 (카드 위, 새 머리에 정확히) */}
       {bubble && (
@@ -1963,6 +2030,41 @@ const store = {
   async get(k) { try { if (typeof window !== "undefined" && window.storage) return await window.storage.get(k); const v = localStorage.getItem(k); return v ? { value: v } : null; } catch (e) { return null; } },
   async set(k, v) { try { if (typeof window !== "undefined" && window.storage) return await window.storage.set(k, v); localStorage.setItem(k, v); } catch (e) {} },
 };
+
+// ── 전체 앱 백업/복원 (모든 저장 키를 한 번에) ──
+const BACKUP_KEYS = ["maum_world5", "cheji:children:v1", "maum_drawer", "maum_temper", "maum_child", "maum_quote_seen"];
+const BACKUP_SHEET = "https://script.google.com/macros/s/AKfycbxkpIeb9FmErkwE1nDvnBa4F9L3hBg295hYd-UWksPAkYwO-MRkjHiojRFfH7thuuPY/exec";
+async function gatherBackup() {
+  const data = {};
+  for (const k of BACKUP_KEYS) { try { const r = await store.get(k); if (r && r.value != null) data[k] = r.value; } catch (e) {} }
+  return { app: "마음곳간", v: 1, exportedAt: new Date().toISOString(), data };
+}
+async function applyBackup(obj) {
+  const data = obj && obj.data ? obj.data : obj; // 신형/구형 모두 허용
+  if (!data || typeof data !== "object") throw new Error("형식 오류");
+  for (const k of BACKUP_KEYS) { if (data[k] != null) { try { await store.set(k, data[k]); } catch (e) {} } }
+}
+// 구글시트 자동 백업 — 별명(nick)으로 묶어 한 줄 저장 (덮어쓰기)
+async function cloudBackup(nick) {
+  if (!nick) return { ok: false, reason: "no-nick" };
+  try {
+    const snap = await gatherBackup();
+    const res = await fetch(BACKUP_SHEET, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({ source: "maum_backup", action: "save", nick, payload: JSON.stringify(snap) }) });
+    const j = await res.json().catch(() => null);
+    return j && j.ok ? { ok: true } : { ok: false, reason: "server" };
+  } catch (e) { return { ok: false, reason: "network" }; }
+}
+async function cloudRestore(nick) {
+  if (!nick) return { ok: false, reason: "no-nick" };
+  try {
+    const res = await fetch(BACKUP_SHEET, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({ source: "maum_backup", action: "load", nick }) });
+    const j = await res.json().catch(() => null);
+    if (j && j.ok && j.payload) { await applyBackup(JSON.parse(j.payload)); return { ok: true }; }
+    return { ok: false, reason: "not-found" };
+  } catch (e) { return { ok: false, reason: "network" }; }
+}
 
 // 구글시트(Apps Script 웹앱) 주소 — 배포 후 …/exec URL 붙여넣기 (양쪽 앱 동일하게)
 const SHEET_API = "https://script.google.com/macros/s/AKfycbxkpIeb9FmErkwE1nDvnBa4F9L3hBg295hYd-UWksPAkYwO-MRkjHiojRFfH7thuuPY/exec";
@@ -4789,10 +4891,7 @@ function WorldPage({ onHome, onCoach, onTest }) {
             <button style={WS.setBtn} onClick={() => setMuted((m) => !m)}>{muted ? "🔇 보석 단어 소리 — 꺼짐" : "🔊 보석 단어 소리 — 켜짐"}</button>
             <div style={WS.setHint}>보석을 누르면 그 나라 말로 단어를 읽어줘요.</div>
             <div style={WS.setDivider} />
-            <div style={WS.setDesc}>모든 기록(빛·보석·메모·할일)을 파일로 저장하고, 다시 불러올 수 있어요.</div>
-            <button style={WS.setBtn} onClick={exportBackup}>⤓ 백업 내려받기</button>
-            <button style={WS.setBtn} onClick={() => fileRef.current && fileRef.current.click()}>⤒ 백업 불러오기(복원)</button>
-            <input ref={fileRef} type="file" accept="application/json,.json" onChange={importBackup} style={{ display: "none" }} />
+            <div style={WS.setDesc}>백업·복원은 홈 화면의 💾 백업에서 — 세계지도뿐 아니라 기질 진단·마음 서랍까지 앱 전체를 한 번에 담아요.</div>
             <button style={{ ...WS.setBtn, ...WS.dangerBtn }} onClick={reset}>처음부터 (모두 지우기)</button>
           </div>
         </div>
