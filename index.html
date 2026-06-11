@@ -3,14 +3,34 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>마음 곳간 · 마더클럽</title>
+  <title>제로섬과 땅따먹기 · 마음 곳간</title>
   <meta name="theme-color" content="#0A1028" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="마음 곳간" />
   <meta name="description" content="아이의 좋은 점을 발견하는 엄마의 자리 — 마더클럽 마음 곳간" />
+
+  <!-- ───────── 카톡·SNS 공유 미리보기 (Open Graph) ─────────
+       ★ 아래 4곳의 PLACEHOLDER_URL 을 실제 깃허브 주소로 바꾸세요.
+         예: https://아이디.github.io/저장소/maum/
+         (끝에 / 까지, og.png 와 같은 폴더 기준) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="제로섬과 땅따먹기 · 마음 곳간" />
+  <meta property="og:description" content="아이의 좋은 점을 발견하는 엄마의 자리 — 마더클럽" />
+  <meta property="og:image" content="PLACEHOLDER_URL/og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:url" content="PLACEHOLDER_URL" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="제로섬과 땅따먹기 · 마음 곳간" />
+  <meta name="twitter:description" content="아이의 좋은 점을 발견하는 엄마의 자리 — 마더클럽" />
+  <meta name="twitter:image" content="PLACEHOLDER_URL/og.png" />
   <style>
     * { -webkit-tap-highlight-color: transparent; }
     html, body { margin: 0; padding: 0; background: #0A1028; }
     #root { min-height: 100vh; }
-    /* 로딩 표시 */
     #boot { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; background: #0A1028; color: #F3EEE3; font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; transition: opacity .4s; }
     #boot.gone { opacity: 0; pointer-events: none; }
     #boot .dot { width: 36px; height: 36px; border-radius: 50%; border: 3px solid rgba(242,193,107,0.25); border-top-color: #F2C16B; animation: spin .8s linear infinite; }
@@ -21,14 +41,16 @@
 <body>
   <div id="boot"><div class="dot"></div><div class="t">마음 곳간을 여는 중…</div></div>
   <div id="root"></div>
-
-  <!-- React 18 (프로덕션) -->
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <!-- Babel standalone: 브라우저에서 JSX 변환 -->
-  <script src="https://unpkg.com/@babel/standalone@7/babel.min.js"></script>
-
-  <!-- 앱 코드 (JSX, 마운트 포함) -->
-  <script type="text/babel" data-presets="react" src="app.jsx"></script>
+  <!-- 미리 번역된 앱 (Babel 불필요 → 빠른 로딩) -->
+  <script src="app.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register("sw.js").catch(function () {});
+      });
+    }
+  </script>
 </body>
 </html>
