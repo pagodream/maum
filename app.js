@@ -6948,6 +6948,13 @@ const TS = {
 const NARA = {
   // ===== 아프리카 (1/2) =====
   "Ghana": {
+    adult: {
+      summary: "서아프리카 기니만에 면한 공화국으로 수도는 아크라입니다. 1957년 사하라 이남 아프리카 최초로 독립했습니다.",
+      geo: "해안 평야에서 북부 사바나까지 이어지며, 볼타강과 거대한 인공 호수 볼타호가 있습니다.",
+      history: "옛 가나·아샨티 왕국의 터전으로, '황금 해안'이라 불렸습니다. 콰메 은크루마의 지도로 독립해 아프리카 독립운동의 상징이 되었습니다.",
+      culture: "카카오와 금의 산지이며, 켄테 직물과 다채로운 축제 문화가 있습니다. 평화로운 민주주의로 평가받습니다.",
+      people: "초대 대통령 콰메 은크루마, 전 유엔 사무총장 코피 아난이 대표적입니다."
+    },
     brief: "가나는 서아프리카에 있는 나라로, 초콜릿의 원료인 카카오를 세계에서 손꼽히게 많이 기르는 곳이에요. 옛날에는 금이 많이 나서 '황금 해안'이라고 불렸어요.",
     story: "우리가 먹는 초콜릿의 시작이 바로 가나예요. 카카오 열매는 나무 줄기에 럭비공처럼 매달려 자라는데, 그 속의 씨앗을 말리고 볶아야 초콜릿 향이 나요. 가나 사람들은 '켄테'라는 알록달록한 천을 손으로 짜는데, 색마다 뜻이 담겨 있대요.\n💬 이렇게 물어보세요: 달콤한 초콜릿이 처음엔 어떤 모습일까? 나무 어디에 열릴 것 같아?"
   },
@@ -7088,6 +7095,13 @@ const NARA = {
     story: "세계에서 가장 긴 나일강의 출발점이 바로 우간다에 있어요. 바다처럼 넓은 빅토리아 호수에서 강물이 흘러나와 6,600킬로미터를 달려 이집트 바다까지 가요. 우간다 산속 안개 숲에는 마운틴고릴라 가족들이 살아요.\n💬 이렇게 물어보세요: 호수에서 출발한 물 한 방울이 바다까지 가는 데 얼마나 걸릴까?"
   },
   "Egypt": {
+    adult: {
+      summary: "아프리카 북동부의 나라로 수도는 카이로입니다. 나일강이 기른 인류 최초의 문명 중 하나가 시작된 곳입니다.",
+      geo: "국토 대부분이 사막이지만 나일강 유역에 인구 대부분이 모여 삽니다. 수에즈 운하가 지중해와 홍해를 잇습니다.",
+      history: "약 5천 년 전 파라오의 고대 이집트 문명이 피라미드와 상형문자를 남겼습니다. 이후 로마·이슬람 제국을 거쳐 1922년 독립했습니다.",
+      culture: "이슬람교가 중심이며, 고대 유적과 현대 아랍 문화가 공존합니다. 기자의 피라미드와 스핑크스가 상징입니다.",
+      people: "고대의 파라오 투탕카멘과 클레오파트라, 전 유엔 사무총장 부트로스 갈리 등이 있습니다."
+    },
     brief: "이집트는 피라미드와 파라오의 나라예요. 4,500년 전에 만든 거대한 피라미드가 아직도 서 있어요.",
     story: "이집트의 쿠푸 피라미드는 4,500년 전에 지어졌는데, 돌 230만 개를 쌓아 만들었어요. 돌 하나가 자동차보다 무거워요. 기계도 없던 시절에 어떻게 이걸 만들었는지 지금도 다 풀리지 않은 수수께끼예요. 나일강이 사막 가운데 긴 초록 띠를 만들어 사람들이 살 수 있게 해줘요.\n💬 이렇게 물어보세요: 기중기도 트럭도 없던 옛날에 그 무거운 돌을 어떻게 올렸을까?"
   },
@@ -7261,6 +7275,13 @@ const NARA = {
     story: "인도네시아는 섬이 17,000개가 넘어서, 매일 섬 하나씩 가도 다 도는 데 46년이 걸려요. 코모도섬에는 길이 3미터의 코모도왕도마뱀이 사는데, 지구에 남은 가장 큰 도마뱀이에요. 꼭 공룡 시대에서 온 손님 같죠.\n💬 이렇게 물어보세요: 섬마다 동물이 조금씩 다른 이유가 뭘까?"
   },
   "Japan": {
+    adult: {
+      summary: "동아시아의 섬나라로 수도는 도쿄입니다. 전통과 첨단 기술이 공존하며, 세계적 산업국으로 성장했습니다.",
+      geo: "네 개의 큰 섬과 수천 개의 섬으로 이루어져 있고, 화산과 지진이 잦은 환태평양 조산대에 위치합니다. 후지산이 상징입니다.",
+      history: "고대 야마토 정권에서 무사(사무라이)가 다스린 막부 시대를 거쳐, 1868년 메이지 유신으로 근대화했습니다. 2차 대전 패전 후 경제대국으로 재건했습니다.",
+      culture: "신토와 불교가 공존하며, 다도·정원·애니메이션·장인정신(모노즈쿠리)이 두드러집니다.",
+      people: "애니메이션 감독 미야자키 하야오, 작가 무라카미 하루키, 노벨상 과학자들이 잘 알려져 있습니다."
+    },
     brief: "일본은 후지산과 벚꽃의 나라예요. 시속 300킬로미터로 달리는 신칸센 기차가 있어요.",
     story: "일본의 신칸센은 시속 300킬로미터로 달리는데도 도착 시간이 초 단위로 정확해요. 평균 지연이 1분도 안 된대요. 봄이면 벚꽃이 남쪽에서 북쪽으로 파도처럼 피어 올라가서, 뉴스에서 '벚꽃 전선'을 일기예보처럼 알려줘요.\n💬 이렇게 물어보세요: 벚꽃은 왜 남쪽부터 피기 시작할까?"
   },
@@ -7325,6 +7346,13 @@ const NARA = {
     story: "필리핀 보홀섬에는 '초콜릿 힐스'라는 둥근 언덕이 1,200개 넘게 펼쳐져 있어요. 건기에 풀이 마르면 온 언덕이 초콜릿색이 되거든요. 그 숲에는 손바닥에 올라가는 작은 안경원숭이 타르시어가 사는데, 눈이 뇌만큼 커서 밤에도 잘 봐요.\n💬 이렇게 물어보세요: 둥근 언덕 1,200개가 어떻게 나란히 생겨났을까?"
   },
   "South Korea": {
+    adult: {
+      summary: "동아시아 한반도 남쪽의 공화국으로, 수도는 서울입니다. 20세기 중반의 전쟁과 가난을 딛고 한 세대 만에 산업화와 민주화를 함께 이룬 드문 나라로 꼽힙니다.",
+      geo: "국토의 약 70%가 산지이며, 동쪽이 높고 서·남쪽이 낮아 큰 강들이 서해와 남해로 흐릅니다. 삼면이 바다로 둘러싸여 사계절이 뚜렷합니다.",
+      history: "고조선에서 삼국시대, 통일신라와 고려, 조선으로 이어졌고, 일제강점기와 6·25 전쟁을 거쳐 1948년 대한민국 정부가 수립되었습니다. 이후 빠른 경제성장과 1987년 민주화를 이뤘습니다.",
+      culture: "한글이라는 독창적 문자를 가졌고, 김치·발효음식의 식문화, 그리고 K-팝·영화·드라마로 대표되는 한류가 세계로 퍼졌습니다.",
+      people: "한글을 창제한 세종대왕, 임진왜란의 이순신 장군, 영화 '기생충'의 봉준호 감독, 그룹 BTS 등이 세계적으로 알려져 있습니다."
+    },
     brief: "한국은 우리가 사는 나라예요. 만든 사람과 만든 원리가 알려진 세계에서 드문 문자, 한글을 써요.",
     story: "우리가 쓰는 한글은 세계에서 아주 특별한 문자예요. 누가, 언제, 왜, 어떤 원리로 만들었는지가 기록으로 남아 있는 문자는 드물거든요. 세종대왕은 입과 혀의 모양을 본떠 글자를 만들었어요. 'ㄱ'은 혀뿌리가 목구멍을 막는 모양이래요.\n💬 이렇게 물어보세요: 'ㅁ'은 입 모양을 본떴대. 그럼 다른 글자들은 뭘 본떴을까?"
   },
@@ -7474,6 +7502,13 @@ const NARA = {
     story: "폴란드의 비엘리치카 소금 광산은 지하 327미터까지 내려가는 거대한 지하 세계예요. 광부들이 700년 동안 소금을 캐며 지하에 소금으로 예배당과 조각상, 샹들리에까지 만들었어요. 모두 소금 덩어리를 깎아 만든 거예요. 지구가 돈다고 처음 주장한 코페르니쿠스도 폴란드 사람이에요.\n💬 이렇게 물어보세요: 땅속 깊은 곳에 어떻게 소금이 산처럼 쌓여 있을까?"
   },
   "France": {
+    adult: {
+      summary: "서유럽의 공화국으로 수도는 파리입니다. 계몽주의와 프랑스 혁명의 무대였으며, '자유·평등·박애'를 국가 이념으로 삼습니다.",
+      geo: "서유럽에서 가장 넓은 나라로, 북쪽 평야부터 남쪽 지중해, 동쪽 알프스까지 다양한 지형을 가집니다. 센강이 파리를 가로지릅니다.",
+      history: "중세 왕국에서 1789년 혁명으로 공화정의 길을 열었고, 나폴레옹 시대를 거쳐 두 차례 세계대전의 중심에 섰습니다. 현재 제5공화국입니다.",
+      culture: "미식·와인·패션·예술의 나라로, 루브르 박물관과 인상주의 미술, 그리고 똘레랑스(관용)의 사회 전통으로 유명합니다.",
+      people: "계몽사상가 볼테르와 루소, 화가 모네, 과학자 마리 퀴리(프랑스에서 활동), 작가 빅토르 위고 등이 있습니다."
+    },
     brief: "프랑스에는 에펠탑과 세계에서 가장 큰 미술관 루브르가 있어요. 마을마다 다른 치즈가 있는 미식의 나라예요.",
     story: "파리의 에펠탑은 처음 세워졌을 때 '흉물'이라고 미움받았어요. 20년만 세웠다 철거할 계획이었는데, 지금은 프랑스의 상징이 되었죠. 여름엔 더위에 철이 늘어나 탑이 15센티미터쯤 더 커져요. 프랑스에는 치즈 종류가 1,000가지가 넘어서 매일 다른 치즈를 먹어도 3년 가까이 걸려요.\n💬 이렇게 물어보세요: 철탑이 여름에 키가 커진다니, 왜 그럴까?"
   },
@@ -7572,6 +7607,13 @@ const NARA = {
     story: "볼리비아의 우유니 소금사막은 옛날 호수가 마른 자리예요. 끝없이 펼쳐진 새하얀 소금밭에 얇게 비가 고이면, 하늘이 땅에 그대로 비쳐서 구름 위를 걷는 것 같아요. 어디가 하늘이고 어디가 땅인지 알 수 없는 거대한 거울이 되는 거죠.\n💬 이렇게 물어보세요: 땅이 거울이 되려면 무슨 일이 있어야 할까?"
   },
   "Brazil": {
+    adult: {
+      summary: "남아메리카에서 가장 크고 인구가 많은 나라로 수도는 브라질리아입니다. 포르투갈어를 쓰는 유일한 대국입니다.",
+      geo: "대륙 면적의 절반 가까이를 차지하며, 지구 산소와 생물다양성의 보고인 아마존 열대우림의 대부분이 있습니다.",
+      history: "포르투갈 식민지였다가 1822년 독립했습니다. 다양한 인종이 어우러진 사회를 이루어 왔습니다.",
+      culture: "삼바와 카니발, 축구가 국민 정서를 대표하며, 커피·대두의 주요 생산국입니다.",
+      people: "축구 황제 펠레, 건축가 오스카 니마이어, 작가 파울로 코엘료 등이 있습니다."
+    },
     brief: "브라질에는 지구의 허파라 불리는 아마존 열대우림이 있어요. 리우의 카니발과 거대한 예수상으로 유명해요.",
     story: "브라질의 아마존은 지구에서 가장 큰 열대우림이에요. 지구 산소의 많은 부분을 만들어 '지구의 허파'라 불리죠. 이 숲에는 아직 사람이 다 못 센 동식물이 가득해요. 리우데자네이루 언덕 위에는 38미터 높이의 거대한 예수상이 두 팔 벌려 도시를 안고 있어요.\n💬 이렇게 물어보세요: 멀리 있는 아마존 숲이 왜 우리 숨쉬기와 관계가 있을까?"
   },
@@ -7641,6 +7683,13 @@ const NARA = {
     story: "피지 사람들은 누구를 만나든 '불라!'라고 환하게 인사해요. '안녕'이자 '건강하길'이라는 뜻이 담긴 따뜻한 말이죠. 333개 섬 둘레의 바다는 산호초로 가득해서 '세계 연산호의 수도'라 불려요. 물이 어찌나 맑은지 배가 물 위에 떠 있는 게 아니라 공중에 뜬 것처럼 보여요.\n💬 이렇게 물어보세요: 만나는 사람마다 밝게 인사하면 하루가 어떻게 달라질까?"
   },
   "Australia": {
+    adult: {
+      summary: "남반구의 대륙이자 국가로 수도는 캔버라입니다. 한 대륙 전체가 하나의 나라인 유일한 경우입니다.",
+      geo: "오래되고 평탄한 대륙으로, 내륙은 광대한 사막(아웃백)이고 북동 해안에는 세계 최대 산호초인 그레이트배리어리프가 있습니다.",
+      history: "수만 년 전부터 원주민(애버리지니)이 살아온 땅으로, 18세기 영국 정착 이후 1901년 연방으로 독립했습니다.",
+      culture: "다문화 이민 사회이며, 캥거루·코알라 등 고유 동물과 야외·해양 문화가 특징입니다.",
+      people: "배우 휴 잭맨과 니콜 키드먼, 노벨상 과학자들이 있습니다."
+    },
     brief: "호주에는 캥거루와 코알라처럼 이곳에만 사는 동물이 많아요. 우주에서도 보이는 거대한 산호초가 있어요.",
     story: "호주는 아주 오래전 다른 대륙에서 떨어져 나온 섬 대륙이라, 캥거루·코알라·오리너구리처럼 세상 어디에도 없는 동물이 살아요. 동쪽 바다의 그레이트 배리어 리프는 산호초가 2,300킬로미터나 이어진, 우주에서도 보이는 세계 최대의 산호 군락이에요. 수많은 작은 산호 생물이 만든 거죠.\n💬 이렇게 물어보세요: 대륙이 외따로 떨어져 있으면 동물들은 어떻게 달라질까?"
   },
@@ -20407,6 +20456,7 @@ function WorldPage({
   const [muted, setMuted] = useState(false);
   const [demo, setDemo] = useState(false);
   const [aiText, setAiText] = useState(null);
+  const [kidOpen, setKidOpen] = useState(false); // 아이와 나누기 펼침
   const [aiLoading, setAiLoading] = useState(false);
   const [gemLoading, setGemLoading] = useState(false);
   const [gemReveal, setGemReveal] = useState(null);
@@ -20421,6 +20471,7 @@ function WorldPage({
   const [lens, setLens] = useState(null); // 지도 렌즈: null=전체 / 이름 / "함께"
   const [stockFilter, setStockFilter] = useState(null); // 곳간 필터
   const [showJourney, setShowJourney] = useState(false); // 🏆 빛의 여정 진열장
+  const [challenge, setChallenge] = useState(null); // 🌱 함께 보기 챌린지 {start, days, sharedStart}
   const [worldDone, setWorldDone] = useState(false); // 🌍 온 땅 완주 대미 카드 (= 여섯 대륙 모두 밝힌 피날레)
   // 아이디(공유용 프로필): 기질테스트에서 아이이름+생년으로 자동 생성, 변경 가능
   // { child: "민서", role: "맘", nick: "민서맘", year: "2018" }
@@ -20457,6 +20508,7 @@ function WorldPage({
           setTodos(o.todos || []);
           setDiaries(o.diaries || []);
           setSos(o.sos || []);
+          setChallenge(o.challenge || null);
           if (o.profile) setProfile(o.profile);
           if (o.lights && o.lights.length) setGreet(`${o.lights.length}개 나라에 불이 켜져 있어요. 잘하고 있어요.`);
         }
@@ -20534,6 +20586,52 @@ function WorldPage({
     return m;
   })();
   const hasLegacy = lights.some(e => !e.child) || gems.some(g => !g.child);
+  // 🔥 연속 기록 일수 — 압박이 아니라 응원 (현재 연속 + 함께한 총 날수)
+  const streakInfo = (() => {
+    const days = new Set([...lights, ...gems].map(e => keyOf(e.date)));
+    const totalDays = days.size;
+    if (totalDays === 0) return {
+      cur: 0,
+      total: 0
+    };
+    let cur = 0;
+    const d = new Date();
+    if (!days.has(keyOf(d))) d.setDate(d.getDate() - 1);
+    while (days.has(keyOf(d))) {
+      cur++;
+      d.setDate(d.getDate() - 1);
+    }
+    return {
+      cur,
+      total: totalDays
+    };
+  })();
+  // 🌱 함께 보기 챌린지 진행 — start 이후 '기록한 날 수' (못 한 날은 세지 않음)
+  const chInfo = (() => {
+    if (!challenge) return null;
+    const daySet = new Set([...lights, ...gems].map(e => keyOf(e.date)));
+    const start = new Date(challenge.start);
+    let done = 0;
+    const tmp = new Date(start);
+    for (let i = 0; i < challenge.days; i++) {
+      if (daySet.has(keyOf(tmp))) done++;
+      tmp.setDate(tmp.getDate() + 1);
+    }
+    const end = new Date(start);
+    end.setDate(end.getDate() + challenge.days - 1);
+    end.setHours(0, 0, 0, 0);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const dleft = Math.ceil((end - today) / 86400000);
+    const dayNo = Math.floor((today - new Date(new Date(challenge.start).setHours(0, 0, 0, 0))) / 86400000) + 1;
+    return {
+      done,
+      total: challenge.days,
+      dleft,
+      dayNo,
+      complete: done >= challenge.days
+    };
+  })();
   // 빈자리 관찰 신호 — 이번 주 기록이 0인 아이 (비교 없이, 빈자리만)
   const obsNudge = (() => {
     if (wkids.length < 2) return null;
@@ -20600,7 +20698,7 @@ function WorldPage({
       streaks
     };
   })();
-  async function saveAll(L, G, M, T, D, P, SS) {
+  async function saveAll(L, G, M, T, D, P, SS, CH) {
     try {
       await store.set("maum_world5", JSON.stringify({
         lights: L,
@@ -20609,12 +20707,13 @@ function WorldPage({
         todos: T,
         diaries: D !== undefined ? D : diaries,
         profile: P !== undefined ? P : profile,
-        sos: SS !== undefined ? SS : sos
+        sos: SS !== undefined ? SS : sos,
+        challenge: CH !== undefined ? CH : challenge
       }));
     } catch (e) {}
   }
   function persist(p) {
-    saveAll(p.lights || lights, p.gems || gems, p.memos || memos, p.todos || todos, p.diaries !== undefined ? p.diaries : diaries, p.profile !== undefined ? p.profile : profile, p.sos !== undefined ? p.sos : sos);
+    saveAll(p.lights || lights, p.gems || gems, p.memos || memos, p.todos || todos, p.diaries !== undefined ? p.diaries : diaries, p.profile !== undefined ? p.profile : profile, p.sos !== undefined ? p.sos : sos, p.challenge !== undefined ? p.challenge : challenge);
   }
 
   // 아이디 만들기: 아이이름 + 역할(맘/아빠/등) → 별명, + 생년 4자리
@@ -20689,6 +20788,52 @@ function WorldPage({
       });
     } catch (e) {}
   }
+
+  // 🌱 챌린지 시작 — 며칠 함께 볼지 정하고, 광장에 도전 선언 공유
+  function startChallenge(days) {
+    const ch = {
+      start: keyOf(new Date()),
+      days: days,
+      sharedStart: false
+    };
+    setChallenge(ch);
+    persist({
+      challenge: ch
+    });
+    if (!shareOff && profile) {
+      sendCelebration(`${days}일 '함께 보기'에 도전해요 🌱 응원해 주세요!`, "챌린지시작");
+    }
+    setMessage({
+      title: `${days}일 함께 보기, 시작! 🌱`,
+      body: "하루에 하나, 아이의 좋은 점을 발견해 보세요. 못 한 날이 있어도 괜찮아요 — 다시 이어가면 돼요."
+    });
+  }
+  function endChallenge() {
+    setChallenge(null);
+    persist({
+      challenge: null
+    });
+  }
+  // 완주 공유 (한 번만)
+  const chCelebratedRef = useRef(false);
+  useEffect(() => {
+    if (chInfo && chInfo.complete && challenge && !challenge.sharedDone && !chCelebratedRef.current) {
+      chCelebratedRef.current = true;
+      const ch = {
+        ...challenge,
+        sharedDone: true
+      };
+      setChallenge(ch);
+      persist({
+        challenge: ch
+      });
+      sendCelebration(`${challenge.days}일 '함께 보기'를 완주했어요 🌷`, "챌린지완주");
+      setMessage({
+        title: `${challenge.days}일 함께 보기 완주! 🌷`,
+        body: "아이를 바라보는 눈이 한 뼘 더 자랐어요. 이 시선이 아이를 키웁니다."
+      });
+    }
+  }, [chInfo && chInfo.complete]);
 
   // 광장 글들을 시트에서 불러온다
   async function loadPlaza() {
@@ -20848,9 +20993,19 @@ function WorldPage({
     if (litMap[c.i]) setPopupId(c.i);
   }
   function askAI(c) {
-    // 정적 데이터에서 나라 이야기+질문을 읽는다 (AI 호출 없음)
-    const nd = NARA[c.en];
-    setAiText(nd && nd.story ? nd.story : "이 나라의 이야기는 곧 준비될 거예요.");
+    // 토글: 이미 열려 있으면 접기
+    if (aiText) {
+      setAiText(null);
+      setKidOpen(false);
+      return;
+    }
+    const nd = NARA[c.en] || {};
+    setAiText({
+      adult: nd.adult || null,
+      story: nd.story || null,
+      brief: nd.brief || null
+    });
+    setKidOpen(false);
   }
   function openYoutube(c) {
     window.open("https://www.youtube.com/results?search_query=" + encodeURIComponent(c.n + " 나라 소개"), "_blank");
@@ -21452,9 +21607,9 @@ function WorldPage({
       whiteSpace: "nowrap",
       alignSelf: "flex-start"
     }
-  }, "\u2715 \uB2E4\uC2DC \uACE0\uB974\uAE30")), /*#__PURE__*/React.createElement("div", {
+  }, "\u2715 \uB2E4\uC2DC \uACE0\uB974\uAE30")), sel.lang && sel.lang !== "—" && /*#__PURE__*/React.createElement("div", {
     style: WS.infoSub
-  }, "\uC5B8\uC5B4 ", sel.lang, " \xB7 \uD1B5\uD654 ", sel.cur), selLit && /*#__PURE__*/React.createElement("div", {
+  }, "\uC5B8\uC5B4 ", sel.lang), selLit && /*#__PURE__*/React.createElement("div", {
     style: WS.litLine
   }, "\u2605 ", selLit.order, "\uBC88\uC9F8\uB85C \uBC1D\uD78C \uB098\uB77C \xB7 ", fmtDate(selLit.date), " \u2014 \u201C", selLit.text, "\u201D"), selLit && /*#__PURE__*/React.createElement("div", {
     style: WS.gemBox
@@ -21527,12 +21682,75 @@ function WorldPage({
     style: WS.aiBtn,
     onClick: () => askAI(sel),
     disabled: aiLoading
-  }, aiLoading ? "여는 중…" : "✨ 이 나라 이야기 보기"), /*#__PURE__*/React.createElement("button", {
+  }, aiText ? "✨ 이야기 접기" : "✨ 이 나라 이야기 보기"), /*#__PURE__*/React.createElement("button", {
     style: WS.ytBtn,
     onClick: () => openYoutube(sel)
   }, "\u25B6 \uC720\uD29C\uBE0C")), aiText && /*#__PURE__*/React.createElement("div", {
     style: WS.aiText
-  }, aiText)) : greet ? /*#__PURE__*/React.createElement("div", {
+  }, aiText.adult && typeof aiText.adult === "object" ? /*#__PURE__*/React.createElement("div", null, aiText.adult.summary && /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 13.5,
+      lineHeight: 1.7,
+      color: WC.cream,
+      marginBottom: 13
+    }
+  }, aiText.adult.summary), [["🗺️ 지리", aiText.adult.geo], ["📜 역사", aiText.adult.history], ["🎭 문화", aiText.adult.culture], ["⭐ 인물", aiText.adult.people]].map(function (row) {
+    return row[1] ? /*#__PURE__*/React.createElement("div", {
+      key: row[0],
+      style: {
+        marginBottom: 11
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 12,
+        fontWeight: 800,
+        color: WC.gold,
+        marginBottom: 3
+      }
+    }, row[0]), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 13,
+        lineHeight: 1.65,
+        color: WC.cream,
+        opacity: 0.92
+      }
+    }, row[1])) : null;
+  })) : /*#__PURE__*/React.createElement("div", {
+    style: {
+      lineHeight: 1.7
+    }
+  }, aiText.adult || aiText.brief || "이 나라의 자세한 정보는 곧 채워질 거예요."), aiText.story && /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: 12
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: () => setKidOpen(v => !v),
+    style: {
+      width: "100%",
+      textAlign: "left",
+      background: "rgba(159,225,203,0.08)",
+      border: "1px solid rgba(159,225,203,0.28)",
+      borderRadius: 11,
+      padding: "9px 12px",
+      color: "#9FE1CB",
+      fontSize: 12.5,
+      fontWeight: 700,
+      cursor: "pointer",
+      fontFamily: "inherit"
+    }
+  }, "\uD83D\uDC67 \uC544\uC774\uC640 \uC774\uC57C\uAE30 \uB098\uB204\uAE30 ", kidOpen ? "\u25b4" : "\u25be"), kidOpen && /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: 8,
+      padding: "11px 13px",
+      background: "rgba(255,255,255,0.03)",
+      border: "1px solid rgba(255,255,255,0.08)",
+      borderRadius: 11,
+      color: WC.cream,
+      fontSize: 13,
+      lineHeight: 1.75,
+      whiteSpace: "pre-line"
+    }
+  }, aiText.story)))) : greet ? /*#__PURE__*/React.createElement("div", {
     style: WS.greet
   }, greet) : message ? /*#__PURE__*/React.createElement("div", {
     style: WS.msgCard,
@@ -21544,13 +21762,7 @@ function WorldPage({
     style: WS.msgBody
   }, message.body)) : /*#__PURE__*/React.createElement("div", {
     style: WS.empty
-  }, count === 0 ? "지도에서 나라를 톡 고르고, 오늘 아이의 좋은 점을 적어보세요." : litToday ? "오늘의 새 땅은 밝혔어요 🌙 밝힌 나라를 골라 아이의 좋은 점을 더 남겨 보석을 모아보세요." : "오늘 밝힐 나라를 지도에서 톡 골라보세요.")), sel && (selLit || canLightSel) && /*#__PURE__*/React.createElement("div", {
-    style: WS.obsBar
-  }, /*#__PURE__*/React.createElement("span", {
-    style: WS.obsTag
-  }, "\uD83C\uDF0D \uC624\uB298\uC758 \uAD00\uCC30"), /*#__PURE__*/React.createElement("span", {
-    style: WS.obsText
-  }, obsToday())), sel && selLit && /*#__PURE__*/React.createElement("div", {
+  }, count === 0 ? "지도에서 나라를 톡 고르고, 오늘 아이의 좋은 점을 적어보세요." : litToday ? "오늘의 새 땅은 밝혔어요 🌙 밝힌 나라를 골라 아이의 좋은 점을 더 남겨 보석을 모아보세요." : "오늘 밝힐 나라를 지도에서 톡 골라보세요.")), sel && selLit && /*#__PURE__*/React.createElement("div", {
     style: WS.virtuePickWrap
   }, /*#__PURE__*/React.createElement("div", {
     style: WS.virtuePickLabel
@@ -21583,13 +21795,21 @@ function WorldPage({
     onClick: () => setShareOff(s => !s)
   }, shareOff ? "🔒 나만 보기" : "🌍 함께 광장에 나눠요"), /*#__PURE__*/React.createElement("span", {
     style: WS.shareHint
-  }, shareOff ? "이 좋은 점은 나만 봐요" : "좋은 점은 다른 엄마들과 나눠요"))), wkids.length > 0 && /*#__PURE__*/React.createElement("div", {
+  }, shareOff ? "이 좋은 점은 나만 봐요" : "좋은 점은 다른 엄마들과 나눠요"))), sel && /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: 14,
+      padding: "14px 14px 4px",
+      background: "rgba(255,255,255,0.035)",
+      border: "1px solid rgba(255,255,255,0.09)",
+      borderRadius: 16
+    }
+  }, wkids.length > 0 && /*#__PURE__*/React.createElement("div", {
     style: {
       display: "flex",
       alignItems: "center",
       gap: 6,
       flexWrap: "wrap",
-      margin: "8px 2px 0"
+      margin: "0 2px 0"
     }
   }, /*#__PURE__*/React.createElement("span", {
     style: {
@@ -21617,7 +21837,16 @@ function WorldPage({
       lineHeight: 1.5,
       margin: "6px 2px 0"
     }
-  }, "\uD83C\uDF31 ", obsNudge), /*#__PURE__*/React.createElement("div", {
+  }, "\uD83C\uDF31 ", obsNudge), sel && (selLit || canLightSel) && /*#__PURE__*/React.createElement("div", {
+    style: {
+      ...WS.obsBar,
+      marginBottom: 6
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: WS.obsTag
+  }, "\uD83C\uDF0D \uC624\uB298\uC758 \uAD00\uCC30"), /*#__PURE__*/React.createElement("span", {
+    style: WS.obsText
+  }, obsToday())), /*#__PURE__*/React.createElement("div", {
     style: WS.inputRow
   }, /*#__PURE__*/React.createElement("textarea", {
     ref: inputRef,
@@ -21637,7 +21866,7 @@ function WorldPage({
       ...WS.btn,
       opacity: sel && (selLit ? text.trim() && !gemLoading : canLightSel && text.trim()) ? 1 : 0.5
     }
-  }, btnLabel)), /*#__PURE__*/React.createElement("div", {
+  }, btnLabel))), /*#__PURE__*/React.createElement("div", {
     style: WS.footer
   }, /*#__PURE__*/React.createElement("button", {
     onClick: () => {
@@ -22176,7 +22405,176 @@ function WorldPage({
   }, "\uB2EC\uB825 \uC77C\uAE30"), /*#__PURE__*/React.createElement("button", {
     style: WS.x,
     onClick: () => setShowCal(false)
-  }, "\u2715")), /*#__PURE__*/React.createElement("div", {
+  }, "\u2715")), streakInfo.total > 0 && /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: "linear-gradient(135deg, rgba(255,158,109,0.13), rgba(242,193,107,0.1))",
+      border: "1px solid rgba(242,193,107,0.32)",
+      borderRadius: 14,
+      padding: "13px 15px",
+      marginBottom: 14,
+      display: "flex",
+      alignItems: "center",
+      gap: 12
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 26
+    }
+  }, streakInfo.cur >= 1 ? "🔥" : "🌱"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: WC.gold,
+      fontSize: 14,
+      fontWeight: 800
+    }
+  }, streakInfo.cur >= 2 ? `${streakInfo.cur}일째 이어가고 있어요` : streakInfo.cur === 1 ? "오늘도 함께했어요" : "오늘 다시 시작해 볼까요"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: WC.mute,
+      fontSize: 11.5,
+      marginTop: 2
+    }
+  }, "\uC9C0\uAE08\uAE4C\uC9C0 \uBAA8\uB450 ", streakInfo.total, "\uC77C \u2014 \uC544\uC774\uC758 \uC88B\uC740 \uC810\uC744 \uBC1C\uACAC\uD55C \uB0A0\uC774\uC5D0\uC694"))), !challenge ? /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: "rgba(159,225,203,0.07)",
+      border: "1px solid rgba(159,225,203,0.25)",
+      borderRadius: 14,
+      padding: "14px 15px",
+      marginBottom: 14
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#9FE1CB",
+      fontSize: 13.5,
+      fontWeight: 800,
+      marginBottom: 4
+    }
+  }, "\uD83C\uDF31 \uD568\uAED8 \uBCF4\uAE30 \uCC4C\uB9B0\uC9C0"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: WC.mute,
+      fontSize: 12,
+      lineHeight: 1.6,
+      marginBottom: 10
+    }
+  }, "\uD558\uB8E8\uC5D0 \uD558\uB098, \uC544\uC774\uC758 \uC88B\uC740 \uC810\uC744 \uBC1C\uACAC\uD558\uB294 \uC2B5\uAD00. \uBABB \uD55C \uB0A0\uC774 \uC788\uC5B4\uB3C4 \uAD1C\uCC2E\uC544\uC694 \u2014 \uB2E4\uC2DC \uC774\uC5B4\uAC00\uBA74 \uB3FC\uC694."), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: 7
+    }
+  }, [7, 14, 21, 30].map(d => /*#__PURE__*/React.createElement("button", {
+    key: d,
+    onClick: () => startChallenge(d),
+    style: {
+      flex: 1,
+      background: d === 21 ? "rgba(159,225,203,0.18)" : "rgba(255,255,255,0.05)",
+      border: d === 21 ? "1px solid rgba(159,225,203,0.5)" : "1px solid rgba(255,255,255,0.14)",
+      color: d === 21 ? "#9FE1CB" : WC.cream,
+      fontSize: 13,
+      fontWeight: 800,
+      borderRadius: 10,
+      padding: "10px 0",
+      cursor: "pointer",
+      fontFamily: "inherit"
+    }
+  }, d, "\uC77C"))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: WC.mute,
+      fontSize: 10.5,
+      marginTop: 7,
+      textAlign: "center"
+    }
+  }, "\uB3C4\uC804\uC744 \uC2DC\uC791\uD558\uBA74 \uD568\uAED8 \uAD11\uC7A5\uC5D0 \uC751\uC6D0 \uAE00\uC774 \uC62C\uB77C\uAC00\uC694 (\uACF5\uC720 \uCF30\uC744 \uB54C)")) : chInfo && /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: chInfo.complete ? "linear-gradient(135deg, rgba(242,193,107,0.16), rgba(255,158,109,0.12))" : "rgba(159,225,203,0.07)",
+      border: chInfo.complete ? "1px solid rgba(242,193,107,0.5)" : "1px solid rgba(159,225,203,0.25)",
+      borderRadius: 14,
+      padding: "14px 15px",
+      marginBottom: 14
+    }
+  }, chInfo.complete ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: WC.gold,
+      fontSize: 14.5,
+      fontWeight: 800,
+      marginBottom: 4
+    }
+  }, "\uD83C\uDF37 ", challenge.days, "\uC77C \uD568\uAED8 \uBCF4\uAE30 \uC644\uC8FC!"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: WC.cream,
+      fontSize: 12,
+      lineHeight: 1.6,
+      marginBottom: 10
+    }
+  }, challenge.days, "\uC77C \uB3D9\uC548 \uC544\uC774\uB97C \uBC14\uB77C\uBCF8 \uC2DC\uAC04\uC774 \uC313\uC600\uC5B4\uC694. \uC774 \uC2DC\uC120\uC774 \uC544\uC774\uB97C \uD0A4\uC6C1\uB2C8\uB2E4."), /*#__PURE__*/React.createElement("button", {
+    onClick: endChallenge,
+    style: {
+      width: "100%",
+      background: "rgba(255,255,255,0.06)",
+      border: "1px solid rgba(255,255,255,0.16)",
+      color: WC.cream,
+      fontSize: 12.5,
+      fontWeight: 700,
+      borderRadius: 10,
+      padding: "9px 0",
+      cursor: "pointer",
+      fontFamily: "inherit"
+    }
+  }, "\uC0C8 \uCC4C\uB9B0\uC9C0 \uC2DC\uC791\uD558\uAE30")) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginBottom: 8
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#9FE1CB",
+      fontSize: 13.5,
+      fontWeight: 800
+    }
+  }, "\uD83C\uDF31 ", challenge.days, "\uC77C \uD568\uAED8 \uBCF4\uAE30"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: WC.gold,
+      fontSize: 12.5,
+      fontWeight: 800
+    }
+  }, chInfo.dleft > 0 ? `D-${chInfo.dleft}` : "D-day")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      height: 8,
+      background: "rgba(255,255,255,0.08)",
+      borderRadius: 99,
+      overflow: "hidden",
+      marginBottom: 7
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      height: "100%",
+      width: `${Math.round(chInfo.done / chInfo.total * 100)}%`,
+      background: "linear-gradient(90deg,#9FE1CB,#6FC79A)",
+      borderRadius: 99
+    }
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: WC.mute,
+      fontSize: 11.5
+    }
+  }, chInfo.total, "\uC77C \uC911 ", chInfo.done, "\uC77C \uBC1C\uACAC\uD588\uC5B4\uC694", chInfo.dayNo >= 1 && chInfo.dayNo <= challenge.days ? ` · 오늘은 ${chInfo.dayNo}일째예요` : "", " \u2014 \uC798 \uAC00\uACE0 \uC788\uC5B4\uC694"), /*#__PURE__*/React.createElement("button", {
+    onClick: () => {
+      if (window.confirm("진행 중인 챌린지를 그만둘까요?")) endChallenge();
+    },
+    style: {
+      marginTop: 9,
+      background: "none",
+      border: "none",
+      color: WC.mute,
+      fontSize: 11,
+      cursor: "pointer",
+      fontFamily: "inherit",
+      textDecoration: "underline"
+    }
+  }, "\uADF8\uB9CC\uB450\uAE30"))), /*#__PURE__*/React.createElement("div", {
     style: WS.searchRow
   }, /*#__PURE__*/React.createElement("input", {
     value: query,
@@ -22780,12 +23178,75 @@ function WorldPage({
       style: WS.aiBtn,
       onClick: () => askAI(c),
       disabled: aiLoading
-    }, aiLoading ? "여는 중…" : "✨ 이 나라 이야기 보기"), /*#__PURE__*/React.createElement("button", {
+    }, aiText ? "✨ 이야기 접기" : "✨ 이 나라 이야기 보기"), /*#__PURE__*/React.createElement("button", {
       style: WS.ytBtn,
       onClick: () => openYoutube(c)
     }, "\u25B6 \uC720\uD29C\uBE0C")), aiText && /*#__PURE__*/React.createElement("div", {
       style: WS.aiText
-    }, aiText)));
+    }, aiText.adult && typeof aiText.adult === "object" ? /*#__PURE__*/React.createElement("div", null, aiText.adult.summary && /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 13.5,
+        lineHeight: 1.7,
+        color: WC.cream,
+        marginBottom: 13
+      }
+    }, aiText.adult.summary), [["🗺️ 지리", aiText.adult.geo], ["📜 역사", aiText.adult.history], ["🎭 문화", aiText.adult.culture], ["⭐ 인물", aiText.adult.people]].map(function (row) {
+      return row[1] ? /*#__PURE__*/React.createElement("div", {
+        key: row[0],
+        style: {
+          marginBottom: 11
+        }
+      }, /*#__PURE__*/React.createElement("div", {
+        style: {
+          fontSize: 12,
+          fontWeight: 800,
+          color: WC.gold,
+          marginBottom: 3
+        }
+      }, row[0]), /*#__PURE__*/React.createElement("div", {
+        style: {
+          fontSize: 13,
+          lineHeight: 1.65,
+          color: WC.cream,
+          opacity: 0.92
+        }
+      }, row[1])) : null;
+    })) : /*#__PURE__*/React.createElement("div", {
+      style: {
+        lineHeight: 1.7
+      }
+    }, aiText.adult || aiText.brief || "이 나라의 자세한 정보는 곧 채워질 거예요."), aiText.story && /*#__PURE__*/React.createElement("div", {
+      style: {
+        marginTop: 12
+      }
+    }, /*#__PURE__*/React.createElement("button", {
+      onClick: () => setKidOpen(v => !v),
+      style: {
+        width: "100%",
+        textAlign: "left",
+        background: "rgba(159,225,203,0.08)",
+        border: "1px solid rgba(159,225,203,0.28)",
+        borderRadius: 11,
+        padding: "9px 12px",
+        color: "#9FE1CB",
+        fontSize: 12.5,
+        fontWeight: 700,
+        cursor: "pointer",
+        fontFamily: "inherit"
+      }
+    }, "\uD83D\uDC67 \uC544\uC774\uC640 \uC774\uC57C\uAE30 \uB098\uB204\uAE30 ", kidOpen ? "\u25b4" : "\u25be"), kidOpen && /*#__PURE__*/React.createElement("div", {
+      style: {
+        marginTop: 8,
+        padding: "11px 13px",
+        background: "rgba(255,255,255,0.03)",
+        border: "1px solid rgba(255,255,255,0.08)",
+        borderRadius: 11,
+        color: WC.cream,
+        fontSize: 13,
+        lineHeight: 1.75,
+        whiteSpace: "pre-line"
+      }
+    }, aiText.story)))));
   })(), showJourney && (() => {
     const nextLvl = LEVELS.find(L => L.p > pct);
     const nextNeed = nextLvl ? Math.ceil(nextLvl.p / 100 * TOTAL) - count : 0;
