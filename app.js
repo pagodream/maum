@@ -1055,9 +1055,38 @@ function HomePage({
     style: S.pill
   }, "\u2699 \uC124\uC815")), /*#__PURE__*/React.createElement("div", {
     style: {
-      height: 16
+      textAlign: "center",
+      paddingTop: 10,
+      paddingBottom: 14,
+      pointerEvents: "auto"
     }
-  })), showBackup && /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "rgba(255,255,255,0.55)",
+      fontSize: 11,
+      fontWeight: 600,
+      letterSpacing: 0.3,
+      textShadow: "0 1px 3px rgba(0,0,0,0.4)"
+    }
+  }, "\xA9 2026 ", /*#__PURE__*/React.createElement("a", {
+    href: "https://youtube.com/@pagodream",
+    target: "_blank",
+    rel: "noopener",
+    style: {
+      color: "rgba(255,255,255,0.7)",
+      textDecoration: "underline",
+      textUnderlineOffset: 2
+    }
+  }, "\uD30C\uACE0\uB4DC\uB9BC"), " \xB7 ", /*#__PURE__*/React.createElement("a", {
+    href: "https://kkoyomam-del.github.io/w-lounge/",
+    target: "_blank",
+    rel: "noopener",
+    style: {
+      color: "rgba(255,255,255,0.7)",
+      textDecoration: "underline",
+      textUnderlineOffset: 2
+    }
+  }, "\uB9C8\uB354\uD074\uB7FD")))), showBackup && /*#__PURE__*/React.createElement("div", {
     onClick: () => setShowBackup(false),
     style: {
       position: "fixed",
