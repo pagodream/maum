@@ -2592,21 +2592,15 @@ function CoachPage({
     }]);
   }
 
-  // AI 대화 진입 — 클로드 안: 그 자리에서 / 밖: 게시된 아티팩트 링크로
+  // AI 대화 진입 — 클로드 안: 그 자리에서 / 밖: 안내 후 사용자가 직접 링크 탭(가장 확실)
+  const [aiOpen, setAiOpen] = useState(false);
   function aiEntry() {
     if (IN_CLAUDE) {
       startChat();
       return;
     }
     if (COACH_CHAT_URL) {
-      // 새 창 시도 → 차단/실패(PWA standalone 등)면 현재 창에서 바로 이동
-      var w = null;
-      try {
-        w = window.open(COACH_CHAT_URL, "_blank", "noopener");
-      } catch (e) {}
-      if (!w) {
-        window.location.href = COACH_CHAT_URL;
-      }
+      setAiOpen(true);
       return;
     }
     window.alert("AI 대화는 클로드 게시 링크가 연결된 뒤 열려요. 지금은 '쪽쪽이 코칭'으로 시작해 보세요.");
@@ -3039,7 +3033,75 @@ function CoachPage({
       setMessages([]);
       setInput("");
     }
-  }, "\uCC98\uC74C\uC73C\uB85C")))));
+  }, "\uCC98\uC74C\uC73C\uB85C"))), aiOpen && /*#__PURE__*/React.createElement("div", {
+    onClick: () => setAiOpen(false),
+    style: {
+      position: "fixed",
+      inset: 0,
+      zIndex: 80,
+      background: "rgba(8,10,30,0.7)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: 26
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    onClick: e => e.stopPropagation(),
+    style: {
+      width: "100%",
+      maxWidth: 360,
+      background: "#15183A",
+      borderRadius: 20,
+      padding: "26px 22px",
+      textAlign: "center"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 40,
+      marginBottom: 12
+    }
+  }, "\u2728"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#F3EEE3",
+      fontSize: 17,
+      fontWeight: 800,
+      marginBottom: 8
+    }
+  }, "AI \uCABD\uCABD\uC774\uC640 \uB300\uD654"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#9AA3C7",
+      fontSize: 13,
+      lineHeight: 1.7,
+      marginBottom: 20
+    }
+  }, "\uC544\uB798 \uBC84\uD2BC\uC744 \uB204\uB974\uBA74 \uCABD\uCABD\uC774\uC640\uC758 \uB300\uD654\uCC3D\uC774 \uC5F4\uB824\uC694.", /*#__PURE__*/React.createElement("br", null), "(\uD074\uB85C\uB4DC \uB85C\uADF8\uC778\uC774 \uD544\uC694\uD574\uC694 \u2014 \uBB34\uB8CC \uACC4\uC815 \uAC00\uB2A5)"), /*#__PURE__*/React.createElement("a", {
+    href: COACH_CHAT_URL,
+    target: "_blank",
+    rel: "noopener noreferrer",
+    onClick: () => setAiOpen(false),
+    style: {
+      display: "block",
+      background: "linear-gradient(135deg,#9F7AEA,#7A5BC8)",
+      color: "#fff",
+      fontSize: 15,
+      fontWeight: 800,
+      borderRadius: 13,
+      padding: "14px 0",
+      textDecoration: "none",
+      marginBottom: 10
+    }
+  }, "\uCABD\uCABD\uC774\uC640 \uB300\uD654 \uC2DC\uC791\uD558\uAE30 \u2192"), /*#__PURE__*/React.createElement("button", {
+    onClick: () => setAiOpen(false),
+    style: {
+      background: "none",
+      border: "none",
+      color: "#9AA3C7",
+      fontSize: 13,
+      cursor: "pointer",
+      fontFamily: "inherit",
+      padding: "6px 0"
+    }
+  }, "\uB2EB\uAE30")))));
 }
 
 // 코칭 문장의 '아이'를 아이 이름으로 (예: 아이가 → 민준이가). 고문님 어록에는 쓰지 않는다.
