@@ -1112,16 +1112,7 @@ function HomePage({
       textDecoration: "underline",
       textUnderlineOffset: 2
     }
-  }, "\uD30C\uACE0\uB4DC\uB9BC"), " \xB7 ", /*#__PURE__*/React.createElement("a", {
-    href: "https://kkoyomam-del.github.io/w-lounge/",
-    target: "_blank",
-    rel: "noopener",
-    style: {
-      color: "rgba(255,255,255,0.7)",
-      textDecoration: "underline",
-      textUnderlineOffset: 2
-    }
-  }, "\uB9C8\uB354\uD074\uB7FD")))), showBackup && /*#__PURE__*/React.createElement("div", {
+  }, "\uD30C\uACE0\uB4DC\uB9BC")))), showBackup && /*#__PURE__*/React.createElement("div", {
     onClick: () => setShowBackup(false),
     style: {
       position: "fixed",
@@ -1573,7 +1564,62 @@ function HomePage({
       lineHeight: 1.6,
       marginTop: 8
     }
-  }, "\uD648 \uD654\uBA74\uC5D0 \uCD94\uAC00\uD558\uBA74 \uC571\uCC98\uB7FC \uC804\uCCB4\uD654\uBA74\uC73C\uB85C \uC5F4\uB824\uC694. \uCE5C\uAD6C\uC5D0\uAC8C \uB9C1\uD06C\uB97C \uACF5\uC720\uD574 \uBCF4\uC138\uC694."), bkMsg && /*#__PURE__*/React.createElement("div", {
+  }, "\uD648 \uD654\uBA74\uC5D0 \uCD94\uAC00\uD558\uBA74 \uC571\uCC98\uB7FC \uC804\uCCB4\uD654\uBA74\uC73C\uB85C \uC5F4\uB824\uC694. \uCE5C\uAD6C\uC5D0\uAC8C \uB9C1\uD06C\uB97C \uACF5\uC720\uD574 \uBCF4\uC138\uC694."), /*#__PURE__*/React.createElement("div", {
+    style: {
+      height: 12
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#9FE1CB",
+      fontSize: 13,
+      fontWeight: 800,
+      marginBottom: 8
+    }
+  }, "\uD83C\uDF3F \uB9C8\uB354\uD074\uB7FD \uAC00\uC871 \uB9C1\uD06C"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      flexDirection: "column",
+      gap: 7
+    }
+  }, [{
+    t: "📺 마더클럽 유튜브",
+    u: "https://youtube.com/channel/UCCC3K-S3XU15AfrAgt8Qobw"
+  }, {
+    t: "☕ 마더클럽 카페",
+    u: "https://naver.me/xWIVgVOx"
+  }, {
+    t: "🎵 마더클럽 밴드",
+    u: "https://band.us/n/a1a5b8CeEbu00"
+  }, {
+    t: "🕊️ 이재훈 고문님 · W라운지",
+    u: "https://kkoyomam-del.github.io/w-lounge/"
+  }, {
+    t: "🎼 고문님이 사랑한 음악 모음집",
+    u: "https://pagodream.github.io/hismusic/"
+  }].map(lk => /*#__PURE__*/React.createElement("a", {
+    key: lk.u,
+    href: lk.u,
+    target: "_blank",
+    rel: "noopener noreferrer",
+    style: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+      background: "rgba(255,255,255,0.05)",
+      border: "1px solid rgba(255,255,255,0.1)",
+      borderRadius: 11,
+      padding: "12px 14px",
+      color: "#F3EEE3",
+      fontSize: 13,
+      fontWeight: 600,
+      textDecoration: "none"
+    }
+  }, /*#__PURE__*/React.createElement("span", null, lk.t), /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: "#9AA3C7",
+      fontSize: 12
+    }
+  }, "\u2197")))), bkMsg && /*#__PURE__*/React.createElement("div", {
     style: {
       marginTop: 13,
       color: bkMsg.ok ? "#9FE1CB" : "#FF9E9E",
@@ -4912,7 +4958,7 @@ const store = {
 };
 
 // ── 전체 앱 백업/복원 (모든 저장 키를 한 번에) ──
-const BACKUP_KEYS = ["maum_world5", "cheji:children:v1", "maum_drawer", "maum_temper", "maum_child", "maum_quote_seen"];
+const BACKUP_KEYS = ["maum_world5", "cheji:children:v1", "maum_drawer", "maum_temper", "maum_child", "maum_quote_seen", "maum_map_mode", "maum_group"];
 // 기억하기 쉬운 백업 코드 자동 생성 (예: maum-포근한참새-482)
 const BK_WORDS_A = ["포근한", "다정한", "씩씩한", "반짝이는", "따뜻한", "용감한", "상냥한", "노래하는", "행복한", "슬기로운"];
 const BK_WORDS_B = ["참새", "고양이", "햇살", "구름", "별빛", "민들레", "토끼", "단풍", "물결", "나무"];
@@ -20841,6 +20887,28 @@ function WorldPage({
   const [calmLoading, setCalmLoading] = useState(false);
   const [showStock, setShowStock] = useState(false);
   const [showPlaza, setShowPlaza] = useState(false); // 함께 광장
+  // 🌸 그룹 — 도전 어머님들 그룹핑 (시트 groups 탭, 대표 승인제)
+  const [myGroup, setMyGroup] = useState(""); // 가입한 그룹 이름 ("" = 없음)
+  const [plazaTab, setPlazaTab] = useState("all"); // "all"(전체) | "group"(우리 그룹)
+  const [grpOpen, setGrpOpen] = useState(false);
+  const [grpQ, setGrpQ] = useState("");
+  const [grpResults, setGrpResults] = useState(null);
+  const [grpBusy, setGrpBusy] = useState(false);
+  const [grpMsg, setGrpMsg] = useState(null);
+  const [grpReqName, setGrpReqName] = useState("");
+  const [grpReqSize, setGrpReqSize] = useState("");
+  const [grpReqIntro, setGrpReqIntro] = useState("");
+  useEffect(() => {
+    (async () => {
+      try {
+        const r = await store.get("maum_group");
+        if (r && r.value) {
+          setMyGroup(r.value);
+          setPlazaTab("group");
+        }
+      } catch (e) {}
+    })();
+  }, []);
   const [showProfile, setShowProfile] = useState(false); // 아이디 만들기/변경
   const [pfChild, setPfChild] = useState(""); // 아이디 입력: 아이 이름
   const [pfRole, setPfRole] = useState("맘"); // 맘/아빠/그 외
@@ -20863,6 +20931,26 @@ function WorldPage({
   const [sos, setSos] = useState([]); // 코칭에서 온 '마음의 보석'
   const [wkids, setWkids] = useState([]); // 진단 앱에 등록된 아이들 [{name, temper}]
   const [curChild, setCurChild] = useState(null); // 지금 기록 대상 아이
+  const [mapMode, setMapMode] = useState(null); // 지도 방식: "together"(다같이) | "perkid"(아이별) | null(미정=다같이로 동작)
+  const [modeLoaded, setModeLoaded] = useState(false);
+  useEffect(() => {
+    (async () => {
+      try {
+        const r = await store.get("maum_map_mode");
+        if (r && r.value) setMapMode(r.value);
+      } catch (e) {}
+      setModeLoaded(true);
+    })();
+  }, []);
+  async function chooseMode(m) {
+    setMapMode(m);
+    try {
+      await store.set("maum_map_mode", m);
+    } catch (e) {}
+  }
+  useEffect(() => {
+    if (mapMode === "perkid" && !curChild && wkids.length) setCurChild(wkids[0].name);
+  }, [mapMode, wkids]);
   const [lens, setLens] = useState(null); // 지도 렌즈: null=전체 / 이름 / "함께"
   const [stockFilter, setStockFilter] = useState(null); // 곳간 필터
   const [showJourney, setShowJourney] = useState(false); // 🏆 빛의 여정 진열장
@@ -20934,7 +21022,7 @@ function WorldPage({
     })();
   }, []);
   function pickChildW(name) {
-    const v = curChild === name ? null : name;
+    const v = mapMode === "perkid" ? name : curChild === name ? null : name;
     setCurChild(v);
     try {
       store.set("maum_child", v || "");
@@ -20960,20 +21048,25 @@ function WorldPage({
       [c.i]: nd && nd.brief ? nd.brief : " "
     }));
   }, [popupId]);
+
+  // 아이별 모드: 지금 보고 있는 아이의 빛만 (다같이 모드: 전체)
+  const perKid = mapMode === "perkid";
+  const activeKid = perKid ? curChild || wkids[0] && wkids[0].name || null : null;
+  const visLights = perKid && activeKid ? lights.filter(e => e.child === activeKid) : lights;
   const litMap = {};
-  lights.forEach(e => litMap[e.cid] = e);
+  visLights.forEach(e => litMap[e.cid] = e);
   const gemsByCid = {};
   gems.forEach(g => {
     (gemsByCid[g.cid] = gemsByCid[g.cid] || []).push(g);
   });
   // 아이별 렌즈 — 지도 '표시'만 거름 (밝히기/보석 규칙은 전체 기준 유지)
   const lensMatch = e => lens === null || (lens === "함께" ? !e.child : e.child === lens);
-  const viewLitMap = lens === null ? litMap : (() => {
+  const viewLitMap = perKid || lens === null ? litMap : (() => {
     const m = {};
     lights.filter(lensMatch).forEach(e => m[e.cid] = e);
     return m;
   })();
-  const viewGemsByCid = lens === null ? gemsByCid : (() => {
+  const viewGemsByCid = perKid || lens === null ? gemsByCid : (() => {
     const m = {};
     gems.filter(lensMatch).forEach(g => {
       (m[g.cid] = m[g.cid] || []).push(g);
@@ -21040,16 +21133,17 @@ function WorldPage({
     const any = Object.values(cnt).some(v => v > 0);
     return empty && any ? `이번 주 ${withName(empty.name)}의 좋은 점은 아직 빈자리예요 — 오늘 하나 찾아볼까요?` : null;
   })();
-  const count = lights.length;
+  const count = visLights.length; // 아이별 모드에선 그 아이의 진행
   const pct = Math.round(count / TOTAL * 100);
   const lvl = levelInfo(count);
-  const litToday = lights.some(e => sameDay(e.date));
+  const litToday = visLights.some(e => sameDay(e.date)); // 하루 1나라도 아이별
 
   // 광장 뷰 계산: 시트에서 받은 행 → 화면용. plazaData가 null이면 로딩 전.
   const plazaView = (() => {
     if (!plazaData) return null;
     // 최신순 정렬 (시간 내림차순), 좋은점 있는 것만 — 축하 행은 따로 뗀다
-    const all = plazaData.filter(r => r && (r["좋은점"] || "").toString().trim()).sort((a, b) => new Date(b["시간"] || 0) - new Date(a["시간"] || 0));
+    let all = plazaData.filter(r => r && (r["좋은점"] || "").toString().trim()).sort((a, b) => new Date(b["시간"] || 0) - new Date(a["시간"] || 0));
+    if (plazaTab === "group" && myGroup) all = all.filter(r => String(r["그룹"] || "").trim() === myGroup); // 🌸 우리 그룹만
     const isCeleb = r => (r["덕담"] || "") === "🎉축하";
     const rows = all.filter(r => !isCeleb(r));
     // 🎉 오늘의 축하 — 오늘 날짜의 이정표만, 모두에게 보임
@@ -21148,7 +21242,8 @@ function WorldPage({
       새: birdFor(profile.nick),
       덕담: virtue || "",
       나라: naraName || "",
-      좋은점: note || ""
+      좋은점: note || "",
+      그룹: myGroup || ""
     };
     try {
       fetch(SHEET_URL, {
@@ -21171,7 +21266,8 @@ function WorldPage({
       새: birdFor(profile.nick),
       덕담: "🎉축하",
       나라: tag || "",
-      좋은점: text || ""
+      좋은점: text || "",
+      그룹: myGroup || ""
     };
     try {
       fetch(SHEET_URL, {
@@ -21250,6 +21346,110 @@ function WorldPage({
       setPlazaData([]);
     }
     setPlazaLoading(false);
+  }
+
+  // 🌸 그룹 검색 — groups 탭에서 승인된 그룹만
+  async function searchGroups() {
+    const q = grpQ.trim();
+    if (!q) return;
+    setGrpBusy(true);
+    setGrpResults(null);
+    setGrpMsg(null);
+    try {
+      const res = await fetch(SHEET_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8"
+        },
+        body: JSON.stringify({
+          source: "groups",
+          action: "load"
+        })
+      });
+      const d = await res.json();
+      const rows = d && d.ok && Array.isArray(d.rows) ? d.rows : [];
+      const ok = rows.filter(r => String(r["상태"] || "").trim() === "승인" && String(r["그룹명"] || "").includes(q));
+      const seen = {};
+      const list = [];
+      ok.forEach(r => {
+        const n = String(r["그룹명"]).trim();
+        if (!seen[n]) {
+          seen[n] = 1;
+          list.push({
+            name: n,
+            boss: r["방장"] || "",
+            intro: r["소개"] || "",
+            size: r["인원"] || ""
+          });
+        }
+      });
+      setGrpResults(list);
+      if (!list.length) setGrpMsg({
+        ok: false,
+        t: "그 이름의 그룹을 못 찾았어요. 아직 승인 전이거나 이름이 다를 수 있어요."
+      });
+    } catch (e) {
+      setGrpMsg({
+        ok: false,
+        t: "검색에 실패했어요. 잠시 후 다시 시도해 주세요."
+      });
+    }
+    setGrpBusy(false);
+  }
+  async function joinGroup(name) {
+    setMyGroup(name);
+    setPlazaTab("group");
+    try {
+      await store.set("maum_group", name);
+    } catch (e) {}
+    setGrpOpen(false);
+    setGrpMsg(null);
+    setGrpResults(null);
+    setGrpQ("");
+  }
+  async function leaveGroup() {
+    if (!window.confirm(`'${myGroup}' 그룹에서 나갈까요?\n(글은 남아 있고, 언제든 다시 가입할 수 있어요)`)) return;
+    setMyGroup("");
+    setPlazaTab("all");
+    try {
+      await store.set("maum_group", "");
+    } catch (e) {}
+  }
+  // 🌸 그룹 만들기 요청 — 운영자(시트)에서 상태를 '승인'으로 바꾸면 열림
+  async function requestGroup() {
+    const n = grpReqName.trim();
+    if (!n || !profile) return;
+    setGrpBusy(true);
+    setGrpMsg(null);
+    try {
+      await fetch(SHEET_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8"
+        },
+        body: JSON.stringify({
+          source: "groups",
+          그룹명: n,
+          방장: profile.nick,
+          인원: grpReqSize.trim(),
+          소개: grpReqIntro.trim(),
+          상태: "요청"
+        })
+      });
+      setGrpMsg({
+        ok: true,
+        t: "요청을 보냈어요! 운영자가 확인해 열어주면, 팀원들이 이 이름으로 검색해 가입할 수 있어요."
+      });
+      setGrpReqName("");
+      setGrpReqSize("");
+      setGrpReqIntro("");
+    } catch (e) {
+      setGrpMsg({
+        ok: false,
+        t: "요청 전송에 실패했어요. 잠시 후 다시요."
+      });
+    }
+    setGrpBusy(false);
   }
   function speak(t) {
     if (muted) return;
@@ -21436,7 +21636,7 @@ function WorldPage({
         cid: c.i,
         cn: c.n,
         order,
-        child: curChild || null
+        child: (perKid ? activeKid : curChild) || null
       }];
       const np = Math.round(next.length / TOTAL * 100);
       const newIdx = levelInfo(next.length).idx;
@@ -21505,7 +21705,7 @@ function WorldPage({
       bcp47: vd.bcp47 || "",
       city: cityM ? cityM.n : "",
       findTogether: false,
-      child: curChild || null
+      child: (perKid ? activeKid : curChild) || null
     } : {
       id: Date.now(),
       date: new Date().toISOString(),
@@ -21519,7 +21719,7 @@ function WorldPage({
       bcp47: "",
       city: cityM ? cityM.n : "",
       findTogether: true,
-      child: curChild || null
+      child: (perKid ? activeKid : curChild) || null
     };
     const ng = [...gems, gem];
     setGems(ng);
@@ -21831,7 +22031,7 @@ function WorldPage({
       ...WS.barFill,
       width: `${Math.max(2, pct)}%`
     }
-  })), wkids.length > 0 && /*#__PURE__*/React.createElement("div", {
+  })), !perKid && wkids.length > 0 && /*#__PURE__*/React.createElement("div", {
     style: {
       display: "flex",
       gap: 6,
@@ -21857,16 +22057,131 @@ function WorldPage({
         fontFamily: "inherit"
       }
     }, l === null ? "🌍 전체" : l === "함께" ? "함께" : `${kk && kk.temper ? EMOJI_T[kk.temper] + " " : ""}${l}`);
-  })), lens && lens !== "함께" && /*#__PURE__*/React.createElement("div", {
+  })), !perKid && lens && lens !== "함께" && /*#__PURE__*/React.createElement("div", {
     style: {
       textAlign: "center",
       color: WC.mute,
       fontSize: 11,
       marginTop: 5
     }
-  }, withName(lens), "\uC758 \uBE5B\uACFC \uBCF4\uC11D\uB9CC \uBCF4\uACE0 \uC788\uC5B4\uC694"), /*#__PURE__*/React.createElement("div", {
+  }, withName(lens), "\uC758 \uBE5B\uACFC \uBCF4\uC11D\uB9CC \uBCF4\uACE0 \uC788\uC5B4\uC694"), perKid && wkids.length > 0 && /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: 6,
+      justifyContent: "center",
+      flexWrap: "wrap",
+      margin: "9px 0 0"
+    }
+  }, wkids.map(k => {
+    const on = activeKid === k.name;
+    return /*#__PURE__*/React.createElement("button", {
+      key: k.name,
+      onClick: () => pickChildW(k.name),
+      style: {
+        background: on ? "rgba(242,193,107,0.18)" : "rgba(255,255,255,0.04)",
+        border: on ? "1px solid rgba(242,193,107,0.6)" : "1px solid rgba(255,255,255,0.12)",
+        color: on ? WC.gold : WC.mute,
+        fontSize: 12,
+        fontWeight: 800,
+        borderRadius: 99,
+        padding: "5px 14px",
+        cursor: "pointer",
+        fontFamily: "inherit"
+      }
+    }, k.temper ? EMOJI_T[k.temper] + " " : "", k.name, "\uC758 \uC9C0\uB3C4");
+  })), /*#__PURE__*/React.createElement("div", {
     style: WS.mapWrap
-  }, /*#__PURE__*/React.createElement("svg", {
+  }, modeLoaded && !mapMode && wkids.length >= 2 && /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: "fixed",
+      inset: 0,
+      zIndex: 90,
+      background: "rgba(8,10,30,0.85)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: 24
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: "100%",
+      maxWidth: 380,
+      background: "#15183A",
+      borderRadius: 20,
+      padding: "26px 20px",
+      textAlign: "center"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 36,
+      marginBottom: 10
+    }
+  }, "\uD83D\uDDFA\uFE0F"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#F3EEE3",
+      fontSize: 17,
+      fontWeight: 800,
+      marginBottom: 6
+    }
+  }, "\uC9C0\uB3C4\uB97C \uC5B4\uB5BB\uAC8C \uBC1D\uD790\uAE4C\uC694?"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#9AA3C7",
+      fontSize: 12.5,
+      lineHeight: 1.6,
+      marginBottom: 18
+    }
+  }, "\uB098\uC911\uC5D0 \uC9C0\uB3C4 \uC124\uC815(\u2699)\uC5D0\uC11C \uBC14\uAFC0 \uC218 \uC788\uC5B4\uC694."), /*#__PURE__*/React.createElement("button", {
+    onClick: () => chooseMode("perkid"),
+    style: {
+      width: "100%",
+      background: "rgba(242,193,107,0.13)",
+      border: "1px solid rgba(242,193,107,0.5)",
+      borderRadius: 14,
+      padding: "16px 14px",
+      marginBottom: 10,
+      cursor: "pointer",
+      fontFamily: "inherit",
+      textAlign: "left"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#F2C16B",
+      fontSize: 14.5,
+      fontWeight: 800,
+      marginBottom: 4
+    }
+  }, "\uD83D\uDC67\uD83D\uDC66 \uC544\uC774\uBCC4\uB85C \uAC01\uC790 \uC9C0\uB3C4"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#9AA3C7",
+      fontSize: 12,
+      lineHeight: 1.55
+    }
+  }, "\uC544\uC774\uB9C8\uB2E4 \uC790\uAE30 \uC9C0\uB3C4\uB97C \uB530\uB85C \uBC1D\uD600\uC694. \uAC19\uC740 \uB098\uB77C\uB3C4 \uAC01\uC790 \uCF24 \uC218 \uC788\uC5B4\uC694.")), /*#__PURE__*/React.createElement("button", {
+    onClick: () => chooseMode("together"),
+    style: {
+      width: "100%",
+      background: "rgba(255,255,255,0.05)",
+      border: "1px solid rgba(255,255,255,0.15)",
+      borderRadius: 14,
+      padding: "16px 14px",
+      cursor: "pointer",
+      fontFamily: "inherit",
+      textAlign: "left"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#F3EEE3",
+      fontSize: 14.5,
+      fontWeight: 800,
+      marginBottom: 4
+    }
+  }, "\uD83C\uDF0D \uB2E4\uAC19\uC774 \uD55C \uC9C0\uB3C4"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#9AA3C7",
+      fontSize: 12,
+      lineHeight: 1.55
+    }
+  }, "\uC628 \uAC00\uC871\uC774 \uD55C \uC9C0\uB3C4\uB97C \uD568\uAED8 \uBC1D\uD600\uC694. \uAE30\uB85D\uB9C8\uB2E4 \uB204\uAD6C\uC758 \uC88B\uC740 \uC810\uC778\uC9C0 \uACE0\uB97C \uC218 \uC788\uC5B4\uC694.")))), /*#__PURE__*/React.createElement("svg", {
     ref: svgRef,
     viewBox: "0 0 1000 500",
     style: WS.svg,
@@ -22198,7 +22513,14 @@ function WorldPage({
       border: "1px solid rgba(255,255,255,0.09)",
       borderRadius: 16
     }
-  }, wkids.length > 0 && /*#__PURE__*/React.createElement("div", {
+  }, perKid && activeKid && /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: WC.gold,
+      fontSize: 11.5,
+      fontWeight: 700,
+      margin: "0 2px 2px"
+    }
+  }, "\u2728 ", withName(activeKid), "\uC758 \uC9C0\uB3C4\uC5D0 \uAE30\uB85D\uD574\uC694"), !perKid && wkids.length > 0 && /*#__PURE__*/React.createElement("div", {
     style: {
       display: "flex",
       alignItems: "center",
@@ -22686,7 +23008,252 @@ function WorldPage({
       setPfYear(profile ? profile.year : "");
       setShowProfile(true);
     }
-  }, "\uBCC4\uBA85 \uBC14\uAFB8\uAE30")), plazaView && plazaView.celebs.length > 0 && /*#__PURE__*/React.createElement("div", {
+  }, "\uBCC4\uBA85 \uBC14\uAFB8\uAE30")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: 6,
+      alignItems: "center",
+      marginBottom: 10,
+      flexWrap: "wrap"
+    }
+  }, myGroup ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("button", {
+    onClick: () => setPlazaTab("all"),
+    style: {
+      background: plazaTab === "all" ? "rgba(242,193,107,0.16)" : "rgba(255,255,255,0.04)",
+      border: plazaTab === "all" ? "1px solid rgba(242,193,107,0.55)" : "1px solid rgba(255,255,255,0.12)",
+      color: plazaTab === "all" ? WC.gold : WC.mute,
+      fontSize: 12,
+      fontWeight: 700,
+      borderRadius: 99,
+      padding: "5px 12px",
+      cursor: "pointer",
+      fontFamily: "inherit"
+    }
+  }, "\uD83C\uDF0D \uC804\uCCB4"), /*#__PURE__*/React.createElement("button", {
+    onClick: () => setPlazaTab("group"),
+    style: {
+      background: plazaTab === "group" ? "rgba(255,158,109,0.16)" : "rgba(255,255,255,0.04)",
+      border: plazaTab === "group" ? "1px solid rgba(255,158,109,0.6)" : "1px solid rgba(255,255,255,0.12)",
+      color: plazaTab === "group" ? "#FF9E6D" : WC.mute,
+      fontSize: 12,
+      fontWeight: 700,
+      borderRadius: 99,
+      padding: "5px 12px",
+      cursor: "pointer",
+      fontFamily: "inherit"
+    }
+  }, "\uD83C\uDF38 ", myGroup), /*#__PURE__*/React.createElement("button", {
+    onClick: leaveGroup,
+    style: {
+      marginLeft: "auto",
+      background: "none",
+      border: "none",
+      color: WC.mute,
+      fontSize: 11,
+      cursor: "pointer",
+      fontFamily: "inherit",
+      textDecoration: "underline",
+      textUnderlineOffset: 2
+    }
+  }, "\uB098\uAC00\uAE30")) : /*#__PURE__*/React.createElement("button", {
+    onClick: () => {
+      setGrpOpen(!grpOpen);
+      setGrpMsg(null);
+    },
+    style: {
+      background: "rgba(255,158,109,0.1)",
+      border: "1px solid rgba(255,158,109,0.4)",
+      color: "#FF9E6D",
+      fontSize: 12,
+      fontWeight: 700,
+      borderRadius: 99,
+      padding: "5px 13px",
+      cursor: "pointer",
+      fontFamily: "inherit"
+    }
+  }, "\uD83C\uDF38 \uADF8\uB8F9 \uCC3E\uAE30 \xB7 \uB9CC\uB4E4\uAE30")), grpOpen && !myGroup && /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: "rgba(255,255,255,0.04)",
+      border: "1px solid rgba(255,255,255,0.1)",
+      borderRadius: 14,
+      padding: "13px 13px",
+      marginBottom: 12
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#FF9E6D",
+      fontSize: 12.5,
+      fontWeight: 800,
+      marginBottom: 7
+    }
+  }, "\uD83D\uDD0D \uADF8\uB8F9 \uCC3E\uC544 \uAC00\uC785\uD558\uAE30"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: 6,
+      marginBottom: 8
+    }
+  }, /*#__PURE__*/React.createElement("input", {
+    value: grpQ,
+    onChange: e => setGrpQ(e.target.value),
+    onKeyDown: e => e.key === "Enter" && searchGroups(),
+    placeholder: "\uADF8\uB8F9 \uC774\uB984\uC73C\uB85C \uAC80\uC0C9",
+    style: {
+      flex: 1,
+      background: "rgba(0,0,0,0.25)",
+      border: "1px solid rgba(255,255,255,0.16)",
+      borderRadius: 9,
+      padding: "9px 11px",
+      color: "#F3EEE3",
+      fontSize: 12.5,
+      fontFamily: "inherit"
+    }
+  }), /*#__PURE__*/React.createElement("button", {
+    disabled: grpBusy || !grpQ.trim(),
+    onClick: searchGroups,
+    style: {
+      background: "rgba(255,158,109,0.15)",
+      border: "1px solid rgba(255,158,109,0.45)",
+      color: "#FF9E6D",
+      fontSize: 12,
+      fontWeight: 700,
+      borderRadius: 9,
+      padding: "0 14px",
+      cursor: "pointer",
+      fontFamily: "inherit"
+    }
+  }, grpBusy ? "…" : "검색")), grpResults && grpResults.map(g => /*#__PURE__*/React.createElement("div", {
+    key: g.name,
+    style: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+      gap: 8,
+      background: "rgba(0,0,0,0.2)",
+      borderRadius: 10,
+      padding: "9px 11px",
+      marginBottom: 6
+    }
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#F3EEE3",
+      fontSize: 13,
+      fontWeight: 700
+    }
+  }, "\uD83C\uDF38 ", g.name), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: WC.mute,
+      fontSize: 10.5,
+      marginTop: 2
+    }
+  }, g.boss ? `방장 ${g.boss}` : "", g.size ? ` · ${g.size}명` : "", g.intro ? ` · ${g.intro}` : "")), /*#__PURE__*/React.createElement("button", {
+    onClick: () => joinGroup(g.name),
+    style: {
+      background: "rgba(159,225,203,0.15)",
+      border: "1px solid rgba(159,225,203,0.4)",
+      color: "#9FE1CB",
+      fontSize: 11.5,
+      fontWeight: 700,
+      borderRadius: 9,
+      padding: "6px 12px",
+      cursor: "pointer",
+      fontFamily: "inherit",
+      whiteSpace: "nowrap"
+    }
+  }, "\uAC00\uC785"))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      borderTop: "1px solid rgba(255,255,255,0.08)",
+      margin: "10px 0"
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#FF9E6D",
+      fontSize: 12.5,
+      fontWeight: 800,
+      marginBottom: 7
+    }
+  }, "\u270B \uC0C8 \uADF8\uB8F9 \uB9CC\uB4E4\uAE30 \uC694\uCCAD (\uBC29\uC7A5)"), /*#__PURE__*/React.createElement("input", {
+    value: grpReqName,
+    onChange: e => setGrpReqName(e.target.value),
+    placeholder: "\uADF8\uB8F9 \uC774\uB984 (\uC608: \uB9C8\uB354\uC0C8\uC2F9\uBC18)",
+    maxLength: 20,
+    style: {
+      width: "100%",
+      boxSizing: "border-box",
+      background: "rgba(0,0,0,0.25)",
+      border: "1px solid rgba(255,255,255,0.16)",
+      borderRadius: 9,
+      padding: "9px 11px",
+      color: "#F3EEE3",
+      fontSize: 12.5,
+      fontFamily: "inherit",
+      marginBottom: 6
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: 6,
+      marginBottom: 6
+    }
+  }, /*#__PURE__*/React.createElement("input", {
+    value: grpReqSize,
+    onChange: e => setGrpReqSize(e.target.value.replace(/[^0-9]/g, "").slice(0, 3)),
+    inputMode: "numeric",
+    placeholder: "\uC778\uC6D0 (\uC608: 8)",
+    style: {
+      flex: 1,
+      background: "rgba(0,0,0,0.25)",
+      border: "1px solid rgba(255,255,255,0.16)",
+      borderRadius: 9,
+      padding: "9px 11px",
+      color: "#F3EEE3",
+      fontSize: 12.5,
+      fontFamily: "inherit"
+    }
+  }), /*#__PURE__*/React.createElement("input", {
+    value: grpReqIntro,
+    onChange: e => setGrpReqIntro(e.target.value),
+    placeholder: "\uD55C \uC904 \uC18C\uAC1C (\uC120\uD0DD)",
+    maxLength: 30,
+    style: {
+      flex: 2,
+      background: "rgba(0,0,0,0.25)",
+      border: "1px solid rgba(255,255,255,0.16)",
+      borderRadius: 9,
+      padding: "9px 11px",
+      color: "#F3EEE3",
+      fontSize: 12.5,
+      fontFamily: "inherit"
+    }
+  })), /*#__PURE__*/React.createElement("button", {
+    disabled: grpBusy || !grpReqName.trim(),
+    onClick: requestGroup,
+    style: {
+      width: "100%",
+      background: grpReqName.trim() ? "linear-gradient(135deg,#FF9E6D,#F2C16B)" : "rgba(255,255,255,0.08)",
+      color: grpReqName.trim() ? "#3A2410" : WC.mute,
+      border: "none",
+      borderRadius: 10,
+      padding: "10px 0",
+      fontSize: 12.5,
+      fontWeight: 800,
+      cursor: "pointer",
+      fontFamily: "inherit"
+    }
+  }, grpBusy ? "보내는 중…" : "만들기 요청 보내기"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: WC.mute,
+      fontSize: 10.5,
+      lineHeight: 1.5,
+      marginTop: 6
+    }
+  }, "\uC6B4\uC601\uC790\uAC00 \uD655\uC778\uD574 \uC5F4\uC5B4\uC8FC\uBA74, \uD300\uC6D0\uB4E4\uC774 \uADF8\uB8F9 \uC774\uB984\uC73C\uB85C \uAC80\uC0C9\uD574 \uAC00\uC785\uD574\uC694."), grpMsg && /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: 8,
+      color: grpMsg.ok ? "#9FE1CB" : "#FF9E9E",
+      fontSize: 11.5,
+      lineHeight: 1.55
+    }
+  }, grpMsg.t)), plazaView && plazaView.celebs.length > 0 && /*#__PURE__*/React.createElement("div", {
     style: {
       background: "linear-gradient(135deg, rgba(242,193,107,0.13), rgba(255,158,109,0.09))",
       border: "1px solid rgba(242,193,107,0.4)",
@@ -23312,7 +23879,21 @@ function WorldPage({
     style: WS.setHint
   }, "\uBCF4\uC11D \uB2E8\uC5B4 \uC18C\uB9AC\uB294 \uBCF4\uC11D \uBAA9\uB85D\uC758 \uD83D\uDD0A \uBC84\uD2BC\uC5D0\uC11C \uB044\uACE0 \uCF24 \uC218 \uC788\uC5B4\uC694."), /*#__PURE__*/React.createElement("div", {
     style: WS.setDivider
-  }), /*#__PURE__*/React.createElement("div", {
+  }), wkids.length >= 2 && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    style: WS.setDesc
+  }, "\uC9C0\uB3C4 \uBC29\uC2DD: \uC9C0\uAE08\uC740 ", /*#__PURE__*/React.createElement("b", {
+    style: {
+      color: "#F2C16B"
+    }
+  }, perKid ? "아이별로 각자 지도" : "다같이 한 지도"), "\uC608\uC694."), /*#__PURE__*/React.createElement("button", {
+    style: WS.setBtn,
+    onClick: () => {
+      chooseMode(perKid ? "together" : "perkid");
+      setShowSet(false);
+    }
+  }, perKid ? "🌍 다같이 한 지도로 바꾸기" : "👧👦 아이별 지도로 바꾸기"), /*#__PURE__*/React.createElement("div", {
+    style: WS.setDivider
+  })), /*#__PURE__*/React.createElement("div", {
     style: WS.setDesc
   }, "\uBC31\uC5C5\xB7\uBCF5\uC6D0\uC740 \uD648 \uD654\uBA74\uC758 \u2699 \uC124\uC815\uC5D0\uC11C \u2014 \uC138\uACC4\uC9C0\uB3C4\uBFD0 \uC544\uB2C8\uB77C \uAE30\uC9C8 \uC9C4\uB2E8\xB7\uB9C8\uC74C \uC11C\uB78D\uAE4C\uC9C0 \uC571 \uC804\uCCB4\uB97C \uD55C \uBC88\uC5D0 \uB2F4\uC544\uC694."), /*#__PURE__*/React.createElement("button", {
     style: {
