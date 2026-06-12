@@ -20917,6 +20917,7 @@ function WorldPage({
   const [plazaLoading, setPlazaLoading] = useState(false);
   const [shareOff, setShareOff] = useState(false); // 🔒 나만 보기 (true면 시트에 안 보냄)
   const [muted, setMuted] = useState(false);
+  const [showGuide, setShowGuide] = useState(false); // 📖 사용법 다시 보기
   const [demo, setDemo] = useState(false);
   const [aiText, setAiText] = useState(null);
   const [kidOpen, setKidOpen] = useState(false); // 아이와 나누기 펼침
@@ -23876,12 +23877,38 @@ function WorldPage({
     style: WS.x,
     onClick: () => setShowSet(false)
   }, "\u2715")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+      marginBottom: 4
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#F3EEE3",
+      fontSize: 13.5,
+      fontWeight: 700
+    }
+  }, "\uD83D\uDD0A \uBCF4\uC11D \uB2E8\uC5B4 \uC18C\uB9AC"), /*#__PURE__*/React.createElement("button", {
+    onClick: () => setMuted(m => !m),
+    style: {
+      background: muted ? "rgba(255,255,255,0.08)" : "rgba(159,225,203,0.16)",
+      border: muted ? "1px solid rgba(255,255,255,0.18)" : "1px solid rgba(159,225,203,0.5)",
+      color: muted ? WC.mute : "#9FE1CB",
+      fontSize: 12,
+      fontWeight: 700,
+      borderRadius: 99,
+      padding: "5px 14px",
+      cursor: "pointer",
+      fontFamily: "inherit"
+    }
+  }, muted ? "꺼짐" : "켜짐")), /*#__PURE__*/React.createElement("div", {
     style: WS.setHint
-  }, "\uBCF4\uC11D \uB2E8\uC5B4 \uC18C\uB9AC\uB294 \uBCF4\uC11D \uBAA9\uB85D\uC758 \uD83D\uDD0A \uBC84\uD2BC\uC5D0\uC11C \uB044\uACE0 \uCF24 \uC218 \uC788\uC5B4\uC694."), /*#__PURE__*/React.createElement("div", {
+  }, "\uBCF4\uC11D\uC744 \uB204\uB974\uBA74 \uADF8 \uB098\uB77C \uB9D0\uB85C \uB2E8\uC5B4\uB97C \uC77D\uC5B4\uC918\uC694."), /*#__PURE__*/React.createElement("div", {
     style: WS.setDivider
   }), wkids.length >= 2 && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     style: WS.setDesc
-  }, "\uC9C0\uB3C4 \uBC29\uC2DD: \uC9C0\uAE08\uC740 ", /*#__PURE__*/React.createElement("b", {
+  }, "\uD83D\uDDFA\uFE0F \uC9C0\uB3C4 \uBC29\uC2DD: \uC9C0\uAE08\uC740 ", /*#__PURE__*/React.createElement("b", {
     style: {
       color: "#F2C16B"
     }
@@ -23894,14 +23921,137 @@ function WorldPage({
   }, perKid ? "🌍 다같이 한 지도로 바꾸기" : "👧👦 아이별 지도로 바꾸기"), /*#__PURE__*/React.createElement("div", {
     style: WS.setDivider
   })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: 8,
+      marginBottom: 4
+    }
+  }, [["💡 밝힌 빛", lights.length], ["💎 보석", gems.length], ["🗓️ 함께한 날", streakInfo.total]].map(([l, n]) => /*#__PURE__*/React.createElement("div", {
+    key: l,
+    style: {
+      flex: 1,
+      background: "rgba(255,255,255,0.04)",
+      border: "1px solid rgba(255,255,255,0.09)",
+      borderRadius: 11,
+      padding: "9px 4px",
+      textAlign: "center"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: WC.mute,
+      fontSize: 10.5
+    }
+  }, l), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#F2C16B",
+      fontSize: 16,
+      fontWeight: 800,
+      marginTop: 2
+    }
+  }, n)))), /*#__PURE__*/React.createElement("div", {
+    style: WS.setDivider
+  }), myGroup ? /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+      marginBottom: 4
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#F3EEE3",
+      fontSize: 13,
+      fontWeight: 700
+    }
+  }, "\uD83C\uDF38 \uB0B4 \uADF8\uB8F9: ", /*#__PURE__*/React.createElement("b", {
+    style: {
+      color: "#FF9E6D"
+    }
+  }, myGroup)), /*#__PURE__*/React.createElement("button", {
+    onClick: leaveGroup,
+    style: {
+      background: "none",
+      border: "1px solid rgba(255,255,255,0.16)",
+      borderRadius: 9,
+      padding: "4px 11px",
+      color: WC.mute,
+      fontSize: 11.5,
+      cursor: "pointer",
+      fontFamily: "inherit"
+    }
+  }, "\uB098\uAC00\uAE30")) : /*#__PURE__*/React.createElement("div", {
     style: WS.setDesc
-  }, "\uBC31\uC5C5\xB7\uBCF5\uC6D0\uC740 \uD648 \uD654\uBA74\uC758 \u2699 \uC124\uC815\uC5D0\uC11C \u2014 \uC138\uACC4\uC9C0\uB3C4\uBFD0 \uC544\uB2C8\uB77C \uAE30\uC9C8 \uC9C4\uB2E8\xB7\uB9C8\uC74C \uC11C\uB78D\uAE4C\uC9C0 \uC571 \uC804\uCCB4\uB97C \uD55C \uBC88\uC5D0 \uB2F4\uC544\uC694."), /*#__PURE__*/React.createElement("button", {
+  }, "\uD83C\uDF38 \uADF8\uB8F9\uC740 \uD568\uAED8 \uAD11\uC7A5\uC5D0\uC11C \uCC3E\uAC70\uB098 \uB9CC\uB4E4 \uC218 \uC788\uC5B4\uC694."), /*#__PURE__*/React.createElement("div", {
+    style: WS.setDivider
+  }), /*#__PURE__*/React.createElement("button", {
+    style: WS.setBtn,
+    onClick: () => {
+      setShowSet(false);
+      setShowGuide(true);
+    }
+  }, "\uD83D\uDCD6 \uC0AC\uC6A9\uBC95 \uB2E4\uC2DC \uBCF4\uAE30"), /*#__PURE__*/React.createElement("div", {
+    style: WS.setDivider
+  }), /*#__PURE__*/React.createElement("div", {
+    style: WS.setDesc
+  }, "\u2601\uFE0F \uBC31\uC5C5\xB7\uBCF5\uC6D0\uC740 \uD648 \uD654\uBA74\uC758 \u2699 \uC124\uC815\uC5D0\uC11C \u2014 \uC138\uACC4\uC9C0\uB3C4\uBFD0 \uC544\uB2C8\uB77C \uAE30\uC9C8 \uC9C4\uB2E8\xB7\uB9C8\uC74C \uC11C\uB78D\uAE4C\uC9C0 \uC571 \uC804\uCCB4\uB97C \uD55C \uBC88\uC5D0 \uB2F4\uC544\uC694."), /*#__PURE__*/React.createElement("button", {
     style: {
       ...WS.setBtn,
       ...WS.dangerBtn
     },
-    onClick: reset
-  }, "\uCC98\uC74C\uBD80\uD130 (\uBAA8\uB450 \uC9C0\uC6B0\uAE30)"))), popupId && (() => {
+    onClick: () => {
+      if (!window.confirm("지우기 전에 — 혹시 남기고 싶은 기록이 있다면\n홈 화면 ⚙ 설정에서 먼저 백업해 주세요.\n\n백업 없이 지우면 되돌릴 수 없어요.\n계속할까요?")) return;
+      reset();
+    }
+  }, "\uCC98\uC74C\uBD80\uD130 (\uBAA8\uB450 \uC9C0\uC6B0\uAE30)"))), showGuide && /*#__PURE__*/React.createElement("div", {
+    style: WS.overlay,
+    onClick: () => setShowGuide(false)
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      ...WS.sheet,
+      maxWidth: 380
+    },
+    onClick: e => e.stopPropagation()
+  }, /*#__PURE__*/React.createElement("div", {
+    style: WS.sheetHead
+  }, /*#__PURE__*/React.createElement("div", {
+    style: WS.sheetTitle
+  }, "\uD83D\uDCD6 \uC774\uB807\uAC8C \uC368\uC694"), /*#__PURE__*/React.createElement("button", {
+    style: WS.x,
+    onClick: () => setShowGuide(false)
+  }, "\u2715")), [["1️⃣", "나라를 톡 골라요", "지도를 움직이고 키워서 마음에 드는 나라를 골라요. 아래 '대륙·나라'에서 찾아도 돼요."], ["2️⃣", "아이의 좋은 점을 한 줄 적어요", "오늘 아이에게서 발견한 좋은 점을 짧게 적고 '이 땅 밝히기'를 눌러요. 하루에 새 나라 하나씩!"], ["3️⃣", "불이 켜지고, 보석이 모여요", "기록이 쌓이면 그 나라의 말로 된 보석 단어가 모여요. 보석을 누르면 소리로 읽어줘요."], ["4️⃣", "달력과 곳간에서 돌아봐요", "달력에선 날짜별로, 곳간에선 모아서 — 그동안 발견한 좋은 점들을 언제든 다시 봐요."], ["5️⃣", "함께 광장에서 나눠요", "다른 엄마들의 발견을 보며 서로 응원해요. 그룹을 만들어 우리끼리 모일 수도 있어요."]].map(([n, t, d]) => /*#__PURE__*/React.createElement("div", {
+    key: n,
+    style: {
+      display: "flex",
+      gap: 10,
+      marginBottom: 13
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 18,
+      lineHeight: 1.2
+    }
+  }, n), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#F3EEE3",
+      fontSize: 13.5,
+      fontWeight: 800,
+      marginBottom: 3
+    }
+  }, t), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: WC.mute,
+      fontSize: 12,
+      lineHeight: 1.6
+    }
+  }, d)))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#F2C16B",
+      fontSize: 11.5,
+      lineHeight: 1.6,
+      textAlign: "center",
+      marginTop: 4
+    }
+  }, "\uB098\uB77C\uB97C \uBAA8\uC73C\uB294 \uAC8C \uC544\uB2C8\uC5D0\uC694.", /*#__PURE__*/React.createElement("br", null), "\uC544\uC774\uC758 \uC88B\uC740 \uC810\uC744 \uBC1C\uACAC\uD558\uB294 \uB208\uC744 \uAE30\uB974\uB294 \uAC70\uC608\uC694. \uD83C\uDF31"))), popupId && (() => {
     const c = BY_ID[popupId];
     const lr = litMap[c.i];
     const cg = gemsByCid[c.i] || [];
