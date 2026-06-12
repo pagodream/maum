@@ -2860,14 +2860,34 @@ function CoachPage({
     style: CS.chooseTitle
   }, "\uD83C\uDF3F \uCABD\uCABD\uC774 \uCF54\uCE6D"), /*#__PURE__*/React.createElement("div", {
     style: CS.chooseDesc
-  }, "\uD55C \uAC78\uC74C\uC529 \uB418\uBB3B\uC73C\uBA70 \uC2A4\uC2A4\uB85C \uB2F5\uC5D0 \uB2FF\uB294 \uAE38.", /*#__PURE__*/React.createElement("br", null), "\uC5B4\uB514\uC11C\uB4E0 \uBC14\uB85C \uC2DC\uC791\uB3FC\uC694.")), /*#__PURE__*/React.createElement("button", {
+  }, "\uD55C \uAC78\uC74C\uC529 \uB418\uBB3B\uC73C\uBA70 \uC2A4\uC2A4\uB85C \uB2F5\uC5D0 \uB2FF\uB294 \uAE38.", /*#__PURE__*/React.createElement("br", null), "\uC5B4\uB514\uC11C\uB4E0 \uBC14\uB85C \uC2DC\uC791\uB3FC\uC694.")), IN_CLAUDE ? /*#__PURE__*/React.createElement("button", {
     style: CS.chooseCard,
     onClick: aiEntry
   }, /*#__PURE__*/React.createElement("div", {
     style: CS.chooseTitle
   }, "\u2728 AI \uCABD\uCABD\uC774\uC640 \uB300\uD654"), /*#__PURE__*/React.createElement("div", {
     style: CS.chooseDesc
-  }, IN_CLAUDE ? /*#__PURE__*/React.createElement(React.Fragment, null, "\uB0B4 \uC774\uC57C\uAE30\uB97C \uC54C\uC544\uB4E3\uACE0 \uB418\uBB3B\uB294 \uAE4A\uC740 \uB300\uD654\uC608\uC694.") : /*#__PURE__*/React.createElement(React.Fragment, null, "\uD074\uB85C\uB4DC\uC5D0\uC11C \uC5F4\uB824\uC694 \u2014 \uD074\uB85C\uB4DC \uACC4\uC815", /*#__PURE__*/React.createElement("br", null), "\uB85C\uADF8\uC778\uC774 \uD544\uC694\uD574\uC694. (\uBB34\uB8CC \uACC4\uC815 \uAC00\uB2A5)"))), /*#__PURE__*/React.createElement("div", {
+  }, "\uB0B4 \uC774\uC57C\uAE30\uB97C \uC54C\uC544\uB4E3\uACE0 \uB418\uBB3B\uB294 \uAE4A\uC740 \uB300\uD654\uC608\uC694.")) : COACH_CHAT_URL ? /*#__PURE__*/React.createElement("a", {
+    href: COACH_CHAT_URL,
+    target: "_blank",
+    rel: "noopener noreferrer",
+    style: {
+      ...CS.chooseCard,
+      textDecoration: "none",
+      display: "block"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: CS.chooseTitle
+  }, "\u2728 AI \uCABD\uCABD\uC774\uC640 \uB300\uD654"), /*#__PURE__*/React.createElement("div", {
+    style: CS.chooseDesc
+  }, "\uD074\uB85C\uB4DC\uC5D0\uC11C \uC5F4\uB824\uC694 \u2014 \uD074\uB85C\uB4DC \uACC4\uC815", /*#__PURE__*/React.createElement("br", null), "\uB85C\uADF8\uC778\uC774 \uD544\uC694\uD574\uC694. (\uBB34\uB8CC \uACC4\uC815 \uAC00\uB2A5)")) : /*#__PURE__*/React.createElement("button", {
+    style: CS.chooseCard,
+    onClick: aiEntry
+  }, /*#__PURE__*/React.createElement("div", {
+    style: CS.chooseTitle
+  }, "\u2728 AI \uCABD\uCABD\uC774\uC640 \uB300\uD654"), /*#__PURE__*/React.createElement("div", {
+    style: CS.chooseDesc
+  }, "\uACE7 \uB9CC\uB098\uC694.")), /*#__PURE__*/React.createElement("div", {
     style: CS.foot
   }, IN_CLAUDE ? "어느 쪽이든 같은 마음으로 함께해요." : COACH_CHAT_URL ? "AI 대화는 새 창(클로드)에서 이어져요." : "AI 링크는 게시 후 연결돼요 — 지금은 쪽쪽이 코칭으로 시작해 보세요.")), stage === "schat" && /*#__PURE__*/React.createElement("div", {
     style: CS.chatWrap,
@@ -4690,7 +4710,7 @@ const sadanDesc = {
   sky: "약한 것을 불쌍히 여기는, 원리와 이상을 좇는 마음이에요"
 };
 const KEY = "cheji:children:v1";
-const SITE_URL = "https://pagodream.github.io/temperament/"; // 배포 주소
+const SITE_URL = "https://pagodream.github.io/maum/"; // 배포 주소
 
 // 받침 있는 이름엔 '이'를 붙여 조사가 자연스럽게: 다다→다다, 드림→드림이
 function withName(name) {

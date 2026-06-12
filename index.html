@@ -5,33 +5,49 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <script>
     // ───── 인앱 브라우저(카톡·인스타·페북·라인 등) 탈출 ─────
-    // 인앱에선 저장(localStorage)이 휘발되고 앱 설치가 안 되므로, 외부 브라우저로 유도.
+    // 인앱에선 저장(localStorage)이 휘발되고 앱 설치가 안 되므로, 외부 브라우저로 강제 이동.
     (function () {
       try {
         var ua = (navigator.userAgent || "").toLowerCase();
-        var inApp = /kakaotalk|instagram|fban|fbav|fb_iab|line\/|naver|daum|whale|everytimeapp|band|snapchat|twitter|trill|musical_ly|tiktok/.test(ua);
+        var isKakao = /kakaotalk/.test(ua);
+        var inApp = /kakaotalk|instagram|fban|fbav|fb_iab|line\/|naver|daum|whale|everytimeapp|band|snapchat|trill|musical_ly|tiktok/.test(ua);
         if (!inApp) return;
         var url = location.href;
         var isAndroid = /android/.test(ua);
-        if (isAndroid) {
-          // 안드로이드: 크롬으로 강제 이동 (intent)
-          var clean = url.replace(/^https?:\/\//, "");
-          location.href = "intent://" + clean + "#Intent;scheme=https;package=com.android.chrome;end";
-        } else {
-          // 아이폰 등: 자동 이동 불가 → 안내 화면 표시 (DOMContentLoaded 후)
-          document.addEventListener("DOMContentLoaded", function () {
-            var g = document.createElement("div");
-            g.style.cssText = "position:fixed;inset:0;z-index:9999;background:#0A1028;color:#F3EEE3;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:32px;font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;";
-            g.innerHTML =
-              '<div style="font-size:46px;margin-bottom:18px;">\uD83C\uDF10</div>' +
-              '<div style="font-size:18px;font-weight:800;margin-bottom:12px;line-height:1.5;">\uC9C0\uAE08\uC740 \uCE74\uD1A1 \uC548\uC5D0\uC11C \uC5F4\uB838\uC5B4\uC694</div>' +
-              '<div style="font-size:14px;color:#9AA3C7;line-height:1.7;margin-bottom:26px;">\uAE30\uB85D\uC774 \uC548\uC804\uD558\uAC8C \uC800\uC7A5\uB418\uACE0 \uC571 \uC124\uCE58\uB3C4 \uB418\uB824\uBA74<br><b style="color:#F2C16B;">Safari</b>\uB098 <b style="color:#F2C16B;">\uD06C\uB86C</b> \uAC19\uC740 \uBE0C\uB77C\uC6B0\uC800\uB85C \uC5F4\uC5B4\uC8FC\uC138\uC694.</div>' +
-              '<div style="background:rgba(242,193,107,0.12);border:1px solid rgba(242,193,107,0.4);border-radius:14px;padding:16px 20px;font-size:13.5px;line-height:1.8;max-width:300px;">' +
-              '\uC624\uB978\uCABD \uC704 <b style="font-size:17px;">\u22EF</b> \uB97C \uB204\uB974\uACE0<br><b style="color:#F2C16B;">\u2018\uB2E4\uB978 \uBE0C\uB77C\uC6B0\uC800\uB85C \uC5F4\uAE30\u2019</b> \uB97C \uC120\uD0DD\uD558\uC138\uC694.</div>' +
-              '<div style="margin-top:24px;"><button onclick="(function(){var t=document.createElement(\'textarea\');t.value=location.href;document.body.appendChild(t);t.select();try{document.execCommand(\'copy\');}catch(e){}document.body.removeChild(t);this.textContent=\'\u2713 \uC8FC\uC18C \uBCF5\uC0AC\uB428\';}).call(this)" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);color:#F3EEE3;border-radius:11px;padding:11px 20px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;">\uD83D\uDCCB \uC8FC\uC18C \uBCF5\uC0AC\uD558\uAE30</button></div>';
-            document.body.appendChild(g);
-          });
+
+        if (isKakao) {
+          // 카카오톡: 카톡 전용 명령으로 외부 브라우저 강제 오픈 (가장 확실)
+          location.href = "kakaotalk://web/openExternal?url=" + encodeURIComponent(url);
+          // 혹시 안 먹으면 안드로이드는 intent 폴백
+          if (isAndroid) {
+            setTimeout(function () {
+              var clean = url.replace(/^https?:\/\//, "");
+              location.href = "intent://" + clean + "#Intent;scheme=https;package=com.android.chrome;end";
+            }, 400);
+          }
+          return;
         }
+
+        if (isAndroid) {
+          // 그 외 안드로이드 인앱: 크롬으로 intent 이동
+          var clean2 = url.replace(/^https?:\/\//, "");
+          location.href = "intent://" + clean2 + "#Intent;scheme=https;package=com.android.chrome;end";
+          return;
+        }
+
+        // 아이폰 등(카톡 아님): 자동 이동 불가 → 안내 화면
+        document.addEventListener("DOMContentLoaded", function () {
+          var g = document.createElement("div");
+          g.style.cssText = "position:fixed;inset:0;z-index:9999;background:#0A1028;color:#F3EEE3;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:32px;font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;";
+          g.innerHTML =
+            '<div style="font-size:46px;margin-bottom:18px;">\uD83C\uDF10</div>' +
+            '<div style="font-size:18px;font-weight:800;margin-bottom:12px;line-height:1.5;">\uC9C0\uAE08\uC740 \uC571 \uC548\uC5D0\uC11C \uC5F4\uB838\uC5B4\uC694</div>' +
+            '<div style="font-size:14px;color:#9AA3C7;line-height:1.7;margin-bottom:26px;">\uAE30\uB85D\uC774 \uC548\uC804\uD558\uAC8C \uC800\uC7A5\uB418\uACE0 \uC571 \uC124\uCE58\uB3C4 \uB418\uB824\uBA74<br><b style="color:#F2C16B;">Safari</b>\uB098 <b style="color:#F2C16B;">\uD06C\uB86C</b> \uAC19\uC740 \uBE0C\uB77C\uC6B0\uC800\uB85C \uC5F4\uC5B4\uC8FC\uC138\uC694.</div>' +
+            '<div style="background:rgba(242,193,107,0.12);border:1px solid rgba(242,193,107,0.4);border-radius:14px;padding:16px 20px;font-size:13.5px;line-height:1.8;max-width:300px;">' +
+            '\uC624\uB978\uCABD \uC704 <b style="font-size:17px;">\u22EF</b> \uB97C \uB204\uB974\uACE0<br><b style="color:#F2C16B;">\u2018\uB2E4\uB978 \uBE0C\uB77C\uC6B0\uC800\uB85C \uC5F4\uAE30\u2019</b> \uB97C \uC120\uD0DD\uD558\uC138\uC694.</div>' +
+            '<div style="margin-top:24px;"><button onclick="(function(){var t=document.createElement(\'textarea\');t.value=location.href;document.body.appendChild(t);t.select();try{document.execCommand(\'copy\');}catch(e){}document.body.removeChild(t);this.textContent=\'\u2713 \uC8FC\uC18C \uBCF5\uC0AC\uB428\';}).call(this)" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);color:#F3EEE3;border-radius:11px;padding:11px 20px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;">\uD83D\uDCCB \uC8FC\uC18C \uBCF5\uC0AC\uD558\uAE30</button></div>';
+          document.body.appendChild(g);
+        });
       } catch (e) {}
     })();
   </script>
@@ -47,20 +63,20 @@
   <meta name="description" content="아이의 좋은 점을 발견하는 엄마의 자리 — 마더클럽 마음 곳간" />
 
   <!-- ───────── 카톡·SNS 공유 미리보기 (Open Graph) ─────────
-       ★ 아래 4곳의 https://pagodream.github.io/temperament 을 실제 깃허브 주소로 바꾸세요.
+       배포 주소: https://pagodream.github.io/maum/
          예: https://아이디.github.io/저장소/maum/
          (끝에 / 까지, og.png 와 같은 폴더 기준) -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="제로섬과 땅따먹기 · 마음 곳간" />
   <meta property="og:description" content="아이의 좋은 점을 발견하는 엄마의 자리 — 마더클럽" />
-  <meta property="og:image" content="https://pagodream.github.io/temperament/og.png" />
+  <meta property="og:image" content="https://pagodream.github.io/maum/og.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:url" content="https://pagodream.github.io/temperament/" />
+  <meta property="og:url" content="https://pagodream.github.io/maum/" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="제로섬과 땅따먹기 · 마음 곳간" />
   <meta name="twitter:description" content="아이의 좋은 점을 발견하는 엄마의 자리 — 마더클럽" />
-  <meta name="twitter:image" content="https://pagodream.github.io/temperament/og.png" />
+  <meta name="twitter:image" content="https://pagodream.github.io/maum/og.png" />
   <style>
     * { -webkit-tap-highlight-color: transparent; }
     html, body { margin: 0; padding: 0; background: #0A1028; }
