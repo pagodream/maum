@@ -2340,7 +2340,7 @@ const EMOJI_T = {
 };
 
 // ★ 게시된 클로드 아티팩트 링크 — 앱을 게시한 뒤 그 주소를 여기 붙여넣으면, 깃허브에서 'AI 대화'가 이 링크로 열려요
-const COACH_CHAT_URL = "https://claude.ai/public/artifacts/1fa851c2-3327-49b8-aa26-195244595524";
+const COACH_CHAT_URL = "https://claude.ai/public/artifacts/b396eed4-773f-4c86-bf6b-8b620daa9cb0";
 // 클로드 아티팩트 환경 감지 (클로드 안: AI 즉시 / 밖: 링크 연결 또는 정적 코칭)
 const IN_CLAUDE = typeof window !== "undefined" && !!(window.claude || window.storage);
 
@@ -5559,16 +5559,7 @@ function AddChild({
       flex: 1,
       marginBottom: 0
     }
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      color: "#6b74a0",
-      fontSize: 11.5,
-      lineHeight: 1.5,
-      margin: "8px auto 0",
-      maxWidth: 320,
-      textAlign: "left"
-    }
-  }, "\uAE30\uB85D\uC744 \uC548\uC804\uD558\uAC8C \uBCF4\uAD00\uD558\uACE0 \uB418\uC0B4\uB9B4 \uB54C \uC4F0\uB294 \uC815\uBCF4\uC608\uC694. (\uC120\uD0DD\uC774\uC9C0\uB9CC \uB123\uC5B4\uB450\uC2DC\uBA74 \uC88B\uC544\uC694)")), /*#__PURE__*/React.createElement("button", {
+  }))), /*#__PURE__*/React.createElement("button", {
     style: {
       ...TS.primary,
       opacity: name.trim() ? 1 : 0.5
@@ -24873,18 +24864,31 @@ const WS = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    justifyContent: "flex-start",
     gap: 6,
     padding: "2px 0",
     fontFamily: "inherit"
   },
   navIcon: {
-    fontSize: 18,
-    lineHeight: 1
+    fontSize: 21,
+    lineHeight: 1,
+    width: 46,
+    height: 46,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    background: "rgba(255,255,255,0.06)",
+    border: "1px solid rgba(255,255,255,0.09)",
+    borderRadius: 13,
+    boxSizing: "border-box"
   },
   navLabel: {
     color: WC.mute,
     fontSize: 10,
-    whiteSpace: "nowrap"
+    whiteSpace: "nowrap",
+    lineHeight: 1,
+    height: 10,
+    display: "block"
   },
   footRight: {
     display: "flex",
