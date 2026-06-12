@@ -1162,6 +1162,21 @@ function HomePage({
       try {
         await store.set("maum_backup_nick", nick);
       } catch (e) {}
+      // 안전장치: 시트의 기존 백업보다 지금 기록이 적으면 덮어쓰기 전에 확인
+      const prevCount = await cloudBackupCount(nick);
+      const nowSnap = await gatherBackup();
+      const nowCount = countRecords(nowSnap);
+      if (prevCount > nowCount) {
+        const proceed = window.confirm(`이 별명에는 이미 기록 ${prevCount}개가 저장돼 있어요.\n지금 폰에는 ${nowCount}개뿐이에요.\n\n그대로 저장하면 시트의 ${prevCount}개가 ${nowCount}개로 줄어들어요.\n\n혹시 새 기기라면 먼저 '되살리기'를 해주세요.\n\n정말 지금 상태로 덮어쓸까요?`);
+        if (!proceed) {
+          setBkBusy(false);
+          setBkMsg({
+            ok: false,
+            t: "저장을 멈췄어요. 먼저 '되살리기'를 해보세요."
+          });
+          return;
+        }
+      }
       const r = await cloudBackup(nick);
       setBkBusy(false);
       setBkMsg(r.ok ? {
@@ -2126,7 +2141,7 @@ const EMOJI_T = {
 };
 
 // ★ 게시된 클로드 아티팩트 링크 — 앱을 게시한 뒤 그 주소를 여기 붙여넣으면, 깃허브에서 'AI 대화'가 이 링크로 열려요
-const COACH_CHAT_URL = "https://claude.ai/public/artifacts/1606187d-a6e5-4a81-84ae-f273f48e305a";
+const COACH_CHAT_URL = "https://claude.ai/public/artifacts/1fa851c2-3327-49b8-aa26-195244595524";
 // 클로드 아티팩트 환경 감지 (클로드 안: AI 즉시 / 밖: 링크 연결 또는 정적 코칭)
 const IN_CLAUDE = typeof window !== "undefined" && !!(window.claude || window.storage);
 
@@ -4669,6 +4684,46 @@ async function cloudBackup(nick) {
       ok: false,
       reason: "network"
     };
+  }
+}
+// 백업 데이터 안의 '기록 개수' (빛+보석+마음의보석+서랍) — 안전장치용 비교 기준
+function countRecords(snap) {
+  try {
+    const data = snap && snap.data ? snap.data : snap;
+    if (!data) return 0;
+    let n = 0;
+    if (data["maum_world5"]) {
+      const w = JSON.parse(data["maum_world5"]);
+      n += (w.lights || []).length + (w.gems || []).length + (w.sos || []).length;
+    }
+    if (data["maum_drawer"]) {
+      n += (JSON.parse(data["maum_drawer"]) || []).length;
+    }
+    return n;
+  } catch (e) {
+    return 0;
+  }
+}
+// 시트에 저장된 기존 백업의 기록 개수 조회 (없으면 -1)
+async function cloudBackupCount(nick) {
+  if (!nick) return -1;
+  try {
+    const res = await fetch(BACKUP_SHEET, {
+      method: "POST",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify({
+        source: "maum_backup",
+        action: "load",
+        nick
+      })
+    });
+    const j = await res.json().catch(() => null);
+    if (j && j.ok && j.payload) return countRecords(JSON.parse(j.payload));
+    return -1;
+  } catch (e) {
+    return -1;
   }
 }
 async function cloudRestore(nick) {
