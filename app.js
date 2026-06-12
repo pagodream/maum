@@ -110,14 +110,26 @@ function HomePage({
   const [bubble, setBubble] = useState(null); // {who, text} 클릭된 새 말풍선
   const [showZero, setShowZero] = useState(false); // 제로섬 더 보기 패널
   const [showBackup, setShowBackup] = useState(false); // 💾 백업/복원 시트
-  const [bkNick, setBkNick] = useState(""); // 백업 별명
+  const [bkNick, setBkNick] = useState(""); // 백업 코드 (자동 생성, 폰에 저장)
+  const [bkLabel, setBkLabel] = useState(""); // 찾기용 별명 (대표가 구제 시 단서)
+  const [bkNewCode, setBkNewCode] = useState(""); // 새 폰에서 코드 직접 입력
   const [bkMsg, setBkMsg] = useState(null); // 백업 상태 메시지
   const [bkBusy, setBkBusy] = useState(false);
   useEffect(() => {
     (async () => {
       try {
         const r = await store.get("maum_backup_nick");
-        if (r && r.value) setBkNick(r.value);
+        if (r && r.value) {
+          setBkNick(r.value);
+        } else {
+          const code = genBackupCode();
+          setBkNick(code);
+          try {
+            await store.set("maum_backup_nick", code);
+          } catch (e) {}
+        } // 처음이면 자동 생성·저장
+        const l = await store.get("maum_backup_label");
+        if (l && l.value) setBkLabel(l.value);
       } catch (e) {}
     })();
   }, []);
@@ -1158,12 +1170,75 @@ function HomePage({
       color: "#F2C16B",
       fontSize: 13,
       fontWeight: 800,
-      marginBottom: 8
+      marginBottom: 6
     }
-  }, "\u2601\uFE0F \uBCC4\uBA85\uC73C\uB85C \uC800\uC7A5 (\uCD94\uCC9C)"), /*#__PURE__*/React.createElement("input", {
-    value: bkNick,
-    onChange: e => setBkNick(e.target.value),
-    placeholder: "\uB098\uB9CC\uC758 \uBCC4\uBA85 (\uC608: \uBBFC\uC900\uB9D82018)",
+  }, "\u2601\uFE0F \uD074\uB77C\uC6B0\uB4DC\uC5D0 \uC800\uC7A5 (\uCD94\uCC9C)"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#9AA3C7",
+      fontSize: 11.5,
+      lineHeight: 1.6,
+      marginBottom: 10
+    }
+  }, "\uC774 \uAE30\uAE30\uC5D0\uC120 \uC790\uB3D9\uC73C\uB85C \uC800\uC7A5\uB3FC\uC694. \uAE30\uAE30\uB97C \uBC14\uAFC0 \uB54C\uB97C \uC704\uD574, \uC544\uB798 ", /*#__PURE__*/React.createElement("b", {
+    style: {
+      color: "#F2C16B"
+    }
+  }, "\uB0B4 \uBC31\uC5C5 \uCF54\uB4DC"), "\uB97C \uBCF5\uC0AC\uD574 \uC548\uC804\uD55C \uACF3(\uCE74\uD1A1 \uB098\uC5D0\uAC8C \uBCF4\uB0B4\uAE30 \uB4F1)\uC5D0 \uBCF4\uAD00\uD558\uC138\uC694."), /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: "rgba(0,0,0,0.25)",
+      border: "1px solid rgba(242,193,107,0.3)",
+      borderRadius: 10,
+      padding: "10px 12px",
+      marginBottom: 10,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+      gap: 8
+    }
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#9AA3C7",
+      fontSize: 10.5,
+      marginBottom: 2
+    }
+  }, "\uB0B4 \uBC31\uC5C5 \uCF54\uB4DC"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#F3EEE3",
+      fontSize: 14,
+      fontWeight: 700,
+      letterSpacing: 0.3
+    }
+  }, bkNick || "…")), /*#__PURE__*/React.createElement("button", {
+    onClick: async () => {
+      try {
+        await navigator.clipboard.writeText(bkNick);
+        setBkMsg({
+          ok: true,
+          t: "백업 코드를 복사했어요. 안전한 곳에 보관하세요."
+        });
+      } catch (e) {
+        setBkMsg({
+          ok: true,
+          t: bkNick
+        });
+      }
+    },
+    style: {
+      background: "rgba(242,193,107,0.15)",
+      border: "1px solid rgba(242,193,107,0.4)",
+      color: "#F2C16B",
+      fontSize: 12,
+      fontWeight: 700,
+      borderRadius: 9,
+      padding: "8px 12px",
+      cursor: "pointer",
+      fontFamily: "inherit",
+      whiteSpace: "nowrap"
+    }
+  }, "\uBCF5\uC0AC")), /*#__PURE__*/React.createElement("input", {
+    value: bkLabel,
+    onChange: e => setBkLabel(e.target.value),
+    placeholder: "\uCC3E\uAE30\uC6A9 \uBCC4\uBA85 (\uC608: \uAD11\uC7A5 \uB2C9\uB124\uC784 \uB610\uB294 \uC774\uB984)",
     maxLength: 20,
     style: {
       width: "100%",
@@ -1173,85 +1248,134 @@ function HomePage({
       borderRadius: 10,
       padding: "10px 12px",
       color: "#F3EEE3",
-      fontSize: 13.5,
+      fontSize: 13,
       fontFamily: "inherit",
-      marginBottom: 10
+      marginBottom: 6
     }
   }), /*#__PURE__*/React.createElement("div", {
     style: {
-      display: "flex",
-      gap: 8
+      color: "#9AA3C7",
+      fontSize: 10.5,
+      lineHeight: 1.5,
+      marginBottom: 10
     }
-  }, /*#__PURE__*/React.createElement("button", {
-    disabled: bkBusy || !bkNick.trim(),
+  }, "\uCF54\uB4DC\uB97C \uC783\uC5B4\uBC84\uB824 \uC6B4\uC601\uC790\uC5D0\uAC8C \uB3C4\uC6C0\uC744 \uC694\uCCAD\uD560 \uB54C \uBCF8\uC778\uC744 \uCC3E\uB294 \uB2E8\uC11C\uC608\uC694."), /*#__PURE__*/React.createElement("button", {
+    disabled: bkBusy || !bkNick,
     onClick: async () => {
       setBkBusy(true);
       setBkMsg(null);
-      const nick = bkNick.trim();
+      const nick = bkNick;
+      const label = bkLabel.trim();
       try {
         await store.set("maum_backup_nick", nick);
+        await store.set("maum_backup_label", label);
       } catch (e) {}
-      // 안전장치: 시트의 기존 백업보다 지금 기록이 적으면 덮어쓰기 전에 확인
       const prevCount = await cloudBackupCount(nick);
       const nowSnap = await gatherBackup();
       const nowCount = countRecords(nowSnap);
       if (prevCount > nowCount) {
-        const proceed = window.confirm(`이 별명에는 이미 기록 ${prevCount}개가 저장돼 있어요.\n지금 폰에는 ${nowCount}개뿐이에요.\n\n그대로 저장하면 시트의 ${prevCount}개가 ${nowCount}개로 줄어들어요.\n\n혹시 새 기기라면 먼저 '되살리기'를 해주세요.\n\n정말 지금 상태로 덮어쓸까요?`);
+        const proceed = window.confirm(`이 코드에는 이미 기록 ${prevCount}개가 저장돼 있어요.\n지금 기기에는 ${nowCount}개뿐이에요.\n\n그대로 저장하면 ${prevCount}개가 ${nowCount}개로 줄어들어요.\n\n혹시 새 기기라면 먼저 아래 '다른 기기에서 가져오기'를 해주세요.\n\n정말 지금 상태로 저장할까요?`);
         if (!proceed) {
           setBkBusy(false);
           setBkMsg({
             ok: false,
-            t: "저장을 멈췄어요. 먼저 '되살리기'를 해보세요."
+            t: "저장을 멈췄어요. 새 기기라면 '가져오기'를 먼저 해보세요."
           });
           return;
         }
       }
-      const r = await cloudBackup(nick);
+      const r = await cloudBackup(nick, label);
       setBkBusy(false);
       setBkMsg(r.ok ? {
         ok: true,
-        t: "☁️ 저장했어요. 이 별명으로 언제든 되살릴 수 있어요."
+        t: "☁️ 저장했어요. 이 기기에선 다음에도 자동으로 이어져요."
       } : {
         ok: false,
         t: "저장에 실패했어요. 잠시 후 다시 시도해 주세요."
       });
     },
     style: {
-      flex: 1,
-      background: bkNick.trim() ? "linear-gradient(135deg,#F2C16B,#FF9E6D)" : "rgba(255,255,255,0.1)",
-      color: bkNick.trim() ? "#3A2410" : "#9AA3C7",
+      width: "100%",
+      background: bkNick ? "linear-gradient(135deg,#F2C16B,#FF9E6D)" : "rgba(255,255,255,0.1)",
+      color: bkNick ? "#3A2410" : "#9AA3C7",
       border: "none",
       borderRadius: 10,
-      padding: "11px 0",
-      fontSize: 13,
+      padding: "12px 0",
+      fontSize: 13.5,
       fontWeight: 800,
-      cursor: bkNick.trim() ? "pointer" : "default",
+      cursor: bkNick ? "pointer" : "default",
       fontFamily: "inherit"
     }
-  }, bkBusy ? "…" : "지금 저장"), /*#__PURE__*/React.createElement("button", {
-    disabled: bkBusy || !bkNick.trim(),
+  }, bkBusy ? "저장 중…" : "지금 저장")), /*#__PURE__*/React.createElement("details", {
+    style: {
+      background: "rgba(255,255,255,0.04)",
+      border: "1px solid rgba(255,255,255,0.1)",
+      borderRadius: 14,
+      padding: "12px 14px",
+      marginBottom: 12
+    }
+  }, /*#__PURE__*/React.createElement("summary", {
+    style: {
+      color: "#9FE1CB",
+      fontSize: 13,
+      fontWeight: 800,
+      cursor: "pointer"
+    }
+  }, "\uD83D\uDCE5 \uB2E4\uB978 \uAE30\uAE30\uC5D0\uC11C \uAC00\uC838\uC624\uAE30"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#9AA3C7",
+      fontSize: 11.5,
+      lineHeight: 1.6,
+      margin: "10px 0"
+    }
+  }, "\uC0C8 \uAE30\uAE30\uC778\uAC00\uC694? \uC608\uC804 \uAE30\uAE30\uC5D0\uC11C \uBCF4\uAD00\uD574\uB454 ", /*#__PURE__*/React.createElement("b", {
+    style: {
+      color: "#9FE1CB"
+    }
+  }, "\uBC31\uC5C5 \uCF54\uB4DC"), "\uB97C \uB123\uACE0 \uAC00\uC838\uC624\uC138\uC694."), /*#__PURE__*/React.createElement("input", {
+    value: bkNewCode,
+    onChange: e => setBkNewCode(e.target.value),
+    placeholder: "\uBC31\uC5C5 \uCF54\uB4DC (\uC608: maum-\uD3EC\uADFC\uD55C\uCC38\uC0C8-482)",
+    style: {
+      width: "100%",
+      boxSizing: "border-box",
+      background: "rgba(0,0,0,0.25)",
+      border: "1px solid rgba(255,255,255,0.16)",
+      borderRadius: 10,
+      padding: "10px 12px",
+      color: "#F3EEE3",
+      fontSize: 13,
+      fontFamily: "inherit",
+      marginBottom: 8
+    }
+  }), /*#__PURE__*/React.createElement("button", {
+    disabled: bkBusy || !bkNewCode.trim(),
     onClick: async () => {
-      if (!window.confirm("이 별명의 백업으로 되살릴까요?\n지금 기기의 기록은 백업 내용으로 덮어써져요.")) return;
+      if (!window.confirm("이 코드의 백업을 가져올까요?\n지금 기기의 기록은 백업 내용으로 덮어써져요.")) return;
       setBkBusy(true);
       setBkMsg(null);
-      const r = await cloudRestore(bkNick.trim());
+      const code = bkNewCode.trim();
+      const r = await cloudRestore(code);
       setBkBusy(false);
       if (r.ok) {
+        try {
+          await store.set("maum_backup_nick", code);
+        } catch (e) {}
         setBkMsg({
           ok: true,
-          t: "되살렸어요! 잠시 후 새로고침돼요."
+          t: "가져왔어요! 잠시 후 새로고침돼요."
         });
         setTimeout(() => window.location.reload(), 1400);
       } else setBkMsg({
         ok: false,
-        t: r.reason === "not-found" ? "그 별명으로 저장된 백업이 없어요." : "복원에 실패했어요. 다시 시도해 주세요."
+        t: r.reason === "not-found" ? "그 코드로 저장된 백업이 없어요. 코드를 다시 확인해 주세요." : "가져오기에 실패했어요. 다시 시도해 주세요."
       });
     },
     style: {
-      flex: 1,
-      background: "rgba(255,255,255,0.07)",
-      color: "#F3EEE3",
-      border: "1px solid rgba(255,255,255,0.16)",
+      width: "100%",
+      background: "rgba(159,225,203,0.15)",
+      color: "#9FE1CB",
+      border: "1px solid rgba(159,225,203,0.4)",
       borderRadius: 10,
       padding: "11px 0",
       fontSize: 13,
@@ -1259,7 +1383,7 @@ function HomePage({
       cursor: "pointer",
       fontFamily: "inherit"
     }
-  }, "\uB418\uC0B4\uB9AC\uAE30"))), /*#__PURE__*/React.createElement("div", {
+  }, bkBusy ? "가져오는 중…" : "이 코드로 가져오기")), /*#__PURE__*/React.createElement("div", {
     style: {
       background: "rgba(255,255,255,0.04)",
       border: "1px solid rgba(255,255,255,0.1)",
@@ -4743,6 +4867,15 @@ const store = {
 
 // ── 전체 앱 백업/복원 (모든 저장 키를 한 번에) ──
 const BACKUP_KEYS = ["maum_world5", "cheji:children:v1", "maum_drawer", "maum_temper", "maum_child", "maum_quote_seen"];
+// 기억하기 쉬운 백업 코드 자동 생성 (예: maum-포근한참새-482)
+const BK_WORDS_A = ["포근한", "다정한", "씩씩한", "반짝이는", "따뜻한", "용감한", "상냥한", "노래하는", "행복한", "슬기로운"];
+const BK_WORDS_B = ["참새", "고양이", "햇살", "구름", "별빛", "민들레", "토끼", "단풍", "물결", "나무"];
+function genBackupCode() {
+  const a = BK_WORDS_A[Math.floor(Math.random() * BK_WORDS_A.length)];
+  const b = BK_WORDS_B[Math.floor(Math.random() * BK_WORDS_B.length)];
+  const n = Math.floor(100 + Math.random() * 900);
+  return `maum-${a}${b}-${n}`;
+}
 const BACKUP_SHEET = "https://script.google.com/macros/s/AKfycbxkpIeb9FmErkwE1nDvnBa4F9L3hBg295hYd-UWksPAkYwO-MRkjHiojRFfH7thuuPY/exec";
 async function gatherBackup() {
   const data = {};
@@ -4771,7 +4904,7 @@ async function applyBackup(obj) {
   }
 }
 // 구글시트 자동 백업 — 별명(nick)으로 묶어 한 줄 저장 (덮어쓰기)
-async function cloudBackup(nick) {
+async function cloudBackup(nick, label) {
   if (!nick) return {
     ok: false,
     reason: "no-nick"
@@ -4784,9 +4917,9 @@ async function cloudBackup(nick) {
         "Content-Type": "text/plain;charset=utf-8"
       },
       body: JSON.stringify({
-        source: "maum_backup",
-        action: "save",
-        nick,
+        source: "backup",
+        nick: nick,
+        찾기별명: label || "",
         payload: JSON.stringify(snap)
       })
     });
@@ -4823,22 +4956,31 @@ function countRecords(snap) {
   }
 }
 // 시트에 저장된 기존 백업의 기록 개수 조회 (없으면 -1)
+// 시트에서 그 별명의 가장 최근 백업 payload를 찾는다 (행이 여러 개면 마지막 것)
+async function fetchBackupPayload(nick) {
+  const res = await fetch(BACKUP_SHEET, {
+    method: "POST",
+    headers: {
+      "Content-Type": "text/plain;charset=utf-8"
+    },
+    body: JSON.stringify({
+      source: "backup",
+      action: "load"
+    })
+  });
+  const j = await res.json().catch(() => null);
+  if (!j || !j.ok || !Array.isArray(j.rows)) return null;
+  let found = null;
+  for (const row of j.rows) {
+    if (String(row.nick) === String(nick) && row.payload) found = row.payload;
+  }
+  return found; // 마지막으로 일치한 행 = 최신
+}
 async function cloudBackupCount(nick) {
   if (!nick) return -1;
   try {
-    const res = await fetch(BACKUP_SHEET, {
-      method: "POST",
-      headers: {
-        "Content-Type": "text/plain;charset=utf-8"
-      },
-      body: JSON.stringify({
-        source: "maum_backup",
-        action: "load",
-        nick
-      })
-    });
-    const j = await res.json().catch(() => null);
-    if (j && j.ok && j.payload) return countRecords(JSON.parse(j.payload));
+    const payload = await fetchBackupPayload(nick);
+    if (payload) return countRecords(JSON.parse(payload));
     return -1;
   } catch (e) {
     return -1;
@@ -4850,20 +4992,9 @@ async function cloudRestore(nick) {
     reason: "no-nick"
   };
   try {
-    const res = await fetch(BACKUP_SHEET, {
-      method: "POST",
-      headers: {
-        "Content-Type": "text/plain;charset=utf-8"
-      },
-      body: JSON.stringify({
-        source: "maum_backup",
-        action: "load",
-        nick
-      })
-    });
-    const j = await res.json().catch(() => null);
-    if (j && j.ok && j.payload) {
-      await applyBackup(JSON.parse(j.payload));
+    const payload = await fetchBackupPayload(nick);
+    if (payload) {
+      await applyBackup(JSON.parse(payload));
       return {
         ok: true
       };
