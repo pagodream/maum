@@ -2599,7 +2599,14 @@ function CoachPage({
       return;
     }
     if (COACH_CHAT_URL) {
-      window.open(COACH_CHAT_URL, "_blank");
+      // 새 창 시도 → 차단/실패(PWA standalone 등)면 현재 창에서 바로 이동
+      var w = null;
+      try {
+        w = window.open(COACH_CHAT_URL, "_blank", "noopener");
+      } catch (e) {}
+      if (!w) {
+        window.location.href = COACH_CHAT_URL;
+      }
       return;
     }
     window.alert("AI 대화는 클로드 게시 링크가 연결된 뒤 열려요. 지금은 '쪽쪽이 코칭'으로 시작해 보세요.");
