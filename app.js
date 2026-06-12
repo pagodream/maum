@@ -122,14 +122,37 @@ function HomePage({
         if (r && r.value) {
           setBkNick(r.value);
         } else {
-          const code = genBackupCode();
+          // 처음이면: 진단한 아이 정보(이름-년월)로 아이디 제안, 없으면 랜덤 코드
+          let code = "";
+          try {
+            const c = await store.get("cheji:children:v1");
+            if (c && c.value) {
+              const kids = JSON.parse(c.value).filter(x => !x.isParent);
+              const k = kids.find(x => x.byear) || kids[0];
+              if (k && k.name) {
+                const ym = k.byear ? k.byear + (k.bmonth ? String(k.bmonth).padStart(2, "0") : "") : "";
+                code = "maum-" + k.name + (ym ? "-" + ym : "-" + Math.floor(100 + Math.random() * 900));
+              }
+            }
+          } catch (e) {}
+          if (!code) code = genBackupCode();
           setBkNick(code);
           try {
             await store.set("maum_backup_nick", code);
           } catch (e) {}
-        } // 처음이면 자동 생성·저장
+        }
         const l = await store.get("maum_backup_label");
-        if (l && l.value) setBkLabel(l.value);
+        if (l && l.value) {
+          setBkLabel(l.value);
+        } else {
+          try {
+            const w = await store.get("maum_world5");
+            if (w && w.value) {
+              const o = JSON.parse(w.value);
+              if (o.profile && o.profile.nick) setBkLabel(o.profile.nick);
+            }
+          } catch (e) {}
+        }
       } catch (e) {}
     })();
   }, []);
@@ -1238,7 +1261,7 @@ function HomePage({
   }, "\uBCF5\uC0AC")), /*#__PURE__*/React.createElement("input", {
     value: bkLabel,
     onChange: e => setBkLabel(e.target.value),
-    placeholder: "\uCC3E\uAE30\uC6A9 \uBCC4\uBA85 (\uC608: \uAD11\uC7A5 \uB2C9\uB124\uC784 \uB610\uB294 \uC774\uB984)",
+    placeholder: "\uCC3E\uAE30\uC6A9 \uBCC4\uBA85 (\uAD11\uC7A5 \uB2C9\uB124\uC784 \uB610\uB294 \uC774\uB984)",
     maxLength: 20,
     style: {
       width: "100%",
@@ -1259,13 +1282,30 @@ function HomePage({
       lineHeight: 1.5,
       marginBottom: 10
     }
-  }, "\uCF54\uB4DC\uB97C \uC783\uC5B4\uBC84\uB824 \uC6B4\uC601\uC790\uC5D0\uAC8C \uB3C4\uC6C0\uC744 \uC694\uCCAD\uD560 \uB54C \uBCF8\uC778\uC744 \uCC3E\uB294 \uB2E8\uC11C\uC608\uC694."), /*#__PURE__*/React.createElement("button", {
+  }, "\uAD11\uC7A5 \uBCC4\uBA85\uC774 \uC788\uC73C\uBA74 \uC790\uB3D9\uC73C\uB85C \uCC44\uC6CC\uC838\uC694. \uCF54\uB4DC\uB97C \uC783\uC5B4\uBC84\uB824 \uC6B4\uC601\uC790\uC5D0\uAC8C \uB3C4\uC6C0\uC744 \uC694\uCCAD\uD560 \uB54C \uBCF8\uC778\uC744 \uCC3E\uB294 \uB2E8\uC11C\uAC00 \uB3FC\uC694."), /*#__PURE__*/React.createElement("button", {
     disabled: bkBusy || !bkNick,
     onClick: async () => {
       setBkBusy(true);
       setBkMsg(null);
       const nick = bkNick;
       const label = bkLabel.trim();
+      // 겹침 확인: 이 아이디로 내가 저장한 적 없는데(=처음) 시트에 이미 있으면 → 다른 사람 것일 수 있음
+      let mine = false;
+      try {
+        const s = await store.get("maum_backup_saved");
+        if (s && s.value === nick) mine = true;
+      } catch (e) {}
+      if (!mine) {
+        const existing = await cloudBackupCount(nick); // -1이면 없음, 0이상이면 이미 존재
+        if (existing >= 0) {
+          setBkBusy(false);
+          setBkMsg({
+            ok: false,
+            t: `'${nick}' 아이디는 이미 쓰이고 있어요. 다른 아이거나 처음이라면, 아이 이름 뒤에 숫자를 붙여(예: ${nick}2) 새로 만들어 주세요. 같은 아이디면 기록이 섞일 수 있어요.`
+          });
+          return;
+        }
+      }
       try {
         await store.set("maum_backup_nick", nick);
         await store.set("maum_backup_label", label);
@@ -1286,6 +1326,11 @@ function HomePage({
       }
       const r = await cloudBackup(nick, label);
       setBkBusy(false);
+      if (r.ok) {
+        try {
+          await store.set("maum_backup_saved", nick);
+        } catch (e) {}
+      }
       setBkMsg(r.ok ? {
         ok: true,
         t: "☁️ 저장했어요. 이 기기에선 다음에도 자동으로 이어져요."
@@ -1360,6 +1405,7 @@ function HomePage({
       if (r.ok) {
         try {
           await store.set("maum_backup_nick", code);
+          await store.set("maum_backup_saved", code);
         } catch (e) {}
         setBkMsg({
           ok: true,
@@ -5067,6 +5113,9 @@ function TestPage({
     s: "home"
   }); // home | add | mode | test | result
   const [name, setName] = useState("");
+  const [byear, setByear] = useState(""); // 생년 4자리
+  const [bmonth, setBmonth] = useState(""); // 생월
+
   useEffect(() => {
     (async () => {
       try {
@@ -5115,12 +5164,16 @@ function TestPage({
     }),
     onAdd: () => {
       setName("");
+      setByear("");
+      setBmonth("");
       setView({
         s: "add"
       });
     },
     onAddParent: () => {
       setName("");
+      setByear("");
+      setBmonth("");
       setView({
         s: "add",
         parent: true
@@ -5150,6 +5203,10 @@ function TestPage({
     parent: view.parent,
     name: name,
     setName: setName,
+    byear: byear,
+    setByear: setByear,
+    bmonth: bmonth,
+    setBmonth: setBmonth,
     onBack: () => setView({
       s: "home"
     }),
@@ -5159,7 +5216,9 @@ function TestPage({
       save([...children, {
         id,
         name: name.trim(),
-        isParent: !!view.parent
+        isParent: !!view.parent,
+        byear: byear.trim(),
+        bmonth: bmonth.trim()
       }]);
       setView({
         s: "mode",
@@ -5451,6 +5510,10 @@ function AddChild({
   parent,
   name,
   setName,
+  byear,
+  setByear,
+  bmonth,
+  setBmonth,
   onSave,
   onBack
 }) {
@@ -5468,7 +5531,44 @@ function AddChild({
     onKeyDown: e => e.key === "Enter" && onSave(),
     placeholder: parent ? "예) 엄마, 아빠, 지우맘" : "예) 지우",
     style: TS.input
-  }), /*#__PURE__*/React.createElement("button", {
+  }), !parent && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: 8,
+      width: "100%",
+      maxWidth: 320,
+      margin: "0 auto"
+    }
+  }, /*#__PURE__*/React.createElement("input", {
+    value: byear,
+    onChange: e => setByear(e.target.value.replace(/[^0-9]/g, "").slice(0, 4)),
+    inputMode: "numeric",
+    placeholder: "\uD0DC\uC5B4\uB09C \uD574 4\uC790\uB9AC (\uC608: 2018)",
+    style: {
+      ...TS.input,
+      flex: 1.4,
+      marginBottom: 0
+    }
+  }), /*#__PURE__*/React.createElement("input", {
+    value: bmonth,
+    onChange: e => setBmonth(e.target.value.replace(/[^0-9]/g, "").slice(0, 2)),
+    inputMode: "numeric",
+    placeholder: "\uC6D4 1~2\uC790\uB9AC (\uC608: 3)",
+    style: {
+      ...TS.input,
+      flex: 1,
+      marginBottom: 0
+    }
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#6b74a0",
+      fontSize: 11.5,
+      lineHeight: 1.5,
+      margin: "8px auto 0",
+      maxWidth: 320,
+      textAlign: "left"
+    }
+  }, "\uAE30\uB85D\uC744 \uC548\uC804\uD558\uAC8C \uBCF4\uAD00\uD558\uACE0 \uB418\uC0B4\uB9B4 \uB54C \uC4F0\uB294 \uC815\uBCF4\uC608\uC694. (\uC120\uD0DD\uC774\uC9C0\uB9CC \uB123\uC5B4\uB450\uC2DC\uBA74 \uC88B\uC544\uC694)")), /*#__PURE__*/React.createElement("button", {
     style: {
       ...TS.primary,
       opacity: name.trim() ? 1 : 0.5
