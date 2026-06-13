@@ -6,6 +6,26 @@ const {
   useRef
 } = React;
 
+// ===== 뒤로가기 공용 — 팝업/모달을 뒤로가기로 닫기 =====
+const __mgBack = { stack: [], suppress: false };
+function useBackClose(isOpen, close) {
+  const ref = useRef(null);
+  useEffect(() => {
+    if (!isOpen) return;
+    const layer = { close, closing: false };
+    ref.current = layer;
+    __mgBack.stack.push(layer);
+    window.history.pushState({ mgLayer: true }, ""); // 팝업 열림 = 히스토리 한 칸
+    return () => {
+      const L = ref.current; ref.current = null;
+      const i = __mgBack.stack.indexOf(L);
+      if (i !== -1) __mgBack.stack.splice(i, 1);
+      // 뒤로가기가 아니라 버튼/배경탭으로 닫혔으면, 우리가 쌓은 히스토리 칸을 회수
+      if (L && !L.closing) { __mgBack.suppress = true; window.history.back(); }
+    };
+  }, [isOpen]);
+}
+
 // ──────────────────────────────────────────────
 // 마음 곳간 — 통합 앱 (홈 + 쪽쪽이 마음 코치)
 // 페이지 전환: App의 page 상태. world(세계지도)·기질테스트는 다음 단계에서 합류 예정
@@ -13,6 +33,36 @@ const {
 function App() {
   const [page, setPage] = useState("home");
   const [drawerOpen, setDrawerOpen] = useState(false); // 💌 마음 서랍
+
+  // ===== 뒤로가기(브라우저 ← / 폰 뒤로가기 버튼) → 이전 화면 =====
+  const navGuard = useRef(false); // 뒤로가기로 인한 화면변경이면 다시 기록하지 않도록
+  const navInit = useRef(false);  // 최초 1회만 현재화면을 교체(쌓지 않음)
+  // 사용자가 화면을 옮기면 그 화면을 브라우저 히스토리에 한 칸 쌓는다
+  useEffect(() => {
+    if (navGuard.current) { navGuard.current = false; return; }
+    if (!navInit.current) { navInit.current = true; window.history.replaceState({ mgPage: page }, ""); return; }
+    const cur = window.history.state && window.history.state.mgPage;
+    if (cur !== page) window.history.pushState({ mgPage: page }, "");
+  }, [page]);
+  // 뒤로가기를 누르면 히스토리에 저장된 이전 화면으로 되돌린다 (브라우저 ←, 폰 뒤로가기 모두 여기로)
+  useEffect(() => {
+    const onPop = (e) => {
+      if (__mgBack.suppress) { __mgBack.suppress = false; return; } // 정리용 back은 무시
+      if (__mgBack.stack.length > 0) {                              // 열린 팝업부터 닫기
+        const L = __mgBack.stack.pop();
+        L.closing = true;
+        L.close();
+        return;
+      }
+      const p = (e.state && e.state.mgPage) || "home";              // 팝업 없으면 이전 화면
+      navGuard.current = true;
+      setPage(p);
+    };
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, []);
+  useBackClose(drawerOpen, () => setDrawerOpen(false)); // 💌 서랍을 뒤로가기로 닫기
+
   if (page === "coach") return /*#__PURE__*/React.createElement(CoachPage, {
     onHome: () => setPage("home"),
     onTest: () => setPage("test"),
@@ -106,6 +156,8 @@ function HomePage({
   const [showZero, setShowZero] = useState(false); // 제로섬 더 보기 패널
   const [showBackup, setShowBackup] = useState(false); // 💾 백업/복원 시트
   const [showHelp, setShowHelp] = useState(false); // 📖 사용법 펼침
+  useBackClose(showZero, () => setShowZero(false));     // 제로섬 패널 뒤로가기로 닫기
+  useBackClose(showBackup, () => setShowBackup(false)); // 백업 시트 뒤로가기로 닫기
   const [bkNick, setBkNick] = useState(""); // 백업 코드 (자동 생성, 폰에 저장)
   const [bkLabel, setBkLabel] = useState(""); // 찾기용 별명 (대표가 구제 시 단서)
   const [bkNewCode, setBkNewCode] = useState(""); // 새 폰에서 코드 직접 입력
