@@ -21410,7 +21410,29 @@ function WorldPage({
   // 아이디(공유용 프로필): 기질테스트에서 아이이름+생년으로 자동 생성, 변경 가능
   // { child: "민서", role: "맘", nick: "민서맘", year: "2018" }
   const [profile, setProfile] = useState(null);
+  // 진단(기질테스트)에서 만든 아이를 읽어와 별명 폼을 자동으로 채운다 (아이디 동기화)
+  const [testKid, setTestKid] = useState(null);
+  useEffect(() => {
+    let alive = true;
+    (async () => {
+      try {
+        const r = await store.get("cheji:children:v1");
+        const list = r && r.value ? JSON.parse(r.value) : [];
+        const kids = Array.isArray(list) ? list.filter(c => c && !c.isParent && c.name) : [];
+        const k = kids.sort((a, b) => (b.id || 0) - (a.id || 0))[0];
+        if (alive && k) setTestKid({ name: k.name, year: (k.byear || "").trim() });
+      } catch (e) {}
+    })();
+    return () => { alive = false; };
+  }, []);
   const [briefByCid, setBriefByCid] = useState({});
+  // 별명 폼이 열릴 때(아직 별명이 없고 처음일 때) 진단의 아이 이름·생년을 자동으로 채움
+  useEffect(() => {
+    if (showProfile && !profile && testKid) {
+      setPfChild(p => p && p.trim() ? p : testKid.name);
+      setPfYear(p => p && p.trim() ? p : testKid.year || "");
+    }
+  }, [showProfile, testKid]);
   const [cityLoading, setCityLoading] = useState(false);
   const [selCity, setSelCity] = useState(null);
   // 달력
