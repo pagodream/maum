@@ -1,21 +1,25 @@
-// 마음 곳간 서비스워커 — 설치 가능 요건 충족 + 기본 캐시
-const CACHE = "maum-v1";
-const ASSETS = ["./", "./index.html", "./app.js", "./manifest.json", "./icon-192.png", "./icon-512.png"];
+// 마음 곳간 서비스워커 v2 — 네트워크 우선 (새 버전 즉시 반영, 오프라인엔 캐시)
+const CACHE = "maum-v2";
+
 self.addEventListener("install", (e) => {
-  e.waitUntil(caches.open(CACHE).then((c) => c.addAll(ASSETS).catch(() => {})));
-  self.skipWaiting();
+  self.skipWaiting(); // 새 워커가 바로 자리를 잡게
 });
+
 self.addEventListener("activate", (e) => {
+  // 옛 캐시(maum-v1 등) 정리 — 기록(localStorage)은 캐시가 아니라 안전함
   e.waitUntil(caches.keys().then((ks) => Promise.all(ks.filter((k) => k !== CACHE).map((k) => caches.delete(k)))));
   self.clients.claim();
 });
+
 self.addEventListener("fetch", (e) => {
   if (e.request.method !== "GET") return;
+  // 네트워크 우선: 항상 새 파일을 먼저 받아오고, 받아온 걸 캐시에 갱신.
+  // 인터넷이 안 될 때만 캐시로 동작(오프라인 지원 유지).
   e.respondWith(
-    caches.match(e.request).then((hit) => hit || fetch(e.request).then((res) => {
+    fetch(e.request).then((res) => {
       const copy = res.clone();
       caches.open(CACHE).then((c) => c.put(e.request, copy)).catch(() => {});
       return res;
-    }).catch(() => hit))
+    }).catch(() => caches.match(e.request))
   );
 });
