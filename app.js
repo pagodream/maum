@@ -431,6 +431,7 @@ function HomePage({
     window.alert(where + " 화면으로 연결됩니다 (다음 단계에서 통합).");
   }
   return /*#__PURE__*/React.createElement("div", {
+    className: "homeRoot",
     style: {
       minHeight: "100vh",
       position: "relative",
@@ -744,6 +745,7 @@ function HomePage({
     opacity: "0.85",
     transform: `rotate(${p.rot} ${p.x * 4} -20)`
   })))), /*#__PURE__*/React.createElement("div", {
+    className: "homeCol",
     style: {
       position: "relative",
       maxWidth: 440,
@@ -1780,6 +1782,8 @@ function HomePage({
     땅: "🏔️",
     뿌리: "🌱"
   }[homeTemper] || "🧭"} 우리 아이의 '${homeTemper}' 기질 보러가기 →` : "우리 아이의 기질 보러가기 →" : "아이의 기질이 더 궁금하다면 — 고문님이 권하신 송재희 선생 『사상체질 학습법』 기반 기질 테스트 해보기 →"))), /*#__PURE__*/React.createElement("style", null, `
+        .homeRoot{min-height:100dvh !important}
+        .homeCol{min-height:100dvh !important}
         @keyframes mFront { 0%,100%{transform:translateY(0) rotate(0deg)} 50%{transform:translateY(-4px) rotate(2deg)} }
         @keyframes mTilt { 0%,20%{transform:rotate(0deg)} 45%,65%{transform:rotate(-6deg)} 90%,100%{transform:rotate(0deg)} }
         @keyframes mJjok { 0%,100%{transform:translateY(0) scaleX(1)} 25%{transform:translateY(-5px) scaleX(1.05)} 50%{transform:translateY(-2px) scaleX(0.98)} 75%{transform:translateY(-4px) scaleX(1.04)} }
