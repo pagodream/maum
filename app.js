@@ -769,7 +769,7 @@ function HomePage({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       color: "#fff",
-      fontSize: mobile ? 22 : 27,
+      fontSize: mobile ? 27 : 31,
       fontWeight: 800,
       letterSpacing: -0.5,
       lineHeight: 1.32,
@@ -787,19 +787,19 @@ function HomePage({
   }), /*#__PURE__*/React.createElement("div", {
     style: {
       color: "#fff",
-      fontSize: mobile ? 12.5 : 13.5,
+      fontSize: mobile ? 15 : 16,
       fontWeight: 500,
-      lineHeight: 1.55,
+      lineHeight: 1.6,
       whiteSpace: "pre-line",
       textShadow: "0 1px 14px rgba(40,15,30,0.95), 0 1px 4px rgba(0,0,0,0.55)",
-      maxWidth: 320,
+      maxWidth: 350,
       margin: "0 auto"
     }
   }, sub), /*#__PURE__*/React.createElement("div", {
     style: {
       color: "rgba(255,255,255,0.85)",
-      fontSize: 11,
-      marginTop: 7,
+      fontSize: 12.5,
+      marginTop: 8,
       textShadow: "0 1px 8px rgba(110,50,80,0.8)"
     }
   }, "\u2014 \uC774\uC7AC\uD6C8 \uACE0\uBB38\uB2D8"), /*#__PURE__*/React.createElement("button", {
@@ -5181,6 +5181,51 @@ function TestPage({
       await store.set(KEY, JSON.stringify(list));
     } catch (e) {}
   };
+  // ✏️ 아이 이름 바꾸기 — 모든 기록(빛·보석·서랍·코치 기억)의 꼬리표도 함께 따라간다
+  const renameChild = async c => {
+    const nn = window.prompt(`'${c.name}'의 새 이름(별명)을 적어주세요.`, c.name);
+    if (nn == null) return;
+    const v = nn.trim();
+    if (!v || v === c.name) return;
+    if (children.some(x => x.id !== c.id && x.name === v)) {
+      window.alert("같은 이름이 이미 있어요. 다른 이름으로 해주세요.");
+      return;
+    }
+    const oldName = c.name;
+    save(children.map(x => x.id === c.id ? {
+      ...x,
+      name: v
+    } : x));
+    try {
+      const w = await store.get("maum_world5");
+      if (w && w.value) {
+        const o = JSON.parse(w.value);
+        ["lights", "gems", "sos"].forEach(k => {
+          if (Array.isArray(o[k])) o[k].forEach(e => {
+            if (e && e.child === oldName) e.child = v;
+          });
+        });
+        await store.set("maum_world5", JSON.stringify(o));
+      }
+    } catch (e) {}
+    try {
+      const d = await store.get("maum_drawer");
+      if (d && d.value) {
+        const list = JSON.parse(d.value);
+        if (Array.isArray(list)) {
+          list.forEach(e => {
+            if (e && e.child === oldName) e.child = v;
+          });
+          await store.set("maum_drawer", JSON.stringify(list));
+        }
+      }
+    } catch (e) {}
+    try {
+      const mc = await store.get("maum_child");
+      if (mc && mc.value === oldName) await store.set("maum_child", v);
+    } catch (e) {}
+    window.alert(`'${oldName}' → '${v}'(으)로 바꿨어요.\n빛·보석·마음 서랍의 기록도 함께 따라갔어요.`);
+  };
   const removeChild = async c => {
     save(children.filter(x => x.id !== c.id));
     try {
@@ -5230,6 +5275,7 @@ function TestPage({
       });
     },
     onDelete: removeChild,
+    onRename: renameChild,
     onPick: id => {
       const ch = children.find(c => c.id === id);
       ch && ch.scores ? setView({
@@ -5347,6 +5393,7 @@ function ChejiHome({
   onAddParent,
   onPick,
   onDelete,
+  onRename,
   onIntro
 }) {
   const parent = children.find(c => c.isParent);
@@ -5471,6 +5518,13 @@ function ChejiHome({
     }, top ? `${TYPES[top].name} · ${TYPES[top].sasang}` : "검사 전 — 눌러서 시작"))), /*#__PURE__*/React.createElement("span", {
       style: TS.chev
     }, c.scores ? "결과 ›" : "검사 ›")), /*#__PURE__*/React.createElement("button", {
+      style: {
+        ...TS.delBtn,
+        fontSize: 13
+      },
+      onClick: () => onRename(c),
+      "aria-label": `${c.name} 이름 바꾸기`
+    }, "\u270F\uFE0F"), /*#__PURE__*/React.createElement("button", {
       style: TS.delBtn,
       onClick: () => askDelete(c),
       "aria-label": `${c.name} 삭제`
@@ -5514,6 +5568,13 @@ function ChejiHome({
   }, parent.scores ? `${TYPES[topType(parent.scores)].name} · ${TYPES[topType(parent.scores)].sasang}` : "검사 전 — 눌러서 시작"))), /*#__PURE__*/React.createElement("span", {
     style: TS.chev
   }, parent.scores ? "결과 ›" : "검사 ›")), /*#__PURE__*/React.createElement("button", {
+    style: {
+      ...TS.delBtn,
+      fontSize: 13
+    },
+    onClick: () => onRename(parent),
+    "aria-label": "\uC774\uB984 \uBC14\uAFB8\uAE30"
+  }, "\u270F\uFE0F"), /*#__PURE__*/React.createElement("button", {
     style: TS.delBtn,
     onClick: () => askDelete(parent),
     "aria-label": "\uC0AD\uC81C"
