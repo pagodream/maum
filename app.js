@@ -20963,6 +20963,11 @@ function WorldPage({
   const [grpReqName, setGrpReqName] = useState("");
   const [grpReqSize, setGrpReqSize] = useState("");
   const [grpReqIntro, setGrpReqIntro] = useState("");
+  const [plazaReplies, setPlazaReplies] = useState({}); // 💬 {글키: [답글]}
+  const [mentorSet, setMentorSet] = useState({}); // 🌟 {별명: true}
+  const [replyOpen, setReplyOpen] = useState(null); // 펼친 글키
+  const [replyText, setReplyText] = useState("");
+  const [replyBusy, setReplyBusy] = useState(false);
   useEffect(() => {
     (async () => {
       try {
@@ -21012,6 +21017,37 @@ function WorldPage({
     setMapMode(m);
     try {
       await store.set("maum_map_mode", m);
+    } catch (e) {}
+  }
+  // ✨ 오늘은 누구? — 아이별 모드 + 아이 2명 이상 + 오늘 첫 진입에만 한 번 묻기
+  const [todayKidAsk, setTodayKidAsk] = useState(false);
+  useEffect(() => {
+    (async () => {
+      if (!modeLoaded || mapMode !== "perkid" || wkids.length < 2) return;
+      try {
+        const r = await store.get("maum_today_kid");
+        const today = keyOf(new Date());
+        if (r && r.value) {
+          const o = JSON.parse(r.value);
+          if (o.day === today) {
+            if (o.kid && wkids.some(k => k.name === o.kid)) setCurChild(o.kid);
+            return;
+          }
+        }
+        setTodayKidAsk(true);
+      } catch (e) {
+        setTodayKidAsk(true);
+      }
+    })();
+  }, [modeLoaded, mapMode, wkids]);
+  async function pickTodayKid(name) {
+    setCurChild(name);
+    setTodayKidAsk(false);
+    try {
+      await store.set("maum_today_kid", JSON.stringify({
+        day: keyOf(new Date()),
+        kid: name
+      }));
     } catch (e) {}
   }
   useEffect(() => {
@@ -21220,6 +21256,7 @@ function WorldPage({
     }));
     // 피드: 최근 12개
     const feed = rows.slice(0, 12).map(r => ({
+      key: String(r["시간"] || "") + "|" + (r["별명"] || ""),
       bird: r["새"] || birdFor(r["별명"] || ""),
       nick: r["별명"] || "익명",
       year: (r["생년"] || "").toString(),
@@ -21393,26 +21430,61 @@ function WorldPage({
   }, [chInfo && chInfo.complete]);
 
   // 광장 글들을 시트에서 불러온다
-  async function loadPlaza() {
-    setPlazaLoading(true);
+  async function loadPlaza(silent) {
+    if (!silent) setPlazaLoading(true);
     try {
-      const res = await fetch(SHEET_URL, {
+      const post = body => fetch(SHEET_URL, {
         method: "POST",
         headers: {
           "Content-Type": "text/plain;charset=utf-8"
         },
-        body: JSON.stringify({
-          source: SHEET_SOURCE,
-          action: "load"
-        })
+        body: JSON.stringify(body)
+      }).then(r => r.json()).catch(() => null);
+      const [d, rp, mt] = await Promise.all([post({
+        source: SHEET_SOURCE,
+        action: "load"
+      }), post({
+        source: "replies",
+        action: "load"
+      }),
+      // 💬 답글
+      post({
+        source: "mentors",
+        action: "load"
+      }) // 🌟 멘토 명단 (대표가 시트에 직접 관리)
+      ]);
+      if (d && d.ok && Array.isArray(d.rows)) setPlazaData(d.rows);else if (!silent) setPlazaData([]);
+      const rm = {};
+      if (rp && rp.ok && Array.isArray(rp.rows)) rp.rows.forEach(r => {
+        const k = String(r["글키"] || "");
+        if (!k) return;
+        (rm[k] = rm[k] || []).push({
+          nick: r["별명"] || "익명",
+          bird: r["새"] || "",
+          text: r["내용"] || "",
+          ago: agoText(r["시간"])
+        });
       });
-      const data = await res.json();
-      if (data && data.ok && Array.isArray(data.rows)) setPlazaData(data.rows);else setPlazaData([]);
+      setPlazaReplies(rm);
+      const ms = {};
+      if (mt && mt.ok && Array.isArray(mt.rows)) mt.rows.forEach(r => {
+        const n = String(r["별명"] || "").trim();
+        if (n) ms[n] = true;
+      });
+      setMentorSet(ms);
     } catch (e) {
-      setPlazaData([]);
+      if (!silent) setPlazaData([]);
     }
-    setPlazaLoading(false);
+    if (!silent) setPlazaLoading(false);
   }
+  // 광장이 열려 있는 동안 45초마다 조용히 새로고침 — 멘토링 대화가 느리게나마 실시간처럼
+  useEffect(() => {
+    if (!showPlaza) return;
+    const t = setInterval(() => {
+      loadPlaza(true);
+    }, 45000);
+    return () => clearInterval(t);
+  }, [showPlaza]);
 
   // 🌸 그룹 검색 — groups 탭에서 승인된 그룹만
   async function searchGroups() {
@@ -21516,6 +21588,40 @@ function WorldPage({
       });
     }
     setGrpBusy(false);
+  }
+
+  // 💬 답글 보내기 — 그룹 멘토링의 핵심 (시트 replies 탭)
+  async function sendReply(postKey) {
+    const t = replyText.trim();
+    if (!t || !profile || replyBusy) return;
+    setReplyBusy(true);
+    try {
+      await fetch(SHEET_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8"
+        },
+        body: JSON.stringify({
+          source: "replies",
+          글키: postKey,
+          별명: profile.nick,
+          새: birdFor(profile.nick),
+          내용: t,
+          그룹: myGroup || ""
+        })
+      });
+      setPlazaReplies(m => ({
+        ...m,
+        [postKey]: [...(m[postKey] || []), {
+          nick: profile.nick,
+          bird: birdFor(profile.nick),
+          text: t,
+          ago: "방금"
+        }]
+      }));
+      setReplyText("");
+    } catch (e) {}
+    setReplyBusy(false);
   }
   function speak(t) {
     if (muted) return;
@@ -22157,7 +22263,75 @@ function WorldPage({
     }, k.temper ? EMOJI_T[k.temper] + " " : "", k.name, "\uC758 \uC9C0\uB3C4");
   })), /*#__PURE__*/React.createElement("div", {
     style: WS.mapWrap
-  }, modeLoaded && !mapMode && wkids.length >= 2 && /*#__PURE__*/React.createElement("div", {
+  }, todayKidAsk && perKid && !(modeLoaded && !mapMode && wkids.length >= 2) && /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: "fixed",
+      inset: 0,
+      zIndex: 89,
+      background: "rgba(8,10,30,0.82)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: 24
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: "100%",
+      maxWidth: 360,
+      background: "#15183A",
+      borderRadius: 20,
+      padding: "24px 20px",
+      textAlign: "center"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 34,
+      marginBottom: 8
+    }
+  }, "\u2728"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#F3EEE3",
+      fontSize: 16.5,
+      fontWeight: 800,
+      marginBottom: 5
+    }
+  }, "\uC624\uB298\uC740 \uB204\uAD6C\uC758 \uC88B\uC740 \uC810\uC744", /*#__PURE__*/React.createElement("br", null), "\uBC1C\uACAC\uD560\uAE4C\uC694?"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#9AA3C7",
+      fontSize: 11.5,
+      marginBottom: 16
+    }
+  }, "\uC9C0\uB3C4 \uC704 \uD0ED\uC73C\uB85C \uC5B8\uC81C\uB4E0 \uBC14\uAFC0 \uC218 \uC788\uC5B4\uC694."), wkids.map(k => {
+    const done = [...lights, ...gems].some(e => e && e.child === k.name && sameDay(e.date));
+    return /*#__PURE__*/React.createElement("button", {
+      key: k.name,
+      onClick: () => pickTodayKid(k.name),
+      style: {
+        width: "100%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        background: "rgba(255,255,255,0.05)",
+        border: "1px solid rgba(242,193,107,0.35)",
+        borderRadius: 13,
+        padding: "14px 15px",
+        marginBottom: 8,
+        cursor: "pointer",
+        fontFamily: "inherit"
+      }
+    }, /*#__PURE__*/React.createElement("span", {
+      style: {
+        color: "#F3EEE3",
+        fontSize: 14.5,
+        fontWeight: 800
+      }
+    }, k.temper ? EMOJI_T[k.temper] + " " : "", k.name), /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontSize: 11,
+        color: done ? "#9FE1CB" : "#9AA3C7"
+      }
+    }, done ? "✨ 오늘 발견했어요" : "· 아직이에요"));
+  }))), modeLoaded && !mapMode && wkids.length >= 2 && /*#__PURE__*/React.createElement("div", {
     style: {
       position: "fixed",
       inset: 0,
@@ -23378,7 +23552,7 @@ function WorldPage({
   }, "\uBC29\uAE08 \uB3C4\uCC29\uD55C \uC88B\uC740 \uC810"), /*#__PURE__*/React.createElement("div", {
     style: WS.plazaFeed
   }, plazaView.feed.map((f, i) => /*#__PURE__*/React.createElement("div", {
-    key: i,
+    key: f.key || i,
     style: WS.plazaCard
   }, /*#__PURE__*/React.createElement("div", {
     style: WS.plazaCardHead
@@ -23388,7 +23562,17 @@ function WorldPage({
     }
   }, f.bird), /*#__PURE__*/React.createElement("span", {
     style: WS.plazaNick
-  }, f.nick), f.year && /*#__PURE__*/React.createElement("span", {
+  }, f.nick), mentorSet[f.nick] && /*#__PURE__*/React.createElement("span", {
+    style: {
+      background: "rgba(242,193,107,0.15)",
+      border: "1px solid rgba(242,193,107,0.45)",
+      color: WC.gold,
+      fontSize: 9.5,
+      fontWeight: 800,
+      borderRadius: 99,
+      padding: "1px 7px"
+    }
+  }, "\uD83C\uDF1F \uBA58\uD1A0"), f.year && /*#__PURE__*/React.createElement("span", {
     style: WS.plazaYear
   }, f.year, "\uB144\uC0DD"), /*#__PURE__*/React.createElement("span", {
     style: WS.plazaTag
@@ -23396,7 +23580,110 @@ function WorldPage({
     style: WS.plazaAgo
   }, f.ago)), /*#__PURE__*/React.createElement("div", {
     style: WS.plazaNote
-  }, f.note)))), plazaView.streaks.length > 0 && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+  }, f.note), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: 7
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: () => {
+      setReplyOpen(replyOpen === f.key ? null : f.key);
+      setReplyText("");
+    },
+    style: {
+      background: "none",
+      border: "none",
+      color: (plazaReplies[f.key] || []).length ? "#9FE1CB" : WC.mute,
+      fontSize: 11,
+      fontWeight: 700,
+      cursor: "pointer",
+      fontFamily: "inherit",
+      padding: 0
+    }
+  }, "\uD83D\uDCAC \uB2F5\uAE00", (plazaReplies[f.key] || []).length ? ` ${(plazaReplies[f.key] || []).length}` : ""), replyOpen === f.key && /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: 7,
+      borderLeft: "2px solid rgba(255,255,255,0.1)",
+      paddingLeft: 10
+    }
+  }, (plazaReplies[f.key] || []).map((rp, j) => /*#__PURE__*/React.createElement("div", {
+    key: j,
+    style: {
+      fontSize: 12,
+      color: WC.cream,
+      lineHeight: 1.65,
+      marginBottom: 5
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      marginRight: 3
+    }
+  }, rp.bird), /*#__PURE__*/React.createElement("b", {
+    style: {
+      color: WC.gold
+    }
+  }, rp.nick), mentorSet[rp.nick] && /*#__PURE__*/React.createElement("span", {
+    style: {
+      background: "rgba(242,193,107,0.15)",
+      border: "1px solid rgba(242,193,107,0.45)",
+      color: WC.gold,
+      fontSize: 9,
+      fontWeight: 800,
+      borderRadius: 99,
+      padding: "0px 6px",
+      marginLeft: 4
+    }
+  }, "\uD83C\uDF1F \uBA58\uD1A0"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      marginLeft: 6
+    }
+  }, rp.text), /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: WC.mute,
+      fontSize: 10,
+      marginLeft: 6
+    }
+  }, rp.ago))), profile ? /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: 6,
+      marginTop: 4
+    }
+  }, /*#__PURE__*/React.createElement("input", {
+    value: replyText,
+    onChange: e => setReplyText(e.target.value),
+    onKeyDown: e => e.key === "Enter" && sendReply(f.key),
+    placeholder: "\uB530\uB73B\uD55C \uD55C\uB9C8\uB514\uB97C \uB0A8\uACA8\uC694",
+    maxLength: 120,
+    style: {
+      flex: 1,
+      background: "rgba(0,0,0,0.25)",
+      border: "1px solid rgba(255,255,255,0.16)",
+      borderRadius: 9,
+      padding: "8px 10px",
+      color: "#F3EEE3",
+      fontSize: 12,
+      fontFamily: "inherit"
+    }
+  }), /*#__PURE__*/React.createElement("button", {
+    disabled: replyBusy || !replyText.trim(),
+    onClick: () => sendReply(f.key),
+    style: {
+      background: "rgba(159,225,203,0.15)",
+      border: "1px solid rgba(159,225,203,0.4)",
+      color: "#9FE1CB",
+      fontSize: 11.5,
+      fontWeight: 700,
+      borderRadius: 9,
+      padding: "0 12px",
+      cursor: "pointer",
+      fontFamily: "inherit"
+    }
+  }, replyBusy ? "…" : "보내기")) : /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: WC.mute,
+      fontSize: 11
+    }
+  }, "\uBCC4\uBA85\uC744 \uB9CC\uB4E4\uBA74 \uB2F5\uAE00\uC744 \uB0A8\uAE38 \uC218 \uC788\uC5B4\uC694.")))))), plazaView.streaks.length > 0 && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     style: WS.plazaSecTitle
   }, "\uC774\uBC88 \uC8FC \uD568\uAED8 \uB9CE\uC774 \uB2F4\uC740 \uC5C4\uB9C8\uB4E4"), /*#__PURE__*/React.createElement("div", {
     style: WS.plazaStreaks
