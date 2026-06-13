@@ -6,22 +6,41 @@ const {
   useRef
 } = React;
 
-// ===== 뒤로가기 공용 — 팝업/모달을 뒤로가기로 닫기 =====
-const __mgBack = { stack: [], suppress: false };
+// ===== 뒤로가기 공용 — 페이지·단계·팝업을 하나의 스택으로 관리 =====
+const __nav = { stack: [], guard: false, suppress: false };
+
+// 화면 상태(페이지/단계)를 뒤로가기에 연결: 값이 '앞으로' 바뀌면 한 칸 쌓고, 뒤로가기 때 이전 값으로 되돌린다
+function useHistoryNav(value, setValue) {
+  const ref = useRef(value);
+  useEffect(() => {
+    if (__nav.guard) { __nav.guard = false; ref.current = value; return; } // 뒤로가기로 바뀐 거면 기록 안 함
+    let changed;
+    try { changed = JSON.stringify(value) !== JSON.stringify(ref.current); }
+    catch (e) { changed = value !== ref.current; }
+    if (changed) {
+      const prev = ref.current;
+      ref.current = value;
+      __nav.stack.push({ undo: () => { __nav.guard = true; setValue(prev); } });
+      window.history.pushState({ d: __nav.stack.length }, ""); // 앞으로 갈 때 히스토리 한 칸
+    }
+  }, [value]);
+}
+
+// 팝업/모달을 뒤로가기로 닫기 (같은 스택 사용)
 function useBackClose(isOpen, close) {
   const ref = useRef(null);
   useEffect(() => {
     if (!isOpen) return;
-    const layer = { close, closing: false };
+    const layer = { undo: close, closing: false };
     ref.current = layer;
-    __mgBack.stack.push(layer);
-    window.history.pushState({ mgLayer: true }, ""); // 팝업 열림 = 히스토리 한 칸
+    __nav.stack.push(layer);
+    window.history.pushState({ d: __nav.stack.length }, ""); // 팝업 열림 = 히스토리 한 칸
     return () => {
       const L = ref.current; ref.current = null;
-      const i = __mgBack.stack.indexOf(L);
-      if (i !== -1) __mgBack.stack.splice(i, 1);
+      const i = __nav.stack.indexOf(L);
+      if (i !== -1) __nav.stack.splice(i, 1);
       // 뒤로가기가 아니라 버튼/배경탭으로 닫혔으면, 우리가 쌓은 히스토리 칸을 회수
-      if (L && !L.closing) { __mgBack.suppress = true; window.history.back(); }
+      if (L && !L.closing) { __nav.suppress = true; window.history.back(); }
     };
   }, [isOpen]);
 }
@@ -35,28 +54,13 @@ function App() {
   const [drawerOpen, setDrawerOpen] = useState(false); // 💌 마음 서랍
 
   // ===== 뒤로가기(브라우저 ← / 폰 뒤로가기 버튼) → 이전 화면 =====
-  const navGuard = useRef(false); // 뒤로가기로 인한 화면변경이면 다시 기록하지 않도록
-  const navInit = useRef(false);  // 최초 1회만 현재화면을 교체(쌓지 않음)
-  // 사용자가 화면을 옮기면 그 화면을 브라우저 히스토리에 한 칸 쌓는다
+  useHistoryNav(page, setPage); // 페이지(홈·진단·코치·세계지도) 단위 뒤로가기
   useEffect(() => {
-    if (navGuard.current) { navGuard.current = false; return; }
-    if (!navInit.current) { navInit.current = true; window.history.replaceState({ mgPage: page }, ""); return; }
-    const cur = window.history.state && window.history.state.mgPage;
-    if (cur !== page) window.history.pushState({ mgPage: page }, "");
-  }, [page]);
-  // 뒤로가기를 누르면 히스토리에 저장된 이전 화면으로 되돌린다 (브라우저 ←, 폰 뒤로가기 모두 여기로)
-  useEffect(() => {
-    const onPop = (e) => {
-      if (__mgBack.suppress) { __mgBack.suppress = false; return; } // 정리용 back은 무시
-      if (__mgBack.stack.length > 0) {                              // 열린 팝업부터 닫기
-        const L = __mgBack.stack.pop();
-        L.closing = true;
-        L.close();
-        return;
-      }
-      const p = (e.state && e.state.mgPage) || "home";              // 팝업 없으면 이전 화면
-      navGuard.current = true;
-      setPage(p);
+    const onPop = () => {
+      if (__nav.suppress) { __nav.suppress = false; return; } // 정리용 back은 무시
+      const top = __nav.stack.pop();
+      if (top) { top.closing = true; top.undo(); } // 이전 단계 복원 또는 팝업 닫기
+      // 스택이 비어있으면 → 브라우저가 자연스레 앱을 빠져나감
     };
     window.addEventListener("popstate", onPop);
     return () => window.removeEventListener("popstate", onPop);
@@ -5368,6 +5372,7 @@ function TestPage({
   const [view, setView] = useState({
     s: "home"
   }); // home | add | mode | test | result
+  useHistoryNav(view, setView); // 진단 단계(이름→모드→검사→결과) 단계별 뒤로가기
   const [name, setName] = useState("");
   const [byear, setByear] = useState(""); // 생년 4자리
   const [bmonth, setBmonth] = useState(""); // 생월
@@ -5847,14 +5852,14 @@ function AddChild({
     onChange: e => setName(e.target.value),
     onKeyDown: e => e.key === "Enter" && onSave(),
     placeholder: parent ? "예) 엄마, 아빠, 지우맘" : "예) 지우",
-    style: TS.input
+    style: { ...TS.input, maxWidth: 320, marginLeft: "auto", marginRight: "auto" }
   }), !parent && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     style: {
       display: "flex",
       gap: 8,
       width: "100%",
       maxWidth: 320,
-      margin: "0 auto"
+      margin: "0 auto 18px"
     }
   }, /*#__PURE__*/React.createElement("input", {
     value: byear,
@@ -5879,6 +5884,8 @@ function AddChild({
   }))), /*#__PURE__*/React.createElement("button", {
     style: {
       ...TS.primary,
+      maxWidth: 320,
+      margin: "10px auto 0",
       opacity: name.trim() ? 1 : 0.5
     },
     onClick: onSave
@@ -21305,6 +21312,16 @@ function WorldPage({
   const [lens, setLens] = useState(null); // 지도 렌즈: null=전체 / 이름 / "함께"
   const [stockFilter, setStockFilter] = useState(null); // 곳간 필터
   const [showJourney, setShowJourney] = useState(false); // 🏆 빛의 여정 진열장
+  // 세계지도 팝업들을 뒤로가기로 닫기 (지도 확대/이동 view는 건드리지 않음)
+  useBackClose(showList, () => setShowList(false));
+  useBackClose(showCal, () => setShowCal(false));
+  useBackClose(showSet, () => setShowSet(false));
+  useBackClose(showCalm, () => setShowCalm(false));
+  useBackClose(showStock, () => setShowStock(false));
+  useBackClose(showPlaza, () => setShowPlaza(false));
+  useBackClose(showProfile, () => setShowProfile(false));
+  useBackClose(showGuide, () => setShowGuide(false));
+  useBackClose(showJourney, () => setShowJourney(false));
   const [challenge, setChallenge] = useState(null); // 🌱 함께 보기 챌린지 {start, days, sharedStart}
   const [worldDone, setWorldDone] = useState(false); // 🌍 온 땅 완주 대미 카드 (= 여섯 대륙 모두 밝힌 피날레)
   // 아이디(공유용 프로필): 기질테스트에서 아이이름+생년으로 자동 생성, 변경 가능
