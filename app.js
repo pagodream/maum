@@ -77,7 +77,8 @@ function App() {
   });
   if (page === "test") return /*#__PURE__*/React.createElement(TestPage, {
     onHome: () => setPage("home"),
-    onCoach: () => setPage("coach")
+    onCoach: () => setPage("coach"),
+    onWorld: () => setPage("world")
   });
   if (page === "world") return /*#__PURE__*/React.createElement(WorldPage, {
     onHome: () => setPage("home"),
@@ -2614,22 +2615,44 @@ const IN_CLAUDE = typeof window !== "undefined" && !!(window.claude || window.st
 // ── 정적 코칭 — 감정 이름 붙이기 ──
 const EMOTIONS = [{
   k: "화남",
-  ack: "화는 엄마가 그만큼 애쓰고 있다는 증거예요. 그 마음, 잘못이 아니에요."
+  ack: "화는 엄마가 그만큼 애쓰고 있다는 증거예요. 그 마음, 잘못이 아니에요.",
+  lens: "그 화 밑엔 보통 '잘 됐으면' 하는 바람이 깔려 있어요. 미워서가 아니라요."
 }, {
   k: "서운함",
-  ack: "마음을 쏟은 만큼 서운한 거예요. 그만큼 사랑이 컸다는 뜻이고요."
+  ack: "마음을 쏟은 만큼 서운한 거예요. 그만큼 사랑이 컸다는 뜻이고요.",
+  lens: "서운함은 기대가 컸던 자리예요 — 그 기대도 결국 아이를 향한 마음이고요."
 }, {
   k: "불안",
-  ack: "불안은 멀리 보는 엄마들이 치르는 값이에요. 혼자 끌어안고 계셨네요."
+  ack: "불안은 멀리 보는 엄마들이 치르는 값이에요. 혼자 끌어안고 계셨네요.",
+  lens: "불안은 대개 '아직 오지 않은 일'을 향해요. 지금 이 순간으로 잠깐만 돌아와 볼까요."
 }, {
   k: "막막함",
-  ack: "어디서부터 손대야 할지 모를 때가 제일 힘들죠. 같이 한 걸음만 떼 봐요."
+  ack: "어디서부터 손대야 할지 모를 때가 제일 힘들죠. 같이 한 걸음만 떼 봐요.",
+  lens: "막막할 땐 전부 풀려고 하지 않아도 돼요. 가장 작은 한 조각만 봐도 충분해요."
 }, {
   k: "지침",
-  ack: "오래 버티셨어요. 지친 건 약해서가 아니라, 멈추지 않아서예요."
+  ack: "오래 버티셨어요. 지친 건 약해서가 아니라, 멈추지 않아서예요.",
+  lens: "지칠 땐 더 잘하기보다 덜 혼내는 쪽이 아이에겐 더 커요. 오늘은 그거면 돼요."
 }];
 
-// ── 정적 코칭 — 상황 8가지 × 고문님 가르침 (어록은 모두 앱에 저장된 검증본에서) ──
+// 코칭 연결 문구 — 매번 다르게 골라 식상함을 줄인다 (어록·핵심 메시지는 그대로 유지)
+const pickOne = a => a[Math.floor(Math.random() * a.length)];
+const COACHLINES = {
+  intro: ["많이 속상하셨죠. 괜찮아요, 같이 봐요.\n어떤 일이었나요?", "오늘 마음이 많이 무거우셨겠어요. 천천히 같이 풀어봐요.\n어떤 일이었어요?", "잠깐 앉았다 가세요. 혼자 삭이지 않으셔도 돼요.\n무슨 일이 있었나요?", "하루 종일 마음에 걸리셨죠. 여기선 편히 내려놓으셔도 돼요.\n어떤 일이었나요?"],
+  write: ["무슨 일이 있었는지 한 줄이면 돼요. 쓰다 보면 화가 한 김 식어요.", "있었던 일을 한 줄만 적어볼까요. 글로 옮기는 사이 마음이 조금 가라앉아요.", "길게 안 쓰셔도 돼요. 한 줄이면 충분해요 — 적는 동안 마음이 정리돼요."],
+  emoLead: ["그 마음, 그럴 만해요.\n지금 어느 쪽에 가장 가까우세요?", "충분히 그럴 수 있어요.\n지금 엄마 마음은 어느 쪽에 가까워요?", "그랬군요. 마음이 많이 일렁였겠어요.\n지금은 어느 쪽에 가장 가까우세요?"],
+  goodLead: ["그 좋은 점을 넓혀 주세요. 좋은 점이 자라면, 아쉬운 점은 자리를 잃어요.", "그거예요. 그 좋은 점에 햇볕을 쬐어 주세요 — 자라는 쪽이 이겨요.", "바로 그 한 조각을 키워 주세요. 좋은 점이 넓어지면 아쉬운 점은 설 자리가 줄어요."],
+  doorLead: ["혼내는 대신 열어줄 만한 '다른 문'을 몇 개 놓아둘게요. 끌리는 게 있는지 천천히 보세요.", "다그치는 문 말고, 열어줄 만한 '다른 문' 몇 개를 둘게요. 마음 가는 걸로 골라보세요.", "닫힌 문 앞에서 실랑이하는 대신 — 열어줄 만한 '다른 문'을 놓아둘게요. 천천히 보세요."],
+  closing: ["오늘은 여기까지로 충분해요. 혼내는 대신, 멈췄으니까요.", "여기까지 온 것만으로 충분해요. 다그치기 전에 멈춰 주셨잖아요.", "오늘 이 멈춤이, 아이에겐 큰 거예요. 충분히 잘하고 계세요."]
+};
+
+// 기질별 '행동 재해석' 통찰 — 되묻기 자리에서 그 아이의 결로 행동을 다시 읽어준다 (TYPES 심리 기반)
+const TINSIGHT = {
+  bird: "새 기질 아이라, 오래 붙잡으면 금세 싫증을 내요 — 게으른 게 아니라 짧고 굵게 타는 결이에요. 감정이 솔직해서 마음이 그대로 드러나는 만큼, 잘했을 때 그 자리에서 바로 알아주면 확 살아나요.",
+  sky: "하늘 기질 아이는 '왜 이걸 해야 하는지'가 안 풀리면 거기서 멈춰 서요 — 반항이 아니라, 의미가 있어야 움직이는 결이에요. 그 '왜?'를 막지 말고 같이 궁금해해 주면, 누가 시키지 않아도 스스로 달려가요.",
+  earth: "땅 기질 아이는 겉은 무던해도 속엔 생각과 걱정이 많고, 분위기를 많이 타요 — 닦달하면 오히려 더 미뤄요. 몰아붙이기보다 곁에서 분위기를 만들어 주면, 끈기 있게 끝까지 가는 아이예요.",
+  seed: "뿌리 기질 아이는 하나를 완전히 이해해야 다음으로 가요 — 느린 게 아니라 신중한 결이에요. 자존심이 강해서 서두르게 하거나 남과 비교하면 그 자리에서 위축돼요. 작은 걸 정확히 알아주는 게 가장 큰 힘이에요."
+};
 const SITUATIONS = [{
   k: "study",
   label: "📚 공부·숙제",
@@ -3575,9 +3598,9 @@ function StaticChat({
   onDone,
   onTest
 }) {
-  const [msgs, setMsgs] = useState([{
+  const [msgs, setMsgs] = useState(() => [{
     role: "a",
-    content: "많이 속상하셨죠. 괜찮아요, 같이 봐요.\n어떤 일이었나요?"
+    content: pickOne(COACHLINES.intro)
   }]);
   const [step, setStep] = useState("situ"); // situ → write → emo → ask1 → zerosum → doors → end
   const [situ, setSitu] = useState(null);
@@ -3588,6 +3611,25 @@ function StaticChat({
   useEffect(() => {
     if (scRef.current) scRef.current.scrollTop = scRef.current.scrollHeight;
   }, [msgs, step]);
+  // 지난 코칭 기억하기 — 이 아이로 상담한 적이 있으면 인사에 이어붙인다
+  useEffect(() => {
+    let alive = true;
+    (async () => {
+      try {
+        if (!kidName) return;
+        const r = await store.get("maum_drawer");
+        const list = r && r.value ? JSON.parse(r.value) : [];
+        const last = Array.isArray(list) ? list.find(x => x && x.kind === "coaching" && x.child === kidName && x.situLabel) : null;
+        if (alive && last) {
+          setMsgs([{
+            role: "a",
+            content: "지난번엔 '" + last.situLabel + "'로 마음 쓰셨죠. 그 뒤로 좀 어떠셨어요?\n오늘은 어떤 일이었나요?"
+          }]);
+        }
+      } catch (e) {}
+    })();
+    return () => { alive = false; };
+  }, []);
   const push = (role, content) => setMsgs(m => [...m, {
     role,
     content
@@ -3602,13 +3644,13 @@ function StaticChat({
   function pickSitu(s) {
     setSitu(s);
     push("u", s.label);
-    push("a", N(s.empathy) + "\n\n무슨 일이 있었는지 한 줄이면 돼요. 쓰다 보면 화가 한 김 식어요.");
+    push("a", N(s.empathy) + "\n\n" + pickOne(COACHLINES.write));
     setStep("write");
   }
   function pickEmo(e) {
     ans.current.emotion = e.k;
     push("u", e.k);
-    push("a", e.ack + "\n\n" + N(situ.ask1));
+    push("a", e.ack + (e.lens ? "\n\n" + N(e.lens) : "") + "\n\n" + N(situ.ask1));
     setStep("ask1");
   }
   function send() {
@@ -3619,10 +3661,12 @@ function StaticChat({
     if (taRef.current) taRef.current.style.height = "auto";
     if (step === "write") ans.current.write = v;else if (step === "ask1") ans.current.signal = v;else if (step === "zerosum") ans.current.good = v;
     if (step === "write") {
-      push("a", "그 마음, 그럴 만해요.\n지금 어느 쪽에 가장 가까우세요?");
+      push("a", pickOne(COACHLINES.emoLead));
       setStep("emo");
     } else if (step === "ask1") {
-      push("a", N(situ.bridge) + "\n\n" + N(situ.zeroQ || "그 와중에도 — 요즘 아이가 작게라도 잘한 순간이 하나 있다면, 뭐가 떠오르세요?"));
+      const tmB = TEMPERS.find(x => x.k === temper);
+      const tIns = tmB && TINSIGHT[tmB.t] ? "\n\n" + N(TINSIGHT[tmB.t]) : "";
+      push("a", N(situ.bridge) + tIns + "\n\n" + N(situ.zeroQ || "그 와중에도 — 요즘 아이가 작게라도 잘한 순간이 하나 있다면, 뭐가 떠오르세요?"));
       setStep("zerosum");
     } else if (step === "zerosum") {
       const PRAISE = {
@@ -3633,12 +3677,12 @@ function StaticChat({
       };
       const tm = TEMPERS.find(x => x.k === temper);
       const tip = tm ? "\n\n" + PRAISE[tm.t] : "";
-      push("a", "그 좋은 점을 넓혀 주세요. 좋은 점이 자라면, 아쉬운 점은 자리를 잃어요." + tip + "\n\n혼내는 대신 열어줄 만한 '다른 문'을 몇 개 놓아둘게요. 끌리는 게 있는지 천천히 보세요.");
+      push("a", pickOne(COACHLINES.goodLead) + tip + "\n\n" + pickOne(COACHLINES.doorLead));
       setStep("doors");
     }
   }
   function finish() {
-    push("a", "오늘은 여기까지로 충분해요. 혼내는 대신, 멈췄으니까요.\n\n\u201c" + situ.quote.t + "\u201d\n— " + situ.quote.d + "\n\n💌 오늘의 코칭은 '마음 서랍'에 담아둘게요. 홈 아래에서 언제든 꺼내 보세요.");
+    push("a", pickOne(COACHLINES.closing) + "\n\n\u201c" + situ.quote.t + "\u201d\n— " + situ.quote.d + "\n\n💌 오늘의 코칭은 '마음 서랍'에 담아둘게요. 홈 아래에서 언제든 꺼내 보세요.");
     const tm = TEMPERS.find(x => x.k === temper);
     const tDoor = tm && situ.tDoors ? situ.tDoors[tm.t] : null;
     saveDrawerItem({
@@ -5365,7 +5409,8 @@ function postCheji(child) {
 }
 function TestPage({
   onHome,
-  onCoach
+  onCoach,
+  onWorld
 }) {
   const [children, setChildren] = useState([]);
   const [loaded, setLoaded] = useState(false);
@@ -5579,6 +5624,7 @@ function TestPage({
       s: "home"
     }),
     onCoach: onCoach,
+    onWorld: onWorld,
     onDeep: t => setView({
       s: "deep",
       id: view.id,
@@ -6097,7 +6143,8 @@ function Result({
   onHome,
   onRetake,
   onDeep,
-  onCoach
+  onCoach,
+  onWorld
 }) {
   const [copied, setCopied] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -6466,20 +6513,56 @@ function Result({
       color: T2.color
     },
     onClick: () => onDeep(second)
-  }, "\uD83D\uDCD6 \uB450 \uBC88\uC9F8 \uACB0 \u2018", T2.name, "\u2019 \uC815\uBC00 \uBD84\uC11D\uB3C4 \uC77D\uAE30 \u203A"), !child.isParent && onCoach && /*#__PURE__*/React.createElement("button", {
+  }, "\uD83D\uDCD6 \uB450 \uBC88\uC9F8 \uACB0 \u2018", T2.name, "\u2019 \uC815\uBC00 \uBD84\uC11D\uB3C4 \uC77D\uAE30 \u203A"), onWorld && /*#__PURE__*/React.createElement("div", {
     style: {
-      ...TS.ghost,
-      marginTop: 16,
-      width: "100%"
+      marginTop: 24,
+      paddingTop: 20,
+      borderTop: `1px solid ${TC.line}`
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: TC.cream,
+      fontSize: 13.5,
+      fontWeight: 700,
+      textAlign: "center",
+      marginBottom: 10,
+      lineHeight: 1.55
+    }
+  }, child.isParent ? "이제 우리 가족의 땅을 넓혀볼까요" : "이제 매일 한 걸음씩, " + withName(child.name) + "의 좋은 점을 찾아볼까요"), /*#__PURE__*/React.createElement("button", {
+    style: {
+      width: "100%",
+      background: `linear-gradient(135deg, ${TC.gold}, #FF9E6D)`,
+      color: "#3a2410",
+      border: "none",
+      borderRadius: 14,
+      padding: "16px",
+      fontSize: 16,
+      fontWeight: 800,
+      cursor: "pointer",
+      boxShadow: "0 10px 26px rgba(242,193,107,0.30)"
+    },
+    onClick: onWorld
+  }, "🌍 세계지도에서 우리 땅 넓히기 →")), !child.isParent && onCoach && /*#__PURE__*/React.createElement("button", {
+    style: {
+      width: "100%",
+      marginTop: 10,
+      background: "rgba(255,255,255,0.04)",
+      border: `1px solid ${TC.line}`,
+      borderRadius: 14,
+      padding: "14px",
+      fontSize: 14.5,
+      fontWeight: 700,
+      color: TC.cream,
+      cursor: "pointer"
     },
     onClick: onCoach
-  }, "\uC774 \uACB0\uC744 \uC544\uB294 \uCC44\uB85C \u2014 \uCABD\uCABD\uC774 \uCF54\uCE6D \uBC1B\uC544\uBCF4\uAE30 \u2192"), /*#__PURE__*/React.createElement("button", {
+  }, "이 결을 아는 채로 — 쪽쪽이 코칭 →"), /*#__PURE__*/React.createElement("button", {
     style: {
-      ...TS.primary,
-      marginTop: 14
+      ...TS.text,
+      marginTop: 10
     },
     onClick: onHome
-  }, "\uC644\uB8CC"), /*#__PURE__*/React.createElement("button", {
+  }, "완료"), /*#__PURE__*/React.createElement("button", {
     style: TS.text,
     onClick: onRetake
   }, "\uB2E4\uC2DC \uAC80\uC0AC\uD558\uAE30"), /*#__PURE__*/React.createElement("div", {
