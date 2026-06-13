@@ -21096,6 +21096,29 @@ function WorldPage({
   onTest
 }) {
   const [lights, setLights] = useState([]);
+  // 🔠 글자 크기(가⁻ 가⁺) — 0:보통 1:크게 2:더크게. 폰에 기억(maum_fontscale)
+  const [fsLv, setFsLv] = useState(0);
+  useEffect(() => {
+    (async () => {
+      try {
+        const r = await store.get("maum_fontscale");
+        if (r && r.value != null) {
+          const n = parseInt(r.value, 10);
+          if (n >= 0 && n < FS_LEVELS.length) setFsLv(n);
+        }
+      } catch (e) {}
+    })();
+  }, []);
+  function bumpFs(d) {
+    const next = Math.max(0, Math.min(FS_LEVELS.length - 1, fsLv + d));
+    if (next === fsLv) return;
+    setFsLv(next);
+    try {
+      store.set("maum_fontscale", String(next));
+    } catch (e) {}
+  }
+  // 매 렌더마다 현재 배율을 WS 글자 크기에 반영 (base에서 다시 계산하므로 누적 안 됨)
+  applyFontScale(FS_LEVELS[fsLv]);
   const [gems, setGems] = useState([]);
   const [memos, setMemos] = useState([]);
   const [todos, setTodos] = useState([]);
@@ -22361,7 +22384,55 @@ function WorldPage({
       cursor: "pointer",
       fontFamily: "inherit"
     }
-  }, "\u2190 \uD648"), /*#__PURE__*/React.createElement("button", {
+  }, "\u2190 \uD648"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      gap: 5,
+      background: "rgba(255,255,255,0.05)",
+      border: "1px solid rgba(255,255,255,0.12)",
+      borderRadius: 12,
+      padding: "3px 4px"
+    },
+    "aria-label": "\uAE00\uC790 \uD06C\uAE30"
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: () => bumpFs(-1),
+    disabled: fsLv <= 0,
+    "aria-label": "\uAE00\uC790 \uC791\uAC8C",
+    style: {
+      background: "none",
+      border: "none",
+      color: fsLv <= 0 ? "rgba(255,255,255,0.25)" : WC.cream,
+      fontSize: 13,
+      fontWeight: 700,
+      lineHeight: 1,
+      padding: "4px 7px",
+      cursor: fsLv <= 0 ? "default" : "pointer",
+      fontFamily: "inherit"
+    }
+  }, "\uAC00\u207B"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: WC.mute,
+      fontSize: 10,
+      minWidth: 30,
+      textAlign: "center"
+    }
+  }, ["\uBCF4\uD1B5", "\uD06C\uAC8C", "\uB354\uD06C\uAC8C"][fsLv]), /*#__PURE__*/React.createElement("button", {
+    onClick: () => bumpFs(1),
+    disabled: fsLv >= FS_LEVELS.length - 1,
+    "aria-label": "\uAE00\uC790 \uD06C\uAC8C",
+    style: {
+      background: "none",
+      border: "none",
+      color: fsLv >= FS_LEVELS.length - 1 ? "rgba(255,255,255,0.25)" : WC.cream,
+      fontSize: 16,
+      fontWeight: 700,
+      lineHeight: 1,
+      padding: "4px 7px",
+      cursor: fsLv >= FS_LEVELS.length - 1 ? "default" : "pointer",
+      fontFamily: "inherit"
+    }
+  }, "\uAC00\u207A")), /*#__PURE__*/React.createElement("button", {
     style: WS.setTop,
     onClick: () => setShowSet(true),
     "aria-label": "\uC124\uC815"
@@ -26815,6 +26886,24 @@ const WS = {
     cursor: "pointer"
   }
 };
+
+// ── 글자 크기(가⁻ 가⁺) ──
+// WS의 '글자(fontSize)'만 배율로 키운다. 지도(mapWrap/svg)·칸·버튼 크기는 그대로라 레이아웃이 안 깨진다.
+// 배율: 1=보통, 1.08=크게, 1.15=더크게 (±15% 이내)
+const FS_LEVELS = [1, 1.08, 1.15];
+// 지도/박스 등 '글자가 핵심이 아닌' 키는 건드리지 않는다 (지도 영역 보호)
+const WS_FS_SKIP = { mapWrap: 1, svg: 1, zoomBtns: 1 };
+const WS_BASE_FS = {};
+Object.keys(WS).forEach(function (k) {
+  if (!WS_FS_SKIP[k] && WS[k] && typeof WS[k].fontSize === "number") {
+    WS_BASE_FS[k] = WS[k].fontSize;
+  }
+});
+function applyFontScale(s) {
+  Object.keys(WS_BASE_FS).forEach(function (k) {
+    WS[k].fontSize = Math.round(WS_BASE_FS[k] * s * 100) / 100;
+  });
+}
 
 // ── 마운트 (깃허브 페이지) ──
 (function () {
