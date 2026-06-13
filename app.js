@@ -110,6 +110,7 @@ function HomePage({
   const [bubble, setBubble] = useState(null); // {who, text} 클릭된 새 말풍선
   const [showZero, setShowZero] = useState(false); // 제로섬 더 보기 패널
   const [showBackup, setShowBackup] = useState(false); // 💾 백업/복원 시트
+  const [showHelp, setShowHelp] = useState(false); // 📖 사용법 펼침
   const [bkNick, setBkNick] = useState(""); // 백업 코드 (자동 생성, 폰에 저장)
   const [bkLabel, setBkLabel] = useState(""); // 찾기용 별명 (대표가 구제 시 단서)
   const [bkNewCode, setBkNewCode] = useState(""); // 새 폰에서 코드 직접 입력
@@ -1178,6 +1179,250 @@ function HomePage({
       background: "rgba(255,255,255,0.04)",
       border: "1px solid rgba(255,255,255,0.1)",
       borderRadius: 14,
+      padding: "12px 14px",
+      marginBottom: 12
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: () => setShowHelp(!showHelp),
+    style: {
+      width: "100%",
+      background: "none",
+      border: "none",
+      color: "#9FE1CB",
+      fontSize: 13,
+      fontWeight: 800,
+      cursor: "pointer",
+      fontFamily: "inherit",
+      textAlign: "left",
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center"
+    }
+  }, /*#__PURE__*/React.createElement("span", null, "\uD83D\uDCD6 \uB9C8\uC74C \uACF3\uAC04 \uC0AC\uC6A9\uBC95"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: "#9AA3C7",
+      fontSize: 12
+    }
+  }, showHelp ? "접기 ▲" : "펼치기 ▼")), showHelp && /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#E8E2D5",
+      fontSize: 12.5,
+      lineHeight: 1.85,
+      marginTop: 11
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: 9
+    }
+  }, /*#__PURE__*/React.createElement("b", {
+    style: {
+      color: "#F2C16B"
+    }
+  }, "\uD83C\uDF0D \uC624\uB298\uC758 \uBC1C\uACAC"), /*#__PURE__*/React.createElement("br", null), "\uB9E4\uC77C \uC544\uC774\uC758 \uC88B\uC740 \uC810\uC744 \uD558\uB098\uC529 \uCC3E\uC544, \uC138\uACC4 \uC9C0\uB3C4\uC5D0 \uBD88\uC744 \uCF1C\uC694. \uB098\uB77C\uB97C \uACE0\uB974\uACE0 \uD55C \uC904\uC744 \uC801\uC73C\uBA74 \uADF8 \uB098\uB77C\uAC00 \uBC1D\uC544\uC9C0\uACE0, \uBCF4\uC11D\uC774 \uBAA8\uC5EC\uC694. \uD558\uB8E8\uC5D0 \uC0C8 \uB098\uB77C \uD558\uB098\uC529 \u2014 \uCC9C\uCC9C\uD788, \uB9E4\uC77C\uC774 \uC911\uC694\uD574\uC694."), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: 9
+    }
+  }, /*#__PURE__*/React.createElement("b", {
+    style: {
+      color: "#F2C16B"
+    }
+  }, "\uD83C\uDF3F \uCABD\uCABD\uC774 \uB9C8\uC74C \uCF54\uCE58"), /*#__PURE__*/React.createElement("br", null), "\uC544\uC774\uC5D0\uAC8C \uC6B1\uD558\uAC70\uB098 \uB9C9\uB9C9\uD560 \uB54C \uCABD\uCABD\uC774\uC640 \uC774\uC57C\uAE30\uD574\uC694. \uB2F5\uC744 \uC8FC\uB294 \uAC8C \uC544\uB2C8\uB77C, \uD55C \uAC78\uC74C\uC529 \uB418\uBB3C\uC73C\uBA70 \uC5C4\uB9C8\uAC00 \uC2A4\uC2A4\uB85C \uB2F5\uC5D0 \uB2FF\uAC8C \uB3C4\uC640\uC694. \uB450 \uAC00\uC9C0 \uAE38\uC774 \uC788\uC5B4\uC694 \u2014 \uBC14\uB85C \uC2DC\uC791\uB418\uB294 ", /*#__PURE__*/React.createElement("b", null, "\uCABD\uCABD\uC774 \uCF54\uCE6D"), ", \uADF8\uB9AC\uACE0 \uB354 \uAE4A\uC740 ", /*#__PURE__*/React.createElement("b", null, "AI \uCABD\uCABD\uC774"), "."), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: 9
+    }
+  }, /*#__PURE__*/React.createElement("b", {
+    style: {
+      color: "#F2C16B"
+    }
+  }, "\uD83E\uDDED \uAE30\uC9C8 \uC9C4\uB2E8"), /*#__PURE__*/React.createElement("br", null), "\uC544\uC774\uB9C8\uB2E4 \uD0C0\uACE0\uB09C \uACB0(\uAE30\uC9C8)\uC744 \uC54C\uC544\uBD10\uC694 \u2014 \uC0C8\xB7\uD558\uB298\xB7\uB545\xB7\uBFCC\uB9AC. \uADF8 \uC544\uC774\uC5D0\uAC8C \uB9DE\uB294 \uCE6D\uCC2C\uBC95\xB7\uACF5\uBD80\uBC95\uC758 \uC2E4\uB9C8\uB9AC\uB97C \uC5BB\uC5B4\uC694. \uC544\uC774\uB97C \uC5EC\uB7EC \uBA85 \uB4F1\uB85D\uD574 \uAC01\uC790 \uC9C4\uB2E8\uD560 \uC218 \uC788\uC5B4\uC694."), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: 9
+    }
+  }, /*#__PURE__*/React.createElement("b", {
+    style: {
+      color: "#F2C16B"
+    }
+  }, "\uD83C\uDF38 \uD568\uAED8 \uAD11\uC7A5 \xB7 \uADF8\uB8F9"), /*#__PURE__*/React.createElement("br", null), "\uB2E4\uB978 \uC5C4\uB9C8\uB4E4\uACFC \uC88B\uC740 \uC810\uC744 \uB098\uB204\uACE0 \uC751\uC6D0\uD574\uC694. \uADF8\uB8F9\uC744 \uB9CC\uB4E4\uBA74(\uC6B4\uC601\uC790 \uC2B9\uC778) \uC6B0\uB9AC\uB07C\uB9AC \uB530\uB85C \uBAA8\uC5EC \uB2F5\uAE00\uB85C \uBA58\uD1A0\uB9C1\uB3C4 \uD560 \uC218 \uC788\uC5B4\uC694."), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: 9
+    }
+  }, /*#__PURE__*/React.createElement("b", {
+    style: {
+      color: "#F2C16B"
+    }
+  }, "\uD83D\uDCBE \uAE30\uB85D \uBCF4\uAD00"), /*#__PURE__*/React.createElement("br", null), "\uAE30\uB85D\uC740 \uC774 \uAE30\uAE30\uC5D0 \uC800\uC7A5\uB3FC\uC694. \uAE30\uAE30\uB97C \uBC14\uAFD4\uB3C4 \uC783\uC9C0 \uC54A\uB3C4\uB85D, \uC124\uC815\uC5D0\uC11C ", /*#__PURE__*/React.createElement("b", null, "\uBC31\uC5C5 \uCF54\uB4DC"), "\uB97C \uBCF5\uC0AC\uD574 \uC548\uC804\uD55C \uACF3(\uCE74\uD1A1 \uB098\uC5D0\uAC8C \uBCF4\uB0B4\uAE30)\uC5D0 \uBCF4\uAD00\uD558\uC138\uC694."), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#9AA3C7",
+      fontSize: 11.5,
+      lineHeight: 1.7,
+      paddingTop: 8,
+      borderTop: "1px solid rgba(255,255,255,0.08)"
+    }
+  }, "\uD83D\uDC9B \uD575\uC2EC\uC740 \uD558\uB098\uC608\uC694 \u2014 ", /*#__PURE__*/React.createElement("b", {
+    style: {
+      color: "#E8E2D5"
+    }
+  }, "\uC9C0\uC801\uC774 \uC544\uB2C8\uB77C \uC88B\uC740 \uC810\uC744 \uB298\uB824\uC8FC\uB294 \uAC83."), " \uB9E4\uC77C \uD55C \uAC00\uC9C0\uC529, \uC88B\uC740 \uC810\uC744 \uBC1C\uACAC\uD574 \uC8FC\uC138\uC694."), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#9FE1CB",
+      fontSize: 12.5,
+      fontWeight: 800,
+      margin: "14px 0 8px"
+    }
+  }, "\u2753 \uC790\uC8FC \uBB3B\uB294 \uC9C8\uBB38"), [{
+    q: "기록이 사라질까 봐 걱정돼요.",
+    a: "설정에서 백업 코드를 복사해 보관하면, 기기를 바꿔도 그 코드로 되살릴 수 있어요. 같은 기기에선 자동으로 이어져요. 가끔 '지금 저장'을 눌러 최신 상태를 보관해 주세요."
+  }, {
+    q: "휴대폰을 바꿨어요. 어떻게 가져오나요?",
+    a: "새 기기 설정 → '다른 기기에서 가져오기' → 예전에 보관해둔 백업 코드를 입력하면 기록이 돌아와요."
+  }, {
+    q: "백업 코드를 잃어버렸어요.",
+    a: "보관해둔 곳(카톡 등)을 먼저 찾아보세요. 정 못 찾으면, 백업할 때 적은 '찾기용 별명'으로 운영자에게 도움을 요청할 수 있어요."
+  }, {
+    q: "아이가 여러 명이에요.",
+    a: "기질 진단에서 아이를 여러 명 등록할 수 있어요. 세계 지도도 처음에 '아이별로 각자 지도 / 다같이 한 지도'를 고를 수 있어요. (설정에서 바꿀 수 있어요)"
+  }, {
+    q: "AI 쪽쪽이가 안 열려요.",
+    a: "AI 대화는 새 창에서 열리고, 무료 클로드 계정 로그인이 필요해요. 카카오톡 안에서 열면 안 되니, 크롬·사파리 같은 브라우저로 열어주세요."
+  }, {
+    q: "지적하지 말라는데, 정말 효과가 있나요?",
+    a: "고문님의 '제로섬'이에요. 좋은 점 5·아쉬운 점 5인 아이에게 아쉬운 점을 지적하면, 자신감을 잃어 좋은 점까지 줄어들어요. 반대로 좋은 점을 칭찬하면 좋은 점이 늘어요. 관찰하다 보면 아이 스스로 변해요."
+  }, {
+    q: "그룹은 어떻게 만드나요?",
+    a: "함께 광장 → '그룹 찾기·만들기'에서 그룹 이름·인원을 적어 요청하면, 운영자가 확인해 열어줘요. 그 뒤 팀원들이 이름으로 검색해 가입해요."
+  }].map((f, i) => /*#__PURE__*/React.createElement("details", {
+    key: i,
+    style: {
+      background: "rgba(0,0,0,0.18)",
+      borderRadius: 10,
+      padding: "9px 12px",
+      marginBottom: 6
+    }
+  }, /*#__PURE__*/React.createElement("summary", {
+    style: {
+      color: "#E8E2D5",
+      fontSize: 12,
+      fontWeight: 700,
+      cursor: "pointer"
+    }
+  }, f.q), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#9AA3C7",
+      fontSize: 11.5,
+      lineHeight: 1.7,
+      marginTop: 7
+    }
+  }, f.a))))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#C9A0E0",
+      fontSize: 13,
+      fontWeight: 800,
+      marginBottom: 8
+    }
+  }, "\uD83D\uDCF2 \uC571 \uC124\uCE58 \xB7 \uACF5\uC720"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: 8
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: doInstall,
+    style: {
+      flex: 1,
+      background: installed ? "rgba(255,255,255,0.05)" : "linear-gradient(135deg,#9F7AEA,#7A5BC8)",
+      color: installed ? "#9AA3C7" : "#fff",
+      border: installed ? "1px solid rgba(255,255,255,0.14)" : "none",
+      borderRadius: 10,
+      padding: "11px 0",
+      fontSize: 13,
+      fontWeight: 800,
+      cursor: "pointer",
+      fontFamily: "inherit"
+    }
+  }, installed ? "✓ 설치됨" : "📲 앱 설치"), /*#__PURE__*/React.createElement("button", {
+    onClick: doShare,
+    style: {
+      flex: 1,
+      background: "rgba(255,255,255,0.07)",
+      color: "#F3EEE3",
+      border: "1px solid rgba(255,255,255,0.16)",
+      borderRadius: 10,
+      padding: "11px 0",
+      fontSize: 13,
+      fontWeight: 700,
+      cursor: "pointer",
+      fontFamily: "inherit"
+    }
+  }, "\uD83D\uDD17 \uACF5\uC720\uD558\uAE30")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#9AA3C7",
+      fontSize: 11,
+      lineHeight: 1.6,
+      marginTop: 8
+    }
+  }, "\uD648 \uD654\uBA74\uC5D0 \uCD94\uAC00\uD558\uBA74 \uC571\uCC98\uB7FC \uC804\uCCB4\uD654\uBA74\uC73C\uB85C \uC5F4\uB824\uC694. \uCE5C\uAD6C\uC5D0\uAC8C \uB9C1\uD06C\uB97C \uACF5\uC720\uD574 \uBCF4\uC138\uC694."), /*#__PURE__*/React.createElement("div", {
+    style: {
+      height: 12
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#9FE1CB",
+      fontSize: 13,
+      fontWeight: 800,
+      marginBottom: 8
+    }
+  }, "\uD83C\uDF3F \uB9C8\uB354\uD074\uB7FD \uAC00\uC871 \uB9C1\uD06C"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      flexDirection: "column",
+      gap: 7
+    }
+  }, [{
+    t: "📺 마더클럽 유튜브",
+    u: "https://youtube.com/channel/UCCC3K-S3XU15AfrAgt8Qobw"
+  }, {
+    t: "☕ 마더클럽 카페",
+    u: "https://naver.me/xWIVgVOx"
+  }, {
+    t: "🎵 마더클럽 밴드",
+    u: "https://band.us/n/a1a5b8CeEbu00"
+  }, {
+    t: "🕊️ 이재훈 고문님 · W라운지",
+    u: "https://kkoyomam-del.github.io/w-lounge/"
+  }, {
+    t: "🎼 고문님이 사랑한 음악 모음집",
+    u: "https://pagodream.github.io/hismusic/"
+  }].map(lk => /*#__PURE__*/React.createElement("a", {
+    key: lk.u,
+    href: lk.u,
+    target: "_blank",
+    rel: "noopener noreferrer",
+    style: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+      background: "rgba(255,255,255,0.05)",
+      border: "1px solid rgba(255,255,255,0.1)",
+      borderRadius: 11,
+      padding: "12px 14px",
+      color: "#F3EEE3",
+      fontSize: 13,
+      fontWeight: 600,
+      textDecoration: "none"
+    }
+  }, /*#__PURE__*/React.createElement("span", null, lk.t), /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: "#9AA3C7",
+      fontSize: 12
+    }
+  }, "\u2197")))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      height: 12
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: "rgba(255,255,255,0.04)",
+      border: "1px solid rgba(255,255,255,0.1)",
+      borderRadius: 14,
       padding: "14px",
       marginBottom: 12
     }
@@ -1517,111 +1762,34 @@ function HomePage({
     }
   })))), /*#__PURE__*/React.createElement("div", {
     style: {
-      height: 12
+      textAlign: "center",
+      marginTop: 16,
+      paddingTop: 14,
+      borderTop: "1px solid rgba(255,255,255,0.08)"
     }
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      color: "#C9A0E0",
-      fontSize: 13,
-      fontWeight: 800,
-      marginBottom: 8
-    }
-  }, "\uD83D\uDCF2 \uC571 \uC124\uCE58 \xB7 \uACF5\uC720"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      gap: 8
-    }
-  }, /*#__PURE__*/React.createElement("button", {
-    onClick: doInstall,
-    style: {
-      flex: 1,
-      background: installed ? "rgba(255,255,255,0.05)" : "linear-gradient(135deg,#9F7AEA,#7A5BC8)",
-      color: installed ? "#9AA3C7" : "#fff",
-      border: installed ? "1px solid rgba(255,255,255,0.14)" : "none",
-      borderRadius: 10,
-      padding: "11px 0",
-      fontSize: 13,
-      fontWeight: 800,
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  }, installed ? "✓ 설치됨" : "📲 앱 설치"), /*#__PURE__*/React.createElement("button", {
-    onClick: doShare,
-    style: {
-      flex: 1,
-      background: "rgba(255,255,255,0.07)",
-      color: "#F3EEE3",
-      border: "1px solid rgba(255,255,255,0.16)",
-      borderRadius: 10,
-      padding: "11px 0",
-      fontSize: 13,
-      fontWeight: 700,
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  }, "\uD83D\uDD17 \uACF5\uC720\uD558\uAE30")), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
     style: {
       color: "#9AA3C7",
       fontSize: 11,
-      lineHeight: 1.6,
-      marginTop: 8
+      lineHeight: 1.7
     }
-  }, "\uD648 \uD654\uBA74\uC5D0 \uCD94\uAC00\uD558\uBA74 \uC571\uCC98\uB7FC \uC804\uCCB4\uD654\uBA74\uC73C\uB85C \uC5F4\uB824\uC694. \uCE5C\uAD6C\uC5D0\uAC8C \uB9C1\uD06C\uB97C \uACF5\uC720\uD574 \uBCF4\uC138\uC694."), /*#__PURE__*/React.createElement("div", {
-    style: {
-      height: 12
-    }
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      color: "#9FE1CB",
-      fontSize: 13,
-      fontWeight: 800,
-      marginBottom: 8
-    }
-  }, "\uD83C\uDF3F \uB9C8\uB354\uD074\uB7FD \uAC00\uC871 \uB9C1\uD06C"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      flexDirection: "column",
-      gap: 7
-    }
-  }, [{
-    t: "📺 마더클럽 유튜브",
-    u: "https://youtube.com/channel/UCCC3K-S3XU15AfrAgt8Qobw"
-  }, {
-    t: "☕ 마더클럽 카페",
-    u: "https://naver.me/xWIVgVOx"
-  }, {
-    t: "🎵 마더클럽 밴드",
-    u: "https://band.us/n/a1a5b8CeEbu00"
-  }, {
-    t: "🕊️ 이재훈 고문님 · W라운지",
-    u: "https://kkoyomam-del.github.io/w-lounge/"
-  }, {
-    t: "🎼 고문님이 사랑한 음악 모음집",
-    u: "https://pagodream.github.io/hismusic/"
-  }].map(lk => /*#__PURE__*/React.createElement("a", {
-    key: lk.u,
-    href: lk.u,
+  }, "\uB9C8\uC74C \uACF3\uAC04 \xB7 v1.0"), /*#__PURE__*/React.createElement("a", {
+    href: "https://youtube.com/@pagodream",
     target: "_blank",
     rel: "noopener noreferrer",
     style: {
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "space-between",
-      background: "rgba(255,255,255,0.05)",
-      border: "1px solid rgba(255,255,255,0.1)",
-      borderRadius: 11,
-      padding: "12px 14px",
-      color: "#F3EEE3",
-      fontSize: 13,
-      fontWeight: 600,
+      color: "rgba(255,255,255,0.5)",
+      fontSize: 11,
       textDecoration: "none"
     }
-  }, /*#__PURE__*/React.createElement("span", null, lk.t), /*#__PURE__*/React.createElement("span", {
+  }, "made by \uD30C\uACE0\uB4DC\uB9BC \xB7 \uB9C8\uB354\uD074\uB7FD"), /*#__PURE__*/React.createElement("div", {
     style: {
-      color: "#9AA3C7",
-      fontSize: 12
+      color: "#6b74a0",
+      fontSize: 10,
+      lineHeight: 1.6,
+      marginTop: 5
     }
-  }, "\u2197")))), bkMsg && /*#__PURE__*/React.createElement("div", {
+  }, "\u6545 \uC774\uC7AC\uD6C8 \uACE0\uBB38\uB2D8\uC758 \uAC00\uB974\uCE68\uC744 \uAE30\uB9AC\uBA70")), bkMsg && /*#__PURE__*/React.createElement("div", {
     style: {
       marginTop: 13,
       color: bkMsg.ok ? "#9FE1CB" : "#FF9E9E",
@@ -2390,7 +2558,7 @@ const EMOJI_T = {
 };
 
 // ★ 게시된 클로드 아티팩트 링크 — 앱을 게시한 뒤 그 주소를 여기 붙여넣으면, 깃허브에서 'AI 대화'가 이 링크로 열려요
-const COACH_CHAT_URL = "https://claude.ai/public/artifacts/b396eed4-773f-4c86-bf6b-8b620daa9cb0";
+const COACH_CHAT_URL = "https://claude.ai/public/artifacts/9ff84209-e3a2-44f0-98fe-ecc5fc754eb9";
 // 클로드 아티팩트 환경 감지 (클로드 안: AI 즉시 / 밖: 링크 연결 또는 정적 코칭)
 const IN_CLAUDE = typeof window !== "undefined" && !!(window.claude || window.storage);
 
@@ -21019,6 +21187,26 @@ function WorldPage({
       await store.set("maum_map_mode", m);
     } catch (e) {}
   }
+  // 🌅 오늘의 시작 — 하루 첫 진입에만 보여주는 들어가는 페이지 (인사·어제 한 줄·오늘의 관찰·아이 고르기)
+  const [entryOpen, setEntryOpen] = useState(false);
+  useEffect(() => {
+    (async () => {
+      try {
+        const r = await store.get("maum_entry_day");
+        const today = keyOf(new Date());
+        if (!r || r.value !== today) setEntryOpen(true);
+      } catch (e) {
+        setEntryOpen(true);
+      }
+    })();
+  }, []);
+  async function enterMap(kidName) {
+    if (kidName) pickChildW(kidName);
+    try {
+      await store.set("maum_entry_day", keyOf(new Date()));
+    } catch (e) {}
+    setEntryOpen(false);
+  }
   // ✨ 오늘은 누구? — 아이별 모드 + 아이 2명 이상 + 오늘 첫 진입에만 한 번 묻기
   const [todayKidAsk, setTodayKidAsk] = useState(false);
   useEffect(() => {
@@ -21236,6 +21424,15 @@ function WorldPage({
     return empty && any ? `이번 주 ${withName(empty.name)}의 좋은 점은 아직 빈자리예요 — 오늘 하나 찾아볼까요?` : null;
   })();
   const count = visLights.length; // 아이별 모드에선 그 아이의 진행
+  // 🌙 어제 발견한 좋은 점 (오늘의 시작 페이지용, 최대 3개)
+  const yesterKey = keyOf(new Date(Date.now() - 864e5));
+  const yesterNotes = entryOpen ? [...lights.filter(e => keyOf(e.date) === yesterKey).map(e => ({
+    t: e.text,
+    c: e.child
+  })), ...gems.filter(g => keyOf(g.date) === yesterKey).map(g => ({
+    t: g.note,
+    c: g.child
+  }))].filter(n => n.t).slice(0, 3) : [];
   const pct = Math.round(count / TOTAL * 100);
   const lvl = levelInfo(count);
   const litToday = visLights.some(e => sameDay(e.date)); // 하루 1나라도 아이별
@@ -22331,7 +22528,178 @@ function WorldPage({
         color: done ? "#9FE1CB" : "#9AA3C7"
       }
     }, done ? "✨ 오늘 발견했어요" : "· 아직이에요"));
-  }))), modeLoaded && !mapMode && wkids.length >= 2 && /*#__PURE__*/React.createElement("div", {
+  }))), entryOpen && !(modeLoaded && !mapMode && wkids.length >= 2) && /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: "fixed",
+      inset: 0,
+      zIndex: 88,
+      background: "linear-gradient(160deg,#0E1430,#1A1438)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: 22,
+      overflowY: "auto"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: "100%",
+      maxWidth: 380,
+      padding: "8px 0"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      textAlign: "center",
+      marginBottom: 18
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 30,
+      marginBottom: 8
+    }
+  }, streakInfo.cur >= 1 ? "🔥" : "🌅"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#F3EEE3",
+      fontSize: 19,
+      fontWeight: 800,
+      lineHeight: 1.4
+    }
+  }, "\uC624\uB298\uB3C4 \uC88B\uC740 \uC810\uC744", /*#__PURE__*/React.createElement("br", null), "\uCC3E\uC73C\uB7EC \uAC00\uC694"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#9AA3C7",
+      fontSize: 12.5,
+      marginTop: 8,
+      lineHeight: 1.6
+    }
+  }, streakInfo.cur >= 2 ? `${streakInfo.cur}일째 이어가고 있어요. 잘하고 있어요.` : streakInfo.total > 0 ? `지금까지 ${streakInfo.total}일, 아이의 좋은 점을 발견했어요.` : "오늘이 첫 발견이 될 거예요.")), yesterNotes.length > 0 && /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: "rgba(255,255,255,0.05)",
+      border: "1px solid rgba(255,255,255,0.1)",
+      borderRadius: 14,
+      padding: "13px 15px",
+      marginBottom: 12
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#9FE1CB",
+      fontSize: 11.5,
+      fontWeight: 800,
+      marginBottom: 8
+    }
+  }, "\uD83C\uDF19 \uC5B4\uC81C \uBC1C\uACAC\uD55C \uC88B\uC740 \uC810"), yesterNotes.map((n, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    style: {
+      color: "#E8E2D5",
+      fontSize: 12.5,
+      lineHeight: 1.7,
+      marginBottom: i < yesterNotes.length - 1 ? 5 : 0
+    }
+  }, "\xB7 ", n.t, n.c ? /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: "#9AA3C7",
+      fontSize: 11
+    }
+  }, " \u2014 ", withName(n.c)) : null))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: "linear-gradient(135deg, rgba(242,193,107,0.13), rgba(255,158,109,0.08))",
+      border: "1px solid rgba(242,193,107,0.35)",
+      borderRadius: 14,
+      padding: "14px 16px",
+      marginBottom: 16
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: WC.gold,
+      fontSize: 11.5,
+      fontWeight: 800,
+      marginBottom: 6
+    }
+  }, "\uD83D\uDC9B \uC624\uB298\uC758 \uAD00\uCC30"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#F3EEE3",
+      fontSize: 14,
+      fontWeight: 600,
+      lineHeight: 1.6
+    }
+  }, obsToday()), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#9AA3C7",
+      fontSize: 11,
+      marginTop: 7,
+      lineHeight: 1.5
+    }
+  }, "\uC774 \uC9C8\uBB38\uC744 \uB9C8\uC74C\uC5D0 \uD488\uACE0, \uC624\uB298 \uC544\uC774\uB97C \uBC14\uB77C\uBD10 \uC8FC\uC138\uC694.")), wkids.length >= 1 ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#9AA3C7",
+      fontSize: 12,
+      textAlign: "center",
+      marginBottom: 9
+    }
+  }, "\uB204\uAD6C\uC758 \uC88B\uC740 \uC810\uC744 \uCC3E\uC544\uBCFC\uAE4C\uC694?"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      flexDirection: "column",
+      gap: 8
+    }
+  }, wkids.map(k => /*#__PURE__*/React.createElement("button", {
+    key: k.name,
+    onClick: () => enterMap(k.name),
+    style: {
+      display: "flex",
+      alignItems: "center",
+      gap: 10,
+      background: "rgba(255,255,255,0.06)",
+      border: "1px solid rgba(255,255,255,0.14)",
+      borderRadius: 13,
+      padding: "14px 16px",
+      cursor: "pointer",
+      fontFamily: "inherit",
+      textAlign: "left"
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: 22
+    }
+  }, k.temper ? EMOJI_T[k.temper] : "🐣"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: "#F3EEE3",
+      fontSize: 15,
+      fontWeight: 700
+    }
+  }, withName(k.name), perKid ? "의 지도로" : ""), /*#__PURE__*/React.createElement("span", {
+    style: {
+      marginLeft: "auto",
+      color: WC.gold,
+      fontSize: 18
+    }
+  }, "\u2192")))), /*#__PURE__*/React.createElement("button", {
+    onClick: () => enterMap(null),
+    style: {
+      width: "100%",
+      marginTop: 12,
+      background: "none",
+      border: "none",
+      color: "#9AA3C7",
+      fontSize: 12.5,
+      cursor: "pointer",
+      fontFamily: "inherit",
+      textDecoration: "underline",
+      textUnderlineOffset: 2
+    }
+  }, "\uADF8\uB0E5 \uC9C0\uB3C4\uB85C \uAC08\uAC8C\uC694")) : /*#__PURE__*/React.createElement("button", {
+    onClick: () => enterMap(null),
+    style: {
+      width: "100%",
+      background: "linear-gradient(135deg,#F2C16B,#FF9E6D)",
+      color: "#3A2410",
+      border: "none",
+      borderRadius: 13,
+      padding: "15px 0",
+      fontSize: 15,
+      fontWeight: 800,
+      cursor: "pointer",
+      fontFamily: "inherit"
+    }
+  }, "\uC9C0\uB3C4\uB85C \uAC00\uAE30 \u2192"))), modeLoaded && !mapMode && wkids.length >= 2 && /*#__PURE__*/React.createElement("div", {
     style: {
       position: "fixed",
       inset: 0,
