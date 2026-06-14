@@ -1,25 +1,42 @@
-// 마음 곳간 서비스워커 v2 — 네트워크 우선 (새 버전 즉시 반영, 오프라인엔 캐시)
-const CACHE = "maum-v2";
+// 마음 곳간 서비스워커
+// 원칙: 항상 네트워크(최신) 우선 → 옛 캐시를 붙들지 않음. 강제 새로고침(reload) 없음.
+//       네트워크가 안 될 때만 캐시로 대체(오프라인 대비).
+const CACHE = "maum-v6";
 
-self.addEventListener("install", (e) => {
-  self.skipWaiting(); // 새 워커가 바로 자리를 잡게
+self.addEventListener("install", function () {
+  // 새 워커가 곧바로 대기 없이 활성화되도록
+  self.skipWaiting();
 });
 
-self.addEventListener("activate", (e) => {
-  // 옛 캐시(maum-v1 등) 정리 — 기록(localStorage)은 캐시가 아니라 안전함
-  e.waitUntil(caches.keys().then((ks) => Promise.all(ks.filter((k) => k !== CACHE).map((k) => caches.delete(k)))));
-  self.clients.claim();
+self.addEventListener("activate", function (e) {
+  e.waitUntil(
+    (async function () {
+      // 예전 캐시 전부 삭제 (옛 app.js가 남아있던 원인 제거)
+      var keys = await caches.keys();
+      await Promise.all(keys.map(function (k) { return caches.delete(k); }));
+      await self.clients.claim();
+    })()
+  );
 });
 
-self.addEventListener("fetch", (e) => {
-  if (e.request.method !== "GET") return;
-  // 네트워크 우선: 항상 새 파일을 먼저 받아오고, 받아온 걸 캐시에 갱신.
-  // 인터넷이 안 될 때만 캐시로 동작(오프라인 지원 유지).
+self.addEventListener("fetch", function (e) {
+  var req = e.request;
+  if (req.method !== "GET") return;
   e.respondWith(
-    fetch(e.request).then((res) => {
-      const copy = res.clone();
-      caches.open(CACHE).then((c) => c.put(e.request, copy)).catch(() => {});
-      return res;
-    }).catch(() => caches.match(e.request))
+    (async function () {
+      try {
+        // 항상 네트워크에서 먼저 가져온다 → 늘 최신
+        var fresh = await fetch(req);
+        try {
+          var cache = await caches.open(CACHE);
+          cache.put(req, fresh.clone()); // 오프라인 대비로만 저장
+        } catch (err) {}
+        return fresh;
+      } catch (err) {
+        // 네트워크 실패 시에만 캐시 사용
+        var cached = await caches.match(req);
+        return cached || Response.error();
+      }
+    })()
   );
 });
