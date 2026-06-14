@@ -5865,14 +5865,14 @@ function ModePick({
     style: TS.h2
   }, child?.name, " — 시작하기 전에"), /*#__PURE__*/React.createElement("div", {
     style: TS.sub2
-  }, "아이를 떠올리며, 아래 다섯 가지를 지켜 ‘그렇다’ 싶은 항목을 골라 주세요."), /*#__PURE__*/React.createElement("div", { style: { textAlign: "left", maxWidth: 560, margin: "4px auto 20px", lineHeight: 1.65 } }, [["하나", "어떤 문항도 아이에게 100퍼센트 딱 맞는 경우는 드물어요. 절반 넘게 맞다 싶으면 ‘그렇다’(아주 그러면 ‘매우’)를, 어중간하면 ‘보통’을, 맞지 않으면 ‘아니다·전혀’를 골라 주세요."], ["둘", "‘이랬으면 좋겠다’는 바람이 아니라, 아이가 실제로 살고 있는 모습 그대로 골라 주세요. 있는 그대로 바라보는 눈이 필요해요."], ["셋", "잘 모르겠는 항목은, 아이를 잘 알면서도 객관적으로 봐 줄 수 있는 분께 여쭤보되, 선택은 직접 하시는 편이 좋아요."], ["넷", "이 과정을 ‘아이를, 그리고 나를 새로 알아가는 여행’이라 여겨 주세요."], ["다섯", "머리로 너무 골똘히 재면 솔직한 느낌이 흐려져요. 어느 정도는 과감하게, 느낌이 가는 대로 골라 주세요."]].map((r, i) => /*#__PURE__*/React.createElement("div", { key: i, style: { display: "flex", gap: 9, marginTop: i ? 11 : 0 } }, /*#__PURE__*/React.createElement("b", { style: { color: TC.gold, flexShrink: 0 } }, r[0]), /*#__PURE__*/React.createElement("span", { style: { color: TC.mute } }, r[1])))), /*#__PURE__*/React.createElement("button", {
+  }, "아래 다섯 가지를 지키며, ‘그렇다’ 싶은 항목을 골라 주세요."), /*#__PURE__*/React.createElement("div", { style: { textAlign: "left", maxWidth: 560, margin: "4px auto 20px", lineHeight: 1.65 } }, [["하나", "어떤 문항도 나에게 100퍼센트 딱 맞는 경우는 드물어요. 절반 넘게 맞다 싶으면 ‘그렇다’(아주 그러면 ‘매우’)를, 어중간하면 ‘보통’을, 맞지 않으면 ‘아니다·전혀’를 골라 주세요."], ["둘", "‘이랬으면 좋겠다’는 바람이 아니라, 지금 실제로 살고 있는 모습 그대로 골라 주세요. 있는 그대로 바라보는 눈이 필요해요."], ["셋", "잘 모르겠는 항목은, 나를 잘 알면서도 객관적으로 봐 줄 수 있는 사람에게 물어보되, 선택은 직접 하는 편이 좋아요."], ["넷", "이 과정을 ‘나를 새로 알아가는 여행’이라 여겨 주세요."], ["다섯", "머리로 너무 골똘히 재면 솔직한 느낌이 흐려져요. 어느 정도는 과감하게, 느낌이 가는 대로 골라 주세요."]].map((r, i) => /*#__PURE__*/React.createElement("div", { key: i, style: { display: "flex", gap: 9, marginTop: i ? 11 : 0 } }, /*#__PURE__*/React.createElement("b", { style: { color: TC.gold, flexShrink: 0 } }, r[0]), /*#__PURE__*/React.createElement("span", { style: { color: TC.mute } }, r[1])))), /*#__PURE__*/React.createElement("div", { style: { maxWidth: 560, margin: "2px auto 18px", padding: "11px 14px", borderRadius: 12, background: "rgba(212,168,67,0.10)", border: "1px solid rgba(212,168,67,0.28)", color: TC.gold, fontSize: 14, lineHeight: 1.6, textAlign: "left" } }, "초등학생 이하 아이는, 엄마가 아이를 떠올리며 대신 골라 주셔도 돼요."), /*#__PURE__*/React.createElement("button", {
     style: TS.modeCard,
     onClick: () => onPick("full")
   }, /*#__PURE__*/React.createElement("div", {
     style: TS.modeTitle
   }, "기질 진단 시작하기"), /*#__PURE__*/React.createElement("div", {
     style: TS.modeDesc
-  }, "전체 102문항 · 아이를 떠올리며 천천히 골라 주세요.")), /*#__PURE__*/React.createElement("button", {
+  }, "전체 102문항 · 천천히 골라 주세요.")), /*#__PURE__*/React.createElement("button", {
     style: TS.text,
     onClick: onBack
   }, "뒤로"));
@@ -5989,7 +5989,7 @@ function Test({
     style: TS.resumeNote
   }, "\uC774\uC804\uC5D0 \uD558\uB358 \uAC80\uC0AC\uB97C \uC774\uC5B4\uC11C \uC9C4\uD589\uD574\uC694. \uB2F5\uC740 \uADF8\uB300\uB85C \uC800\uC7A5\uB3FC \uC788\uC5B4\uC694."), /*#__PURE__*/React.createElement("div", {
     style: TS.testHint
-  }, isP ? "나 자신을 떠올리며, 각 문장이 얼마나 맞는지 선택해 주세요." : "아이를 떠올리며, 각 문장이 얼마나 맞는지 선택해 주세요.", " \uB9DD\uC124\uC5EC\uC9C0\uBA74 \uAC00\uC6B4\uB370 \u2018\uBCF4\uD1B5\u2019, \uB9DE\uC9C0 \uC54A\uC73C\uBA74 \u2018\uC804\uD600\u2019\uB97C \uC120\uD0DD\uD558\uC154\uB3C4 \uB429\uB2C8\uB2E4."), /*#__PURE__*/React.createElement("div", {
+  }, "각 문장이 지금의 나와 얼마나 맞는지 골라 주세요.", " \uB9DD\uC124\uC5EC\uC9C0\uBA74 \uAC00\uC6B4\uB370 \u2018\uBCF4\uD1B5\u2019, \uB9DE\uC9C0 \uC54A\uC73C\uBA74 \u2018\uC804\uD600\u2019\uB97C \uC120\uD0DD\uD558\uC154\uB3C4 \uB429\uB2C8\uB2E4."), /*#__PURE__*/React.createElement("div", {
     style: {
       flex: 1
     }
@@ -6281,11 +6281,15 @@ function Result({
       background: TYPES[t].color
     }
   }))))), /*#__PURE__*/React.createElement(Section, {
-    title: "\uC774 \uC544\uC774\uC758 \uACB0"
-  }, T.desc), /*#__PURE__*/React.createElement(Section, {
+    title: "\uC774 \uC544\uC774\uC758 \uACB0",
+    defaultOpen: true
+  }, T.desc), /*#__PURE__*/React.createElement(Section, { title: "\uD83D\uDCD6 \uCC45\uC774 \uADF8\uB9B0 \u2018" + T.name + "\u2019\uC758 \uBAA8\uC2B5 \xB7 \uC815\uBC00", accent: T.color }, PORTRAIT[top].map((p, i) => /*#__PURE__*/React.createElement("div", { key: i, style: { color: "rgba(255,255,255,0.82)", lineHeight: 1.8, fontSize: 15, marginTop: i ? 12 : 0 } }, p)), close && /*#__PURE__*/React.createElement("div", { style: { marginTop: 18, paddingTop: 14, borderTop: "1px solid " + TC.line } }, /*#__PURE__*/React.createElement("div", { style: { color: T2.color, fontWeight: 700, marginBottom: 10 } }, "\uB450 \uBC88\uC9F8 \uACB0 \u2018" + T2.name + "\u2019\uC758 \uBAA8\uC2B5"), PORTRAIT[second].map((p, i) => /*#__PURE__*/React.createElement("div", { key: i, style: { color: "rgba(255,255,255,0.82)", lineHeight: 1.8, fontSize: 15, marginTop: i ? 12 : 0 } }, p)))), /*#__PURE__*/React.createElement(Section, {
     title: "\uC774\uB807\uAC8C \uACF5\uBD80\uD560 \uB54C \uC990\uAC70\uC6CC\uC694",
     accent: T.color
-  }, T.study), /*#__PURE__*/React.createElement("div", {
+  }, T.study), /*#__PURE__*/React.createElement(Section, {
+    title: "\uC774\uB807\uAC8C \uD0A4\uC6CC \uC8FC\uC138\uC694",
+    accent: T.color
+  }, /*#__PURE__*/React.createElement("div", {
     style: TS.guideRow
   }, /*#__PURE__*/React.createElement("div", {
     style: {
@@ -6313,7 +6317,7 @@ function Result({
   }, "\uC774\uAC74 \uD53C\uD574\uC8FC\uC138\uC694"), T.avoid.map((x, i) => /*#__PURE__*/React.createElement("div", {
     key: i,
     style: TS.guideItem
-  }, "\u2715 ", x)))), (sparse || weak) && /*#__PURE__*/React.createElement("div", {
+  }, "\u2715 ", x))))), (sparse || weak) && /*#__PURE__*/React.createElement("div", {
     style: TS.warnNote
   }, "\uC751\uB2F5\uC774 \uC801\uAC70\uB098 \uC57D\uD558\uAC8C \uB098\uC640\uC11C \uACB0\uACFC\uAC00 \uB610\uB837\uD558\uC9C0 \uC54A\uC744 \uC218 \uC788\uC5B4\uC694. \u2018\uC815\uBC00 \uC9C4\uB2E8\u2019\uC73C\uB85C \uB2E4\uC2DC \uD574\uBCF4\uBA74 \uD6E8\uC52C \uC815\uD655\uD574\uC838\uC694."), close && /*#__PURE__*/React.createElement("div", {
     style: TS.mixNote
@@ -6408,22 +6412,7 @@ function Result({
     style: TS.toast
   }, "\uBCF5\uC0AC\uB410\uC5B4\uC694! \uBD99\uC5EC\uB123\uC5B4 \uACF5\uC720\uD558\uC138\uC694 \uD83D\uDC26"), saved && /*#__PURE__*/React.createElement("div", {
     style: TS.toast
-  }, "\uCE74\uB4DC \uC774\uBBF8\uC9C0\uAC00 \uC800\uC7A5\uB410\uC5B4\uC694 \uD83D\uDDBC"), /*#__PURE__*/React.createElement("button", {
-    style: {
-      ...TS.deepBtn,
-      borderColor: T.color + "66",
-      color: T.color
-    },
-    onClick: () => onDeep(top)
-  }, "\uD83D\uDCD6 \uCC45\uC774 \uB9D0\uD558\uB294 \u2018", T.name, "\u2019 \uAC19\uC740 \uC544\uC774 \u2014 \uC815\uBC00 \uBD84\uC11D \uC77D\uAE30 \u203A"), close && /*#__PURE__*/React.createElement("button", {
-    style: {
-      ...TS.deepBtn,
-      marginTop: 8,
-      borderColor: T2.color + "66",
-      color: T2.color
-    },
-    onClick: () => onDeep(second)
-  }, "\uD83D\uDCD6 \uB450 \uBC88\uC9F8 \uACB0 \u2018", T2.name, "\u2019 \uC815\uBC00 \uBD84\uC11D\uB3C4 \uC77D\uAE30 \u203A"), onWorld && /*#__PURE__*/React.createElement("div", {
+  }, "\uCE74\uB4DC \uC774\uBBF8\uC9C0\uAC00 \uC800\uC7A5\uB410\uC5B4\uC694 \uD83D\uDDBC"), onWorld && /*#__PURE__*/React.createElement("div", {
     style: {
       marginTop: 24,
       paddingTop: 20,
@@ -6482,17 +6471,41 @@ function Result({
 function Section({
   title,
   children,
-  accent
+  accent,
+  defaultOpen = false
 }) {
+  const [open, setOpen] = useState(defaultOpen);
   return /*#__PURE__*/React.createElement("div", {
     style: TS.section
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: () => setOpen(o => !o),
     style: {
       ...TS.sectionH,
-      color: accent || TC.gold
+      color: accent || TC.gold,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+      width: "100%",
+      background: "transparent",
+      border: "none",
+      cursor: "pointer",
+      textAlign: "left",
+      padding: 0,
+      font: "inherit"
     }
-  }, title), /*#__PURE__*/React.createElement("div", {
-    style: TS.sectionB
+  }, /*#__PURE__*/React.createElement("span", null, title), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: 12,
+      opacity: 0.55,
+      transition: "transform .2s ease",
+      transform: open ? "rotate(90deg)" : "rotate(0deg)",
+      marginLeft: 8
+    }
+  }, "\u25B8")), open && /*#__PURE__*/React.createElement("div", {
+    style: {
+      ...TS.sectionB,
+      marginTop: 12
+    }
   }, children));
 }
 function topType(scores) {
