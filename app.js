@@ -5863,26 +5863,19 @@ function ModePick({
     style: TS.center
   }, /*#__PURE__*/React.createElement("div", {
     style: TS.h2
-  }, child?.name, " \u2014 \uAC80\uC0AC \uBC29\uC2DD"), /*#__PURE__*/React.createElement("div", {
+  }, child?.name, " — 시작하기 전에"), /*#__PURE__*/React.createElement("div", {
     style: TS.sub2
-  }, "\uC544\uC774\uB97C \uB5A0\uC62C\uB9AC\uBA70 \u2018\uADF8\uB807\uB2E4\u2019 \uC2F6\uC740 \uD56D\uBAA9\uC744 \uC120\uD0DD\uD574 \uC8FC\uC138\uC694."), /*#__PURE__*/React.createElement("button", {
-    style: TS.modeCard,
-    onClick: () => onPick("easy")
-  }, /*#__PURE__*/React.createElement("div", {
-    style: TS.modeTitle
-  }, "\uAC04\uD3B8 \uC9C4\uB2E8"), /*#__PURE__*/React.createElement("div", {
-    style: TS.modeDesc
-  }, "\uD575\uC2EC \uBB38\uD56D 24\uAC1C \xB7 \uC57D 2\uBD84. \uACB0\uC744 \uBE60\uB974\uAC8C \uAC00\uB2A0\uD574 \uBD05\uB2C8\uB2E4.")), /*#__PURE__*/React.createElement("button", {
+  }, "아이를 떠올리며, 아래 다섯 가지를 지켜 ‘그렇다’ 싶은 항목을 골라 주세요."), /*#__PURE__*/React.createElement("div", { style: { textAlign: "left", maxWidth: 560, margin: "4px auto 20px", lineHeight: 1.65 } }, [["하나", "어떤 문항도 아이에게 100퍼센트 딱 맞는 경우는 드물어요. 절반 넘게 맞다 싶으면 ‘그렇다’(아주 그러면 ‘매우’)를, 어중간하면 ‘보통’을, 맞지 않으면 ‘아니다·전혀’를 골라 주세요."], ["둘", "‘이랬으면 좋겠다’는 바람이 아니라, 아이가 실제로 살고 있는 모습 그대로 골라 주세요. 있는 그대로 바라보는 눈이 필요해요."], ["셋", "잘 모르겠는 항목은, 아이를 잘 알면서도 객관적으로 봐 줄 수 있는 분께 여쭤보되, 선택은 직접 하시는 편이 좋아요."], ["넷", "이 과정을 ‘아이를, 그리고 나를 새로 알아가는 여행’이라 여겨 주세요."], ["다섯", "머리로 너무 골똘히 재면 솔직한 느낌이 흐려져요. 어느 정도는 과감하게, 느낌이 가는 대로 골라 주세요."]].map((r, i) => /*#__PURE__*/React.createElement("div", { key: i, style: { display: "flex", gap: 9, marginTop: i ? 11 : 0 } }, /*#__PURE__*/React.createElement("b", { style: { color: TC.gold, flexShrink: 0 } }, r[0]), /*#__PURE__*/React.createElement("span", { style: { color: TC.mute } }, r[1])))), /*#__PURE__*/React.createElement("button", {
     style: TS.modeCard,
     onClick: () => onPick("full")
   }, /*#__PURE__*/React.createElement("div", {
     style: TS.modeTitle
-  }, "\uC815\uBC00 \uC9C4\uB2E8"), /*#__PURE__*/React.createElement("div", {
+  }, "기질 진단 시작하기"), /*#__PURE__*/React.createElement("div", {
     style: TS.modeDesc
-  }, "\uC804\uCCB4 \uBB38\uD56D 48\uAC1C \xB7 \uC57D 5\uBD84. \uB354 \uB610\uB837\uD558\uAC8C \uC0B4\uD3B4\uBD05\uB2C8\uB2E4.")), /*#__PURE__*/React.createElement("button", {
+  }, "전체 102문항 · 아이를 떠올리며 천천히 골라 주세요.")), /*#__PURE__*/React.createElement("button", {
     style: TS.text,
     onClick: onBack
-  }, "\uB4A4\uB85C"));
+  }, "뒤로"));
 }
 function Test({
   child,
@@ -5940,6 +5933,10 @@ function Test({
   const cDone = Object.keys(cAns).length;
   const pct = Math.round((done + cDone) / (items.length + choices.length) * 100);
   const finish = () => {
+    if (done + cDone < 8) {
+      window.alert("아직 고른 항목이 적어요. 문항을 조금 더 골라 주신 뒤에 결과를 봐 주세요.");
+      return;
+    }
     // 1) 리커트 점수(유형별 %)
     const lik = {};
     for (const t of ORDER) {
