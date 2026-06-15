@@ -2004,6 +2004,10 @@ function HomePage({
   }[homeTemper] || "🧭"} 우리 아이의 '${homeTemper}' 기질 보러가기 →` : "우리 아이의 기질 보러가기 →" : "아이의 기질이 더 궁금하다면 — 고문님이 권하신 송재희 선생 『사상체질 학습법』 기반 기질 테스트 해보기 →"))), /*#__PURE__*/React.createElement("style", null, `
         .homeRoot{min-height:100dvh !important}
         .homeCol{min-height:100dvh !important}
+        @media (min-width: 521px){
+          html,body{background:#241826;}
+          .homeRoot{max-width:480px !important; margin:0 auto !important; box-shadow:0 0 70px rgba(0,0,0,0.45);}
+        }
         @keyframes mFront { 0%,100%{transform:translateY(0) rotate(0deg)} 50%{transform:translateY(-4px) rotate(2deg)} }
         @keyframes mTilt { 0%,20%{transform:rotate(0deg)} 45%,65%{transform:rotate(-6deg)} 90%,100%{transform:rotate(0deg)} }
         @keyframes mJjok { 0%,100%{transform:translateY(0) scaleX(1)} 25%{transform:translateY(-5px) scaleX(1.05)} 50%{transform:translateY(-2px) scaleX(0.98)} 75%{transform:translateY(-4px) scaleX(1.04)} }
