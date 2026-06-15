@@ -6506,7 +6506,22 @@ function Result({
     style: TS.toast
   }, "\uBCF5\uC0AC\uB410\uC5B4\uC694! \uBD99\uC5EC\uB123\uC5B4 \uACF5\uC720\uD558\uC138\uC694 \uD83D\uDC26"), saved && /*#__PURE__*/React.createElement("div", {
     style: TS.toast
-  }, "\uCE74\uB4DC \uC774\uBBF8\uC9C0\uAC00 \uC800\uC7A5\uB410\uC5B4\uC694 \uD83D\uDDBC"), onWorld && /*#__PURE__*/React.createElement("div", {
+  }, "\uCE74\uB4DC \uC774\uBBF8\uC9C0\uAC00 \uC800\uC7A5\uB410\uC5B4\uC694 \uD83D\uDDBC"), /*#__PURE__*/React.createElement("button", {
+    style: {
+      ...TS.deepBtn,
+      borderColor: T.color + "66",
+      color: T.color
+    },
+    onClick: () => onDeep(top)
+  }, "\uD83D\uDCD6 \uCC45\uC774 \uB9D0\uD558\uB294 \u2018", T.name, "\u2019 \uAC19\uC740 \uC544\uC774 \u2014 \uC815\uBC00 \uBD84\uC11D \uC77D\uAE30 \u203A"), close && /*#__PURE__*/React.createElement("button", {
+    style: {
+      ...TS.deepBtn,
+      marginTop: 8,
+      borderColor: T2.color + "66",
+      color: T2.color
+    },
+    onClick: () => onDeep(second)
+  }, "\uD83D\uDCD6 \uB450 \uBC88\uC9F8 \uACB0 \u2018", T2.name, "\u2019 \uC815\uBC00 \uBD84\uC11D\uB3C4 \uC77D\uAE30 \u203A"), onWorld && /*#__PURE__*/React.createElement("div", {
     style: {
       marginTop: 24,
       paddingTop: 20,
