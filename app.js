@@ -5029,6 +5029,7 @@ function DeepView({
   const top = type || topType(child.scores),
     T = TYPES[top],
     D = DEEP[top];
+  useEffect(() => { try { window.scrollTo(0, 0); document.documentElement.scrollTop = 0; document.body.scrollTop = 0; } catch (e) {} }, []);
   return /*#__PURE__*/React.createElement("div", {
     className: "fade"
   }, /*#__PURE__*/React.createElement("button", {
@@ -5096,6 +5097,7 @@ function DeepAll({
 }) {
   const scores = child.scores || {};
   const ordered = ORDER.slice().sort((a, b) => (scores[b] || 0) - (scores[a] || 0));
+  useEffect(() => { try { window.scrollTo(0, 0); document.documentElement.scrollTop = 0; document.body.scrollTop = 0; } catch (e) {} }, []);
   return /*#__PURE__*/React.createElement("div", {
     className: "fade"
   }, /*#__PURE__*/React.createElement("button", {
@@ -6380,7 +6382,22 @@ function Result({
     }
   }))))), /*#__PURE__*/React.createElement(Section, {
     title: "\uC774 \uC544\uC774\uC758 \uACB0"
-  }, T.desc), /*#__PURE__*/React.createElement("button", { style: { width: "100%", marginTop: 14, padding: "15px 18px", borderRadius: 14, border: "none", cursor: "pointer", background: "linear-gradient(135deg, #6E9BFF, #9B86FF)", color: "#0A0E20", fontWeight: 800, fontSize: 15.5, boxShadow: "0 8px 22px rgba(120,150,255,0.28)" }, onClick: onDeepAll }, "📖 네 기질, 책으로 다시 보기"), /*#__PURE__*/React.createElement("div", { style: { fontSize: 12.5, color: TC.mute, textAlign: "center", marginTop: 8, marginBottom: 4, lineHeight: 1.5 } }, "결이 또렷하지 않을 때 — 네 유형을 모두 읽고 다시 판단해 보세요"), /*#__PURE__*/React.createElement(Section, {
+  }, T.desc), /*#__PURE__*/React.createElement("button", { style: { width: "100%", marginTop: 14, padding: "15px 18px", borderRadius: 14, border: "none", cursor: "pointer", background: "linear-gradient(135deg, #6E9BFF, #9B86FF)", color: "#0A0E20", fontWeight: 800, fontSize: 15.5, boxShadow: "0 8px 22px rgba(120,150,255,0.28)" }, onClick: onDeepAll }, "📖 네 기질, 책으로 다시 보기"), /*#__PURE__*/React.createElement("div", { style: { fontSize: 12.5, color: TC.mute, textAlign: "center", marginTop: 8, marginBottom: 4, lineHeight: 1.5 } }, "결이 또렷하지 않을 때 — 네 유형을 모두 읽고 다시 판단해 보세요"), /*#__PURE__*/React.createElement("button", {
+    style: {
+      ...TS.deepBtn,
+      borderColor: T.color + "66",
+      color: T.color
+    },
+    onClick: () => onDeep(top)
+  }, "\uD83D\uDCD6 \uCC45\uC774 \uB9D0\uD558\uB294 \u2018", T.name, "\u2019 \uAC19\uC740 \uC544\uC774 \u2014 \uC815\uBC00 \uBD84\uC11D \uC77D\uAE30 \u203A"), close && /*#__PURE__*/React.createElement("button", {
+    style: {
+      ...TS.deepBtn,
+      marginTop: 8,
+      borderColor: T2.color + "66",
+      color: T2.color
+    },
+    onClick: () => onDeep(second)
+  }, "\uD83D\uDCD6 \uB450 \uBC88\uC9F8 \uACB0 \u2018", T2.name, "\u2019 \uC815\uBC00 \uBD84\uC11D\uB3C4 \uC77D\uAE30 \u203A"), /*#__PURE__*/React.createElement(Section, {
     title: "\uC774\uB807\uAC8C \uACF5\uBD80\uD560 \uB54C \uC990\uAC70\uC6CC\uC694",
     accent: T.color
   }, T.study), /*#__PURE__*/React.createElement("div", {
@@ -6506,22 +6523,7 @@ function Result({
     style: TS.toast
   }, "\uBCF5\uC0AC\uB410\uC5B4\uC694! \uBD99\uC5EC\uB123\uC5B4 \uACF5\uC720\uD558\uC138\uC694 \uD83D\uDC26"), saved && /*#__PURE__*/React.createElement("div", {
     style: TS.toast
-  }, "\uCE74\uB4DC \uC774\uBBF8\uC9C0\uAC00 \uC800\uC7A5\uB410\uC5B4\uC694 \uD83D\uDDBC"), /*#__PURE__*/React.createElement("button", {
-    style: {
-      ...TS.deepBtn,
-      borderColor: T.color + "66",
-      color: T.color
-    },
-    onClick: () => onDeep(top)
-  }, "\uD83D\uDCD6 \uCC45\uC774 \uB9D0\uD558\uB294 \u2018", T.name, "\u2019 \uAC19\uC740 \uC544\uC774 \u2014 \uC815\uBC00 \uBD84\uC11D \uC77D\uAE30 \u203A"), close && /*#__PURE__*/React.createElement("button", {
-    style: {
-      ...TS.deepBtn,
-      marginTop: 8,
-      borderColor: T2.color + "66",
-      color: T2.color
-    },
-    onClick: () => onDeep(second)
-  }, "\uD83D\uDCD6 \uB450 \uBC88\uC9F8 \uACB0 \u2018", T2.name, "\u2019 \uC815\uBC00 \uBD84\uC11D\uB3C4 \uC77D\uAE30 \u203A"), onWorld && /*#__PURE__*/React.createElement("div", {
+  }, "\uCE74\uB4DC \uC774\uBBF8\uC9C0\uAC00 \uC800\uC7A5\uB410\uC5B4\uC694 \uD83D\uDDBC"), onWorld && /*#__PURE__*/React.createElement("div", {
     style: {
       marginTop: 24,
       paddingTop: 20,
