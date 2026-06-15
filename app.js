@@ -5199,6 +5199,14 @@ function withName(name) {
   const batchim = c >= 0xac00 && c <= 0xd7a3 && (c - 0xac00) % 28 !== 0;
   return batchim ? name + "이" : name;
 }
+function subjName(child) {
+  const n = child && child.name ? child.name : "";
+  if (!n) return n;
+  const c = n.charCodeAt(n.length - 1);
+  const batchim = c >= 0xac00 && c <= 0xd7a3 && (c - 0xac00) % 28 !== 0;
+  if (child && child.isParent) return n + (batchim ? "은" : "는");
+  return (batchim ? n + "이" : n) + "는";
+}
 
 // 깃허브(크롬)에선 localStorage, 클로드 환경에선 window.storage 사용
 const store = {
@@ -6243,7 +6251,7 @@ function Result({
       im.src = CHAR_IMG[topKey];
     });
     const W = 1080,
-      H = 1350,
+      H = 1700,
       cv = document.createElement("canvas");
     cv.width = W;
     cv.height = H;
@@ -6280,7 +6288,7 @@ function Result({
     }
     x.font = "bold 76px sans-serif";
     x.fillStyle = tt.color;
-    x.fillText(`${withName(child.name)}는 ‘${tt.name}’의 결`, W / 2, 540);
+    x.fillText(`${subjName(child)} ‘${tt.name}’의 결`, W / 2, 540);
     x.font = "40px sans-serif";
     x.fillStyle = "rgba(244,239,230,0.75)";
     x.fillText(`${tt.sasang} · ${tt.sadan}`, W / 2, 600);
@@ -6299,26 +6307,46 @@ function Result({
     }
     if (line) lines.push(line);
     lines.slice(0, 3).forEach((l, i) => x.fillText(l, W / 2, 690 + i * 60));
-    // 네 결 막대
-    const ranked2 = ORDER.map(t => ({
-      t,
-      v: child.scores[t]
-    })).sort((a, b) => b.v - a.v);
-    const bx = 150,
-      bw = W - 300,
-      by = 900;
+    // 이 아이의 결 — 설명
+    const essLines = Math.min(lines.length, 3);
+    let dy = 690 + essLines * 62 + 76;
+    const PAD = 96,
+      maxW = W - PAD * 2;
+    const wrapL = (text, f) => {
+      x.font = f;
+      const ws = text.split(" ");
+      let ln = "",
+        out = [];
+      for (const w of ws) {
+        const t2 = ln ? ln + " " + w : w;
+        if (x.measureText(t2).width > maxW) {
+          if (ln) out.push(ln);
+          ln = w;
+        } else ln = t2;
+      }
+      if (ln) out.push(ln);
+      return out;
+    };
     x.textAlign = "left";
-    x.font = "36px sans-serif";
-    ranked2.forEach((r, i) => {
-      const y = by + i * 88;
-      x.fillStyle = "#F4EFE6";
-      x.fillText(`${TYPES[r.t].name}`, bx, y);
-      x.fillStyle = "rgba(255,255,255,0.10)";
-      x.fillRect(bx + 220, y - 28, bw - 320, 34);
-      x.fillStyle = TYPES[r.t].color;
-      x.fillRect(bx + 220, y - 28, (bw - 320) * (r.v / 100), 34);
-      x.fillText(`${r.v}%`, bx + bw - 80, y);
-    });
+    x.fillStyle = "rgba(244,239,230,0.92)";
+    const dl = wrapL(tt.desc, "39px sans-serif").slice(0, 6);
+    dl.forEach((l, i) => x.fillText(l, PAD, dy + i * 56));
+    dy += dl.length * 56 + 52;
+    x.strokeStyle = "rgba(242,193,107,0.3)";
+    x.lineWidth = 2;
+    x.beginPath();
+    x.moveTo(PAD, dy);
+    x.lineTo(W - PAD, dy);
+    x.stroke();
+    dy += 58;
+    x.fillStyle = "#F2C16B";
+    const ql = wrapL("\u201C부족한 점 절대 지적하지 마시고, 조금이라도 좋아진 점 열심히 찾아서 과장되게 칭찬해 주세요.\u201D", "italic 37px sans-serif").slice(0, 5);
+    x.font = "italic 37px sans-serif";
+    ql.forEach((l, i) => x.fillText(l, PAD, dy + i * 52));
+    dy += ql.length * 52 + 16;
+    x.fillStyle = "rgba(244,239,230,0.62)";
+    x.font = "31px sans-serif";
+    x.fillText("\u2014 이재훈 고문님", PAD, dy);
     x.textAlign = "center";
     x.font = "34px sans-serif";
     x.fillStyle = "rgba(244,239,230,0.6)";
@@ -6363,7 +6391,7 @@ function Result({
       ...TS.resName,
       color: T.color
     }
-  }, withName(child.name), "\uB294 \u2018", T.name, "\u2019\uC758 \uACB0"), /*#__PURE__*/React.createElement("div", {
+  }, subjName(child), " \u2018", T.name, "\u2019\uC758 \uACB0"), /*#__PURE__*/React.createElement("div", {
     style: TS.resSub
   }, T.sasang, " \xB7 ", T.sadan, T.rare ? " · 아주 드문 유형" : ""), /*#__PURE__*/React.createElement("div", {
     style: TS.resEss
