@@ -6398,9 +6398,11 @@ function Result({
     },
     onClick: () => onDeep(second)
   }, "\uD83D\uDCD6 \uB450 \uBC88\uC9F8 \uACB0 \u2018", T2.name, "\u2019 \uC815\uBC00 \uBD84\uC11D\uB3C4 \uC77D\uAE30 \u203A"), /*#__PURE__*/React.createElement(Section, {
-    title: "\uC774\uB807\uAC8C \uACF5\uBD80\uD560 \uB54C \uC990\uAC70\uC6CC\uC694",
-    accent: T.color
-  }, T.study), /*#__PURE__*/React.createElement("div", {
+    title: "\uC774\uB807\uAC8C \uACF5\uBD80\uD560 \uB54C \uC990\uAC70\uC6CC\uC694"
+  }, T.study), /*#__PURE__*/React.createElement(Section, {
+    title: "이렇게 키워 주세요",
+    bare: true
+  }, /*#__PURE__*/React.createElement("div", {
     style: TS.guideRow
   }, /*#__PURE__*/React.createElement("div", {
     style: {
@@ -6428,7 +6430,7 @@ function Result({
   }, "\uC774\uAC74 \uD53C\uD574\uC8FC\uC138\uC694"), T.avoid.map((x, i) => /*#__PURE__*/React.createElement("div", {
     key: i,
     style: TS.guideItem
-  }, "\u2715 ", x)))), (sparse || weak) && /*#__PURE__*/React.createElement("div", {
+  }, "\u2715 ", x))))), (sparse || weak) && /*#__PURE__*/React.createElement("div", {
     style: TS.warnNote
   }, "\uC751\uB2F5\uC774 \uC801\uAC70\uB098 \uC57D\uD558\uAC8C \uB098\uC640\uC11C \uACB0\uACFC\uAC00 \uB610\uB837\uD558\uC9C0 \uC54A\uC744 \uC218 \uC788\uC5B4\uC694. \u2018\uC815\uBC00 \uC9C4\uB2E8\u2019\uC73C\uB85C \uB2E4\uC2DC \uD574\uBCF4\uBA74 \uD6E8\uC52C \uC815\uD655\uD574\uC838\uC694."), close && /*#__PURE__*/React.createElement("div", {
     style: TS.mixNote
@@ -6469,7 +6471,7 @@ function Result({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       ...TS.todayHead,
-      color: T.color
+      color: TC.gold
     }
   }, "\uD83C\uDF31 \uC624\uB298\uBD80\uD130 \uD55C \uAC00\uC9C0"), /*#__PURE__*/React.createElement("div", {
     style: TS.todayMain
@@ -6582,7 +6584,8 @@ function Result({
 function Section({
   title,
   children,
-  accent
+  accent,
+  bare
 }) {
   return /*#__PURE__*/React.createElement("div", {
     style: TS.section
@@ -6591,7 +6594,7 @@ function Section({
       ...TS.sectionH,
       color: accent || TC.gold
     }
-  }, title), /*#__PURE__*/React.createElement("div", {
+  }, title), bare ? children : /*#__PURE__*/React.createElement("div", {
     style: TS.sectionB
   }, children));
 }
@@ -7026,9 +7029,9 @@ const TS = {
     padding: "15px 16px"
   },
   secondHead: {
-    fontSize: 15,
+    fontSize: 16.5,
     fontWeight: 800,
-    marginBottom: 8
+    marginBottom: 11
   },
   topHome: {
     display: "inline-flex",
@@ -7108,12 +7111,16 @@ const TS = {
     transition: "width .6s ease"
   },
   section: {
-    marginTop: 18
+    marginTop: 26
   },
   sectionH: {
-    fontSize: 13.5,
+    fontSize: 16.5,
     fontWeight: 800,
-    marginBottom: 8
+    marginBottom: 12,
+    borderLeft: "3px solid",
+    paddingLeft: 11,
+    lineHeight: 1.3,
+    letterSpacing: "-0.01em"
   },
   sectionB: {
     color: TC.cream,
@@ -7127,7 +7134,7 @@ const TS = {
   guideRow: {
     display: "flex",
     gap: 10,
-    marginTop: 14
+    marginTop: 2
   },
   guideCol: {
     flex: 1,
@@ -7148,14 +7155,12 @@ const TS = {
     marginBottom: 7
   },
   mixNote: {
-    marginTop: 14,
-    background: "rgba(134,182,232,0.08)",
-    border: "1px solid rgba(134,182,232,0.22)",
-    borderRadius: 12,
-    padding: "12px 14px",
-    color: TC.cream,
+    marginTop: 24,
+    marginBottom: 6,
+    color: TC.mute,
     fontSize: 13,
-    lineHeight: 1.6
+    lineHeight: 1.6,
+    paddingLeft: 13
   },
   coachHook: {
     marginTop: 16,
@@ -7435,9 +7440,9 @@ const TS = {
     padding: "15px 16px"
   },
   todayHead: {
-    fontSize: 15,
+    fontSize: 16.5,
     fontWeight: 800,
-    marginBottom: 9
+    marginBottom: 11
   },
   todayMain: {
     color: TC.cream,
