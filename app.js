@@ -5090,6 +5090,93 @@ function DeepView({
     onClick: onBack
   }, "\uACB0\uACFC\uB85C \uB3CC\uC544\uAC00\uAE30"));
 }
+function DeepAll({
+  child,
+  onBack
+}) {
+  const scores = child.scores || {};
+  const ordered = ORDER.slice().sort((a, b) => (scores[b] || 0) - (scores[a] || 0));
+  return /*#__PURE__*/React.createElement("div", {
+    className: "fade"
+  }, /*#__PURE__*/React.createElement("button", {
+    style: TS.text,
+    onClick: onBack
+  }, "\u2039 \uACB0\uACFC\uB85C"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      textAlign: "center",
+      marginTop: 4
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      ...TS.deepTitle,
+      color: TC.gold
+    }
+  }, "\uCC45\uC774 \uADF8\uB9B0 \uB124 \uAC00\uC9C0 \uACB0"), /*#__PURE__*/React.createElement("div", {
+    style: TS.deepSub
+  }, "\uC1A1\uC7AC\uD76C \u300E\uC0AC\uC0C1\uCCB4\uC9C8 \uD559\uC2B5\uBC95\u300F \xB7 \uB124 \uC720\uD615 \uBAA8\uB450 \uBCF4\uAE30")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      ...TS.deepLead,
+      background: "rgba(212,168,67,0.08)",
+      border: "1px solid rgba(212,168,67,0.22)",
+      borderRadius: 14,
+      padding: "14px 16px"
+    }
+  }, "\uAC80\uC0AC \uACB0\uACFC\uAC00 \uB610\uB837\uD558\uC9C0 \uC54A\uAC70\uB098 \uB354 \uAE4A\uC774 \uC0B4\uD3B4\uBCF4\uACE0 \uC2F6\uC744 \uB54C \u2014 \uB124 \uC720\uD615\uC758 \uBAA8\uC2B5\uC744 \uBAA8\uB450 \uC77D\uACE0, ", withName(child.name), "\uC5D0\uAC8C \uAC00\uC7A5 \uAC00\uAE4C\uC6B4 \uACB0\uC744 \uC9C1\uC811 \uCC3E\uC544\uBCF4\uC138\uC694. \uAC80\uC0AC \uACB0\uACFC\uB294 \uCC38\uACE0\uC77C \uBFD0, \uB9C8\uC9C0\uB9C9 \uD310\uB2E8\uC740 \uACC1\uC5D0\uC11C \uC9C0\uCF1C\uBCF8 \uBD84\uC758 \uBABE\uC774\uC5D0\uC694."), ordered.map((t, i) => {
+    const T = TYPES[t];
+    const ps = PORTRAIT[t] || [];
+    return /*#__PURE__*/React.createElement("div", {
+      key: t,
+      style: {
+        marginTop: 18,
+        padding: "16px 16px 6px",
+        borderRadius: 16,
+        background: "rgba(255,255,255,0.025)",
+        border: "1px solid " + T.color + "44"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: "flex",
+        alignItems: "center",
+        gap: 10,
+        marginBottom: 12
+      }
+    }, /*#__PURE__*/React.createElement(Avatar, {
+      type: t,
+      size: 40
+    }), /*#__PURE__*/React.createElement("div", {
+      style: {
+        flex: 1
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontWeight: 800,
+        fontSize: 17,
+        color: T.color
+      }
+    }, T.name, " \xB7 ", T.sasang), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 12.5,
+        color: TC.mute
+      }
+    }, T.sadan)), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontWeight: 800,
+        fontSize: 18,
+        color: T.color
+      }
+    }, Math.round(scores[t] || 0), "%")), ps.map((p, j) => /*#__PURE__*/React.createElement("p", {
+      key: j,
+      style: TS.deepP
+    }, p)));
+  }), /*#__PURE__*/React.createElement("button", {
+    style: {
+      ...TS.primary,
+      marginTop: 22
+    },
+    onClick: onBack
+  }, "\uACB0\uACFC\uB85C \uB3CC\uC544\uAC00\uAE30"));
+}
+
 const sadanDesc = {
   earth: "불편함을 견디지 못해 양보하고, 사람들 사이의 원만함과 자연스러움을 가장 소중히 여기는 마음이에요",
   bird: "옳고 그름을 못 견디는, 정의롭고 순발력 있는 마음이에요",
@@ -5543,6 +5630,10 @@ function TestPage({
       id: view.id,
       type: t
     }),
+    onDeepAll: () => setView({
+      s: "deepall",
+      id: view.id
+    }),
     onRetake: () => setView({
       s: "mode",
       id: view.id
@@ -5550,6 +5641,12 @@ function TestPage({
   }), view.s === "deep" && /*#__PURE__*/React.createElement(DeepView, {
     child: children.find(c => c.id === view.id),
     type: view.type,
+    onBack: () => setView({
+      s: "result",
+      id: view.id
+    })
+  }), view.s === "deepall" && /*#__PURE__*/React.createElement(DeepAll, {
+    child: children.find(c => c.id === view.id),
     onBack: () => setView({
       s: "result",
       id: view.id
@@ -6053,6 +6150,7 @@ function Result({
   onHome,
   onRetake,
   onDeep,
+  onDeepAll,
   onCoach,
   onWorld
 }) {
@@ -6281,15 +6379,11 @@ function Result({
       background: TYPES[t].color
     }
   }))))), /*#__PURE__*/React.createElement(Section, {
-    title: "\uC774 \uC544\uC774\uC758 \uACB0",
-    defaultOpen: true
-  }, T.desc), /*#__PURE__*/React.createElement(Section, { title: "\uD83D\uDCD6 \uCC45\uC774 \uADF8\uB9B0 \u2018" + T.name + "\u2019\uC758 \uBAA8\uC2B5 \xB7 \uC815\uBC00", accent: T.color }, PORTRAIT[top].map((p, i) => /*#__PURE__*/React.createElement("div", { key: i, style: { color: "rgba(255,255,255,0.82)", lineHeight: 1.8, fontSize: 15, marginTop: i ? 12 : 0 } }, p)), close && /*#__PURE__*/React.createElement("div", { style: { marginTop: 18, paddingTop: 14, borderTop: "1px solid " + TC.line } }, /*#__PURE__*/React.createElement("div", { style: { color: T2.color, fontWeight: 700, marginBottom: 10 } }, "\uB450 \uBC88\uC9F8 \uACB0 \u2018" + T2.name + "\u2019\uC758 \uBAA8\uC2B5"), PORTRAIT[second].map((p, i) => /*#__PURE__*/React.createElement("div", { key: i, style: { color: "rgba(255,255,255,0.82)", lineHeight: 1.8, fontSize: 15, marginTop: i ? 12 : 0 } }, p)))), /*#__PURE__*/React.createElement(Section, {
+    title: "\uC774 \uC544\uC774\uC758 \uACB0"
+  }, T.desc), /*#__PURE__*/React.createElement("button", { style: { width: "100%", marginTop: 14, padding: "15px 18px", borderRadius: 14, border: "none", cursor: "pointer", background: "linear-gradient(135deg, #6E9BFF, #9B86FF)", color: "#0A0E20", fontWeight: 800, fontSize: 15.5, boxShadow: "0 8px 22px rgba(120,150,255,0.28)" }, onClick: onDeepAll }, "📖 네 기질, 책으로 다시 보기"), /*#__PURE__*/React.createElement("div", { style: { fontSize: 12.5, color: TC.mute, textAlign: "center", marginTop: 8, marginBottom: 4, lineHeight: 1.5 } }, "결이 또렷하지 않을 때 — 네 유형을 모두 읽고 다시 판단해 보세요"), /*#__PURE__*/React.createElement(Section, {
     title: "\uC774\uB807\uAC8C \uACF5\uBD80\uD560 \uB54C \uC990\uAC70\uC6CC\uC694",
     accent: T.color
-  }, T.study), /*#__PURE__*/React.createElement(Section, {
-    title: "\uC774\uB807\uAC8C \uD0A4\uC6CC \uC8FC\uC138\uC694",
-    accent: T.color
-  }, /*#__PURE__*/React.createElement("div", {
+  }, T.study), /*#__PURE__*/React.createElement("div", {
     style: TS.guideRow
   }, /*#__PURE__*/React.createElement("div", {
     style: {
@@ -6317,7 +6411,7 @@ function Result({
   }, "\uC774\uAC74 \uD53C\uD574\uC8FC\uC138\uC694"), T.avoid.map((x, i) => /*#__PURE__*/React.createElement("div", {
     key: i,
     style: TS.guideItem
-  }, "\u2715 ", x))))), (sparse || weak) && /*#__PURE__*/React.createElement("div", {
+  }, "\u2715 ", x)))), (sparse || weak) && /*#__PURE__*/React.createElement("div", {
     style: TS.warnNote
   }, "\uC751\uB2F5\uC774 \uC801\uAC70\uB098 \uC57D\uD558\uAC8C \uB098\uC640\uC11C \uACB0\uACFC\uAC00 \uB610\uB837\uD558\uC9C0 \uC54A\uC744 \uC218 \uC788\uC5B4\uC694. \u2018\uC815\uBC00 \uC9C4\uB2E8\u2019\uC73C\uB85C \uB2E4\uC2DC \uD574\uBCF4\uBA74 \uD6E8\uC52C \uC815\uD655\uD574\uC838\uC694."), close && /*#__PURE__*/React.createElement("div", {
     style: TS.mixNote
@@ -6471,41 +6565,17 @@ function Result({
 function Section({
   title,
   children,
-  accent,
-  defaultOpen = false
+  accent
 }) {
-  const [open, setOpen] = useState(defaultOpen);
   return /*#__PURE__*/React.createElement("div", {
     style: TS.section
-  }, /*#__PURE__*/React.createElement("button", {
-    onClick: () => setOpen(o => !o),
+  }, /*#__PURE__*/React.createElement("div", {
     style: {
       ...TS.sectionH,
-      color: accent || TC.gold,
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "space-between",
-      width: "100%",
-      background: "transparent",
-      border: "none",
-      cursor: "pointer",
-      textAlign: "left",
-      padding: 0,
-      font: "inherit"
+      color: accent || TC.gold
     }
-  }, /*#__PURE__*/React.createElement("span", null, title), /*#__PURE__*/React.createElement("span", {
-    style: {
-      fontSize: 12,
-      opacity: 0.55,
-      transition: "transform .2s ease",
-      transform: open ? "rotate(90deg)" : "rotate(0deg)",
-      marginLeft: 8
-    }
-  }, "\u25B8")), open && /*#__PURE__*/React.createElement("div", {
-    style: {
-      ...TS.sectionB,
-      marginTop: 12
-    }
+  }, title), /*#__PURE__*/React.createElement("div", {
+    style: TS.sectionB
   }, children));
 }
 function topType(scores) {
