@@ -6035,9 +6035,12 @@ function Test({
   const done = Object.keys(ans).length;
   const cDone = Object.keys(cAns).length;
   const pct = Math.round((done + cDone) / (items.length + choices.length) * 100);
+  const allReq = items.length + choices.length;
+  const allDone = done + cDone >= allReq;
+  const remain = allReq - done - cDone;
   const finish = () => {
-    if (done + cDone < 8) {
-      window.alert("아직 고른 항목이 적어요. 문항을 조금 더 골라 주신 뒤에 결과를 봐 주세요.");
+    if (!allDone) {
+      window.alert("아직 안 고른 문항이 있어요. 모두 골라 주셔야 결과를 볼 수 있어요.");
       return;
     }
     // 1) 리커트 점수(유형별 %)
@@ -6143,11 +6146,27 @@ function Test({
       }
     }), /*#__PURE__*/React.createElement("span", null, o.s));
   })))), /*#__PURE__*/React.createElement("div", {
-    style: TS.testFootWrap
-  }, /*#__PURE__*/React.createElement("button", {
-    style: TS.primary,
+    style: {
+      marginTop: 30,
+      paddingBottom: 18
+    }
+  }, !allDone && /*#__PURE__*/React.createElement("div", {
+    style: {
+      textAlign: "center",
+      color: TC.mute,
+      fontSize: 13.5,
+      lineHeight: 1.6,
+      marginBottom: 11
+    }
+  }, "아직 ", remain, "개 안 골랐어요. 모두 골라야 결과를 볼 수 있어요."), /*#__PURE__*/React.createElement("button", {
+    style: {
+      ...TS.primary,
+      opacity: allDone ? 1 : 0.38,
+      cursor: allDone ? "pointer" : "not-allowed"
+    },
+    disabled: !allDone,
     onClick: finish
-  }, "\uACB0\uACFC \uBCF4\uAE30")));
+  }, allDone ? "결과 보기" : "결과 보기 (" + (done + cDone) + "/" + allReq + ")")));
 }
 function Result({
   child,
@@ -6165,11 +6184,27 @@ function Result({
   async function share() {
     if (!child || !child.scores) return;
     const tt = TYPES[topType(child.scores)];
-    const txt = child.isParent ? `나는 ‘${tt.name}’ 결의 부모래요 ${tt.emoji}\n부모와 아이의 ‘결’을 알면 칭찬법·공부법이 달라져요. 무료 진단:\n${SITE_URL}` : `「${withName(child.name)}」는 ‘${tt.name}’ 같은 아이래요 ${tt.emoji}\n아이마다 공부하는 ‘결’이 달라요. 우리 아이 체질 학습 진단(무료):\n${SITE_URL}`;
+    const txt = child.isParent ? `나는 ‘${tt.name}’ 결의 부모래요 ${tt.emoji}\n부모와 아이의 ‘결’을 알면 칭찬법·공부법이 달라져요. 마음 곳간:\n${SITE_URL}` : `「${withName(child.name)}」는 ‘${tt.name}’ 같은 아이래요 ${tt.emoji}\n아이마다 공부하는 ‘결’이 달라요. 마음 곳간에서 무료 진단:\n${SITE_URL}`;
     try {
+      const blob = await buildCardBlob();
+      if (blob && navigator.canShare) {
+        const file = new File([blob], `마음곳간_${child.name}.png`, {
+          type: "image/png"
+        });
+        if (navigator.canShare({
+          files: [file]
+        })) {
+          await navigator.share({
+            files: [file],
+            title: "마음 곳간 — 우리 아이의 결",
+            text: txt
+          });
+          return;
+        }
+      }
       if (navigator.share) {
         await navigator.share({
-          title: "체질 학습 진단",
+          title: "마음 곳간",
           text: txt,
           url: SITE_URL
         });
@@ -6184,9 +6219,20 @@ function Result({
     setCopied(true);
     setTimeout(() => setCopied(false), 2200);
   }
-  // ⑥ 결과 이미지 카드 (1080×1350 PNG)
   async function saveCard() {
-    if (!child || !child.scores) return;
+    const blob = await buildCardBlob();
+    if (!blob) return;
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = `마음곳간_${child.name}.png`;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2200);
+  }
+  // ⑥ 결과 이미지 카드 (1080×1350 PNG) — blob 반환
+  async function buildCardBlob() {
+    if (!child || !child.scores) return null;
     const tt = TYPES[topType(child.scores)];
     const topKey = topType(child.scores);
     // 캐릭터 이미지 미리 로드
@@ -6276,35 +6322,10 @@ function Result({
     x.textAlign = "center";
     x.font = "34px sans-serif";
     x.fillStyle = "rgba(244,239,230,0.6)";
-    x.fillText("마더클럽 · 우리 아이 결 무료 진단", W / 2, H - 110);
+    x.fillText("마음 곳간 · 우리 아이 결 무료 진단", W / 2, H - 110);
     x.fillStyle = "#F2C16B";
     x.fillText(SITE_URL.replace("https://", ""), W / 2, H - 60);
-    cv.toBlob(async blob => {
-      if (!blob) return;
-      const file = new File([blob], `체질진단_${child.name}.png`, {
-        type: "image/png"
-      });
-      try {
-        if (navigator.canShare && navigator.canShare({
-          files: [file]
-        })) {
-          await navigator.share({
-            files: [file],
-            title: "체질 학습 진단"
-          });
-          return;
-        }
-      } catch (e) {
-        if (e && e.name === "AbortError") return;
-      }
-      const a = document.createElement("a");
-      a.href = URL.createObjectURL(blob);
-      a.download = file.name;
-      a.click();
-      setTimeout(() => URL.revokeObjectURL(a.href), 4000);
-      setSaved(true);
-      setTimeout(() => setSaved(false), 2200);
-    }, "image/png");
+    return await new Promise(res => cv.toBlob(res, "image/png"));
   }
   if (!child || !child.scores) return null;
   const ranked = ORDER.map(t => ({
