@@ -283,6 +283,10 @@ function HomePage({
   useEffect(() => {
     const onR = () => setVw(window.innerWidth);
     window.addEventListener("resize", onR);
+    try {
+      const vp = document.querySelector('meta[name="viewport"]');
+      if (vp && !/interactive-widget/.test(vp.content)) vp.content += ", interactive-widget=resizes-content";
+    } catch (e) {}
     return () => window.removeEventListener("resize", onR);
   }, []);
   const mobile = vw <= 520;
