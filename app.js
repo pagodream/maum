@@ -2646,7 +2646,7 @@ const EMOTIONS = [{
 // 코칭 연결 문구 — 매번 다르게 골라 식상함을 줄인다 (어록·핵심 메시지는 그대로 유지)
 const pickOne = a => a[Math.floor(Math.random() * a.length)];
 const COACHLINES = {
-  intro: ["많이 속상하셨죠. 괜찮아요, 같이 봐요.\n어떤 일이었나요?", "오늘 마음이 많이 무거우셨겠어요. 천천히 같이 풀어봐요.\n어떤 일이었어요?", "잠깐 앉았다 가세요. 혼자 삭이지 않으셔도 돼요.\n무슨 일이 있었나요?", "하루 종일 마음에 걸리셨죠. 여기선 편히 내려놓으셔도 돼요.\n어떤 일이었나요?"],
+  intro: ["안녕하세요, 쪽쪽이예요. 무슨 이야기든 좋아요.\n방금 어떤 일이 있었나요?", "잠깐 앉았다 가세요. 같이 천천히 들여다봐요.\n어떤 일이었어요?", "어서 오세요. 마음에 떠오르는 대로 편하게 적어 주세요.\n어떤 일이 있었나요?", "오늘 하루는 어떠셨어요? 무슨 일이든 같이 봐요.\n어떤 일이었나요?"],
   write: ["무슨 일이 있었는지 한 줄이면 돼요. 쓰다 보면 화가 한 김 식어요.", "있었던 일을 한 줄만 적어볼까요. 글로 옮기는 사이 마음이 조금 가라앉아요.", "길게 안 쓰셔도 돼요. 한 줄이면 충분해요 — 적는 동안 마음이 정리돼요."],
   emoLead: ["그 마음, 그럴 만해요.\n지금 어느 쪽에 가장 가까우세요?", "충분히 그럴 수 있어요.\n지금 엄마 마음은 어느 쪽에 가까워요?", "그랬군요. 마음이 많이 일렁였겠어요.\n지금은 어느 쪽에 가장 가까우세요?"],
   goodLead: ["그 좋은 점을 넓혀 주세요. 좋은 점이 자라면, 아쉬운 점은 자리를 잃어요.", "그거예요. 그 좋은 점에 햇볕을 쬐어 주세요 — 자라는 쪽이 이겨요.", "바로 그 한 조각을 키워 주세요. 좋은 점이 넓어지면 아쉬운 점은 설 자리가 줄어요."],
@@ -2960,6 +2960,20 @@ function CoachPage({
   const [showSci, setShowSci] = useState(false);
   const scrollRef = useRef(null);
   const taRef = useRef(null);
+  // ⌨️ 키보드가 떠도 입력창이 보이도록 — 실제 보이는 높이에 화면을 맞춤
+  const [vvh, setVvh] = useState(0);
+  useEffect(() => {
+    const vv = window.visualViewport;
+    if (!vv) return;
+    const on = () => setVvh(Math.round(vv.height));
+    on();
+    vv.addEventListener("resize", on);
+    vv.addEventListener("scroll", on);
+    return () => {
+      vv.removeEventListener("resize", on);
+      vv.removeEventListener("scroll", on);
+    };
+  }, []);
 
   // 진단된 아이들 + 마지막 선택 기억
   const [chipsOpen, setChipsOpen] = useState(false); // 아이/기질 카드 펼침
@@ -3056,7 +3070,7 @@ function CoachPage({
     const nm = kidName ? withName(kidName) : null;
     setMessages([{
       role: "assistant",
-      content: nm ? `많이 속상하셨죠. 괜찮아요, 잠깐 저랑 같이 봐요.\n방금 ${nm}와 무슨 일이 있었는지 한 줄로 들려주실래요?` : "많이 속상하셨죠. 괜찮아요, 잠깐 저랑 같이 봐요.\n방금 무슨 일이 있었는지 한 줄로 들려주실래요?"
+      content: nm ? `안녕하세요, 쪽쪽이예요. 무슨 이야기든 좋아요.\n방금 ${nm}와 어떤 일이 있었는지, 한 줄로 편하게 들려주실래요?` : "안녕하세요, 쪽쪽이예요. 무슨 이야기든 좋아요.\n방금 어떤 일이 있었는지, 한 줄로 편하게 들려주실래요?"
     }]);
   }
 
@@ -3123,9 +3137,9 @@ function CoachPage({
   const breathText = breath.done ? "준비됐어요" : breath.phase === "in" ? "천천히 들이쉬고" : breath.phase === "hold" ? "잠깐 멈춰요" : "길게 — 내쉬고";
   const breathDur = breath.phase === "in" ? 4 : breath.phase === "hold" ? 1 : 6;
   return /*#__PURE__*/React.createElement("div", {
-    style: CS.root
+    style: vvh && (stage === "chat" || stage === "schat") ? { ...CS.root, minHeight: 0, height: vvh, overflow: "hidden" } : CS.root
   }, /*#__PURE__*/React.createElement("style", null, COACH_CSS), /*#__PURE__*/React.createElement("div", {
-    style: CS.frame
+    style: vvh && (stage === "chat" || stage === "schat") ? { ...CS.frame, minHeight: 0, height: vvh - 52 } : CS.frame
   }, stage !== "chat" && stage !== "schat" && /*#__PURE__*/React.createElement("button", {
     style: CS.homeBtn,
     onClick: onHome
