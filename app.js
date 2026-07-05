@@ -49,6 +49,25 @@ function useBackClose(isOpen, close) {
 // 마음 곳간 — 통합 앱 (홈 + 쪽쪽이 마음 코치)
 // 페이지 전환: App의 page 상태. world(세계지도)·기질테스트는 다음 단계에서 합류 예정
 // ──────────────────────────────────────────────
+// 홈 배경음악 (song.mp3) — 버튼 누를 때만 로드/재생. 로딩엔 영향 없음.
+// ⚠️ 깃허브 저장소의 index.html과 같은 위치에 song.mp3 를 올려주세요.
+var MAUM_BGM_SRC = "./song.mp3";
+var MAUM_BGM = null;
+function getBgm() {
+  if (typeof window === "undefined") return null;
+  if (!MAUM_BGM) {
+    try {
+      MAUM_BGM = new Audio(MAUM_BGM_SRC);
+      MAUM_BGM.loop = true;
+      MAUM_BGM.volume = 0.5;
+      MAUM_BGM.preload = "none";
+    } catch (e) {
+      MAUM_BGM = null;
+    }
+  }
+  return MAUM_BGM;
+}
+
 function App() {
   const [page, setPage] = useState("home");
   const [drawerOpen, setDrawerOpen] = useState(false); // 💌 마음 서랍
@@ -168,6 +187,17 @@ function HomePage({
   const [bkNewCode, setBkNewCode] = useState(""); // 새 폰에서 코드 직접 입력
   const [bkMsg, setBkMsg] = useState(null); // 백업 상태 메시지
   const [bkBusy, setBkBusy] = useState(false);
+  const [musicOn, setMusicOn] = useState(false); // 🎵 배경음악 (버튼으로만 켜고 끔)
+  function toggleMusic() {
+    const a = getBgm();
+    if (!a) return;
+    if (musicOn) {
+      a.pause();
+      setMusicOn(false);
+    } else {
+      a.play().then(() => setMusicOn(true)).catch(() => {});
+    }
+  }
   useEffect(() => {
     (async () => {
       try {
@@ -496,7 +526,30 @@ function HomePage({
       fontFamily: "'Pretendard', -apple-system, sans-serif",
       backgroundColor: "#C9A8C0"
     }
-  }, /*#__PURE__*/React.createElement("svg", {
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: toggleMusic,
+    "aria-label": "\uBC30\uACBD\uC74C\uC545",
+    style: {
+      position: "fixed",
+      top: 14,
+      right: 14,
+      zIndex: 50,
+      width: 42,
+      height: 42,
+      borderRadius: 999,
+      border: "1px solid rgba(255,255,255,0.5)",
+      background: "rgba(0,0,0,0.32)",
+      color: "#fff",
+      fontSize: 18,
+      lineHeight: 1,
+      cursor: "pointer",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      WebkitBackdropFilter: "blur(4px)",
+      backdropFilter: "blur(4px)"
+    }
+  }, musicOn ? "\u23F8" : "\uD83C\uDFB5"), /*#__PURE__*/React.createElement("svg", {
     viewBox: "0 0 400 720",
     preserveAspectRatio: "xMidYMid slice",
     style: {
