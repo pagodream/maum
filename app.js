@@ -1162,6 +1162,20 @@ function HomePage({
     }
   }, "\u2715")), /*#__PURE__*/React.createElement("div", {
     style: {
+      color: "#F2C16B",
+      fontSize: 13,
+      fontWeight: 800,
+      marginBottom: 4
+    }
+  }, "\uD83D\uDCBE \uBC31\uC5C5 \xB7 \uBCF5\uC6D0"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#9AA3C7",
+      fontSize: 12.5,
+      lineHeight: 1.6,
+      marginBottom: 16
+    }
+  }, "\uC138\uACC4\uC9C0\uB3C4\xB7\uAE30\uC9C8 \uC9C4\uB2E8\xB7\uB9C8\uC74C \uC11C\uB78D\xB7\uC124\uC815\uAE4C\uC9C0 \u2014 \uC774 \uC571\uC758 \uBAA8\uB4E0 \uAE30\uB85D\uC744 \uD55C \uBC88\uC5D0 \uB2F4\uC544\uC694. \uAE30\uAE30\uB97C \uBC14\uAFD4\uB3C4 \uBCC4\uBA85\uC73C\uB85C \uB418\uC0B4\uB9B4 \uC218 \uC788\uC5B4\uC694."), /*#__PURE__*/React.createElement("div", {
+    style: {
       background: "rgba(255,255,255,0.04)",
       border: "1px solid rgba(255,255,255,0.1)",
       borderRadius: 14,
@@ -1405,20 +1419,6 @@ function HomePage({
       height: 12
     }
   }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      color: "#F2C16B",
-      fontSize: 13,
-      fontWeight: 800,
-      marginBottom: 4
-    }
-  }, "\uD83D\uDCBE \uBC31\uC5C5 \xB7 \uBCF5\uC6D0"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      color: "#9AA3C7",
-      fontSize: 12.5,
-      lineHeight: 1.6,
-      marginBottom: 12
-    }
-  }, "\uC138\uACC4\uC9C0\uB3C4\xB7\uAE30\uC9C8 \uC9C4\uB2E8\xB7\uB9C8\uC74C \uC11C\uB78D\xB7\uC124\uC815\uAE4C\uC9C0 \u2014 \uC774 \uC571\uC758 \uBAA8\uB4E0 \uAE30\uB85D\uC744 \uD55C \uBC88\uC5D0 \uB2F4\uC544\uC694. \uAE30\uAE30\uB97C \uBC14\uAFD4\uB3C4 \uBCC4\uBA85\uC73C\uB85C \uB418\uC0B4\uB9B4 \uC218 \uC788\uC5B4\uC694."), /*#__PURE__*/React.createElement("div", {
     style: {
       background: "rgba(255,255,255,0.04)",
       border: "1px solid rgba(255,255,255,0.1)",
