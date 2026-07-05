@@ -25,7 +25,7 @@ function getBgm() {
       MAUM_BGM = new Audio(MAUM_BGM_SRC);
       MAUM_BGM.loop = true;
       MAUM_BGM.volume = 0.45;
-      MAUM_BGM.preload = "auto";
+      MAUM_BGM.preload = "none";
     } catch (e) {
       MAUM_BGM = null;
     }
