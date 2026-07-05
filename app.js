@@ -14,25 +14,6 @@ function deskW(base, w) {
   return base;
 }
 
-// 홈 배경음악 (대표님이 직접 만든 곡)
-// ⚠️ 깃허브 저장소의 index.html과 같은 위치에 아래 이름으로 mp3 파일을 올려주세요.
-var MAUM_BGM_SRC = "./maum-song.mp3";
-var MAUM_BGM = null;
-function getBgm() {
-  if (typeof window === "undefined") return null;
-  if (!MAUM_BGM) {
-    try {
-      MAUM_BGM = new Audio(MAUM_BGM_SRC);
-      MAUM_BGM.loop = true;
-      MAUM_BGM.volume = 0.45;
-      MAUM_BGM.preload = "none";
-    } catch (e) {
-      MAUM_BGM = null;
-    }
-  }
-  return MAUM_BGM;
-}
-
 // ──────────────────────────────────────────────
 // 마음 곳간 — 통합 앱 (홈 + 쪽쪽이 마음 코치)
 // 페이지 전환: App의 page 상태. world(세계지도)·기질테스트는 다음 단계에서 합류 예정
@@ -143,44 +124,6 @@ function HomePage({
   const [bkNewCode, setBkNewCode] = useState(""); // 새 폰에서 코드 직접 입력
   const [bkMsg, setBkMsg] = useState(null); // 백업 상태 메시지
   const [bkBusy, setBkBusy] = useState(false);
-  const [musicOn, setMusicOn] = useState(true); // 홈 배경음악
-  useEffect(() => {
-    let on = true;
-    (async () => {
-      try {
-        const r = await store.get("maum_music");
-        if (r && r.value === "off") on = false;
-      } catch (e) {}
-      setMusicOn(on);
-      const a = getBgm();
-      if (!a || !on) return;
-      const start = () => {
-        a.play().catch(() => {});
-      };
-      // 자동재생이 차단되면(대부분의 휴대폰) 첫 화면 터치에서 재생 시작
-      a.play().catch(() => {
-        const once = () => {
-          start();
-          document.removeEventListener("pointerdown", once);
-          document.removeEventListener("touchstart", once);
-        };
-        document.addEventListener("pointerdown", once, {
-          once: true
-        });
-        document.addEventListener("touchstart", once, {
-          once: true
-        });
-      });
-    })();
-  }, []);
-  function toggleMusic() {
-    const a = getBgm();
-    const next = !musicOn;
-    setMusicOn(next);
-    store.set("maum_music", next ? "on" : "off");
-    if (!a) return;
-    if (next) a.play().catch(() => {});else a.pause();
-  }
   useEffect(() => {
     (async () => {
       try {
@@ -823,30 +766,7 @@ function HomePage({
       flexDirection: "column",
       pointerEvents: "none"
     }
-  }, /*#__PURE__*/React.createElement("button", {
-    onClick: toggleMusic,
-    "aria-label": "\uBC30\uACBD\uC74C\uC545 \uCF1C\uAE30/\uB044\uAE30",
-    style: {
-      position: "absolute",
-      top: mobile ? 16 : 26,
-      right: mobile ? 14 : 20,
-      zIndex: 6,
-      pointerEvents: "auto",
-      width: 40,
-      height: 40,
-      borderRadius: 999,
-      border: "1px solid rgba(255,255,255,0.28)",
-      background: "rgba(0,0,0,0.3)",
-      color: "#fff",
-      fontSize: 17,
-      cursor: "pointer",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      WebkitBackdropFilter: "blur(4px)",
-      backdropFilter: "blur(4px)"
-    }
-  }, musicOn ? "\uD83C\uDFB5" : "\uD83D\uDD07"), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
     style: {
       textAlign: "center",
       position: "relative",
