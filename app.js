@@ -6,14 +6,6 @@ const {
   useRef
 } = React;
 
-// 데스크탑에서만 본문 컬럼을 보기 좋게 넓힘 (폰 화면은 그대로 유지)
-function deskW(base, w) {
-  if (typeof w !== "number") w = typeof window !== "undefined" ? window.innerWidth : 420;
-  if (w >= 1100) return Math.round(base * 1.45);
-  if (w >= 860) return Math.round(base * 1.22);
-  return base;
-}
-
 // ──────────────────────────────────────────────
 // 마음 곳간 — 통합 앱 (홈 + 쪽쪽이 마음 코치)
 // 페이지 전환: App의 page 상태. world(세계지도)·기질테스트는 다음 단계에서 합류 예정
@@ -757,7 +749,7 @@ function HomePage({
     className: "homeCol",
     style: {
       position: "relative",
-      maxWidth: deskW(440, vw),
+      maxWidth: 440,
       margin: "0 auto",
       padding: mobile ? "26px 20px 0" : "44px 24px 0",
       minHeight: "100vh",
@@ -3800,7 +3792,7 @@ const CS = {
   },
   frame: {
     width: "100%",
-    maxWidth: deskW(440),
+    maxWidth: 440,
     display: "flex",
     flexDirection: "column",
     minHeight: "calc(100vh - 52px)"
@@ -6558,7 +6550,7 @@ const TS = {
   },
   frame: {
     width: "100%",
-    maxWidth: deskW(460)
+    maxWidth: 460
   },
   center: {
     display: "flex",
@@ -25464,7 +25456,7 @@ const WS = {
   },
   frame: {
     width: "100%",
-    maxWidth: deskW(480),
+    maxWidth: 480,
     position: "relative"
   },
   topBar: {
