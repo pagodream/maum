@@ -526,30 +526,7 @@ function HomePage({
       fontFamily: "'Pretendard', -apple-system, sans-serif",
       backgroundColor: "#C9A8C0"
     }
-  }, /*#__PURE__*/React.createElement("button", {
-    onClick: toggleMusic,
-    "aria-label": "\uBC30\uACBD\uC74C\uC545",
-    style: {
-      position: "fixed",
-      top: 14,
-      right: 14,
-      zIndex: 50,
-      width: 42,
-      height: 42,
-      borderRadius: 999,
-      border: "1px solid rgba(255,255,255,0.5)",
-      background: "rgba(0,0,0,0.32)",
-      color: "#fff",
-      fontSize: 18,
-      lineHeight: 1,
-      cursor: "pointer",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      WebkitBackdropFilter: "blur(4px)",
-      backdropFilter: "blur(4px)"
-    }
-  }, musicOn ? "\u23F8" : "\uD83C\uDFB5"), /*#__PURE__*/React.createElement("svg", {
+  }, /*#__PURE__*/React.createElement("svg", {
     viewBox: "0 0 400 720",
     preserveAspectRatio: "xMidYMid slice",
     style: {
@@ -841,7 +818,33 @@ function HomePage({
     y: "470",
     width: "72",
     height: "122"
-  }))), petals.map((p, i) => /*#__PURE__*/React.createElement("g", {
+  }))), /*#__PURE__*/React.createElement("g", {
+    onClick: toggleMusic,
+    style: {
+      cursor: "pointer"
+    }
+  }, /*#__PURE__*/React.createElement("rect", {
+    x: 118,
+    y: 606,
+    width: 164,
+    height: 30,
+    rx: 15,
+    fill: "#000000",
+    fillOpacity: musicOn ? 0.45 : 0.3,
+    stroke: "#ffffff",
+    strokeOpacity: 0.55,
+    strokeWidth: 1
+  }), /*#__PURE__*/React.createElement("text", {
+    x: 200,
+    y: 626,
+    textAnchor: "middle",
+    fontSize: 14,
+    fontWeight: 700,
+    fill: "#ffffff",
+    style: {
+      fontFamily: "'Pretendard', -apple-system, sans-serif"
+    }
+  }, musicOn ? "\u266A \uC8FC\uC81C\uACE1 \uC7AC\uC0DD \uC911" : "\u266A \uB9C8\uB354\uD074\uB7FD \uC8FC\uC81C\uACE1")), petals.map((p, i) => /*#__PURE__*/React.createElement("g", {
     key: i,
     style: {
       animation: `pf${p.type} ${p.dur}s ${p.delay}s linear infinite`
