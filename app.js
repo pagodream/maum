@@ -22674,6 +22674,7 @@ function WorldPage({
   return /*#__PURE__*/React.createElement("div", {
     style: WS.root
   }, /*#__PURE__*/React.createElement("style", null, CSS), /*#__PURE__*/React.createElement("div", {
+    className: "wFrame",
     style: WS.frame
   }, /*#__PURE__*/React.createElement("div", {
     style: WS.topBar
@@ -25749,6 +25750,7 @@ const CSS = `
 @media (prefers-reduced-motion: reduce){.rise,.pop{animation:none !important;}}
 input::placeholder{color:#6f78a0;} input:disabled{opacity:.6;}
 textarea::placeholder{color:#6f78a0;} .prewrap{white-space:pre-wrap;}
+@media (min-width: 521px){ .wFrame{ max-width:min(92vw, 900px) !important; } }
 `;
 const WS = {
   root: {
