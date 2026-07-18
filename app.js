@@ -526,7 +526,31 @@ function HomePage({
       fontFamily: "'Pretendard', -apple-system, sans-serif",
       backgroundColor: "#C9A8C0"
     }
-  }, /*#__PURE__*/React.createElement("svg", {
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: toggleMusic,
+    "aria-label": "\uB9C8\uB354\uD074\uB7FD \uC8FC\uC81C\uACE1",
+    style: {
+      position: "fixed",
+      top: "55%",
+      right: 12,
+      transform: "translateY(-50%)",
+      zIndex: 40,
+      display: "inline-flex",
+      alignItems: "center",
+      gap: 5,
+      background: musicOn ? "rgba(0,0,0,0.42)" : "rgba(0,0,0,0.28)",
+      border: "1px solid rgba(255,255,255,0.4)",
+      borderRadius: 999,
+      padding: "6px 12px",
+      color: "#fff",
+      fontSize: 12,
+      fontWeight: 700,
+      cursor: "pointer",
+      fontFamily: "inherit",
+      WebkitBackdropFilter: "blur(4px)",
+      backdropFilter: "blur(4px)"
+    }
+  }, musicOn ? "\u266A \uC7AC\uC0DD\uC911" : "\u266A \uC8FC\uC81C\uACE1"), /*#__PURE__*/React.createElement("svg", {
     viewBox: "0 0 400 720",
     preserveAspectRatio: "xMidYMid slice",
     style: {
@@ -903,32 +927,7 @@ function HomePage({
       fontFamily: "inherit",
       backdropFilter: "blur(4px)"
     }
-  }, "\uC81C\uB85C\uC12C\uC774 \uBB50\uC608\uC694? \u203A")), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginTop: 12,
-      textAlign: "center",
-      pointerEvents: "auto"
-    }
-  }, /*#__PURE__*/React.createElement("button", {
-    onClick: toggleMusic,
-    style: {
-      display: "inline-flex",
-      alignItems: "center",
-      gap: 6,
-      background: musicOn ? "rgba(0,0,0,0.4)" : "rgba(255,255,255,0.14)",
-      border: "1px solid rgba(255,255,255,0.35)",
-      borderRadius: 999,
-      padding: "7px 15px",
-      color: "#fff",
-      fontSize: 12.5,
-      fontWeight: 700,
-      cursor: "pointer",
-      fontFamily: "inherit",
-      textShadow: "0 1px 4px rgba(110,50,80,0.5)",
-      WebkitBackdropFilter: "blur(4px)",
-      backdropFilter: "blur(4px)"
-    }
-  }, musicOn ? "\u266A \uC8FC\uC81C\uACE1 \uC7AC\uC0DD \uC911" : "\u266A \uB9C8\uB354\uD074\uB7FD \uC8FC\uC81C\uACE1")), mobile ? /*#__PURE__*/React.createElement("div", {
+  }, "\uC81C\uB85C\uC12C\uC774 \uBB50\uC608\uC694? \u203A")), mobile ? /*#__PURE__*/React.createElement("div", {
     style: {
       marginTop: 14,
       display: "flex",
