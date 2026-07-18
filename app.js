@@ -3200,6 +3200,7 @@ function CoachPage({
   return /*#__PURE__*/React.createElement("div", {
     style: vvh && (stage === "chat" || stage === "schat") ? { ...CS.root, minHeight: 0, height: vvh, overflow: "hidden" } : CS.root
   }, /*#__PURE__*/React.createElement("style", null, COACH_CSS), /*#__PURE__*/React.createElement("div", {
+    className: "cFrame",
     style: vvh && (stage === "chat" || stage === "schat") ? { ...CS.frame, minHeight: 0, height: vvh - 52 } : CS.frame
   }, stage !== "chat" && stage !== "schat" && /*#__PURE__*/React.createElement("button", {
     style: CS.homeBtn,
@@ -3954,6 +3955,7 @@ const COACH_CSS = `
 @media (prefers-reduced-motion: reduce){.fade,.ring{animation:none;}}
 textarea::placeholder{color:#6b74a0;}
 textarea{font-family:inherit;}
+@media (min-width: 521px){ .cFrame{ max-width:min(92vw, 1200px) !important; } }
 `;
 const CS = {
   root: {
