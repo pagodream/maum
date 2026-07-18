@@ -2066,8 +2066,12 @@ function HomePage({
         .homeCol{min-height:100dvh !important}
         @media (min-width: 521px){
           html,body{background:#241826;}
-          .homeRoot{max-width:640px !important; margin:0 auto !important; box-shadow:0 0 70px rgba(0,0,0,0.45);}
-          .homeCol{max-width:640px !important;}
+          .homeRoot{max-width:min(92vw, 900px) !important; margin:0 auto !important; box-shadow:0 0 70px rgba(0,0,0,0.45);}
+          .homeCol{max-width:min(92vw, 900px) !important;}
+        }
+        @media (min-width: 1024px){
+          .homeRoot{max-width:900px !important;}
+          .homeCol{max-width:900px !important;}
         }
         @keyframes mFront { 0%,100%{transform:translateY(0) rotate(0deg)} 50%{transform:translateY(-4px) rotate(2deg)} }
         @keyframes mTilt { 0%,20%{transform:rotate(0deg)} 45%,65%{transform:rotate(-6deg)} 90%,100%{transform:rotate(0deg)} }
