@@ -818,33 +818,7 @@ function HomePage({
     y: "470",
     width: "72",
     height: "122"
-  }))), /*#__PURE__*/React.createElement("g", {
-    onClick: toggleMusic,
-    style: {
-      cursor: "pointer"
-    }
-  }, /*#__PURE__*/React.createElement("rect", {
-    x: 118,
-    y: 606,
-    width: 164,
-    height: 30,
-    rx: 15,
-    fill: "#000000",
-    fillOpacity: musicOn ? 0.45 : 0.3,
-    stroke: "#ffffff",
-    strokeOpacity: 0.55,
-    strokeWidth: 1
-  }), /*#__PURE__*/React.createElement("text", {
-    x: 200,
-    y: 626,
-    textAnchor: "middle",
-    fontSize: 14,
-    fontWeight: 700,
-    fill: "#ffffff",
-    style: {
-      fontFamily: "'Pretendard', -apple-system, sans-serif"
-    }
-  }, musicOn ? "\u266A \uC8FC\uC81C\uACE1 \uC7AC\uC0DD \uC911" : "\u266A \uB9C8\uB354\uD074\uB7FD \uC8FC\uC81C\uACE1")), petals.map((p, i) => /*#__PURE__*/React.createElement("g", {
+  }))), petals.map((p, i) => /*#__PURE__*/React.createElement("g", {
     key: i,
     style: {
       animation: `pf${p.type} ${p.dur}s ${p.delay}s linear infinite`
@@ -929,7 +903,32 @@ function HomePage({
       fontFamily: "inherit",
       backdropFilter: "blur(4px)"
     }
-  }, "\uC81C\uB85C\uC12C\uC774 \uBB50\uC608\uC694? \u203A")), mobile ? /*#__PURE__*/React.createElement("div", {
+  }, "\uC81C\uB85C\uC12C\uC774 \uBB50\uC608\uC694? \u203A")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: 12,
+      textAlign: "center",
+      pointerEvents: "auto"
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: toggleMusic,
+    style: {
+      display: "inline-flex",
+      alignItems: "center",
+      gap: 6,
+      background: musicOn ? "rgba(0,0,0,0.4)" : "rgba(255,255,255,0.14)",
+      border: "1px solid rgba(255,255,255,0.35)",
+      borderRadius: 999,
+      padding: "7px 15px",
+      color: "#fff",
+      fontSize: 12.5,
+      fontWeight: 700,
+      cursor: "pointer",
+      fontFamily: "inherit",
+      textShadow: "0 1px 4px rgba(110,50,80,0.5)",
+      WebkitBackdropFilter: "blur(4px)",
+      backdropFilter: "blur(4px)"
+    }
+  }, musicOn ? "\u266A \uC8FC\uC81C\uACE1 \uC7AC\uC0DD \uC911" : "\u266A \uB9C8\uB354\uD074\uB7FD \uC8FC\uC81C\uACE1")), mobile ? /*#__PURE__*/React.createElement("div", {
     style: {
       marginTop: 14,
       display: "flex",
