@@ -87,10 +87,6 @@
     @keyframes spin { to { transform: rotate(360deg); } }
     #boot .t { font-size: 13px; color: #9AA3C7; letter-spacing: 1px; }
   </style>
-  <script>
-    // 키보드가 채팅을 가리지 않도록 — 키보드 높이를 앱이 직접 받아 입력칸을 그만큼 위로 띄움
-    try { if (navigator.virtualKeyboard) navigator.virtualKeyboard.overlaysContent = true; } catch (e) {}
-  </script>
 </head>
 <body>
   <div id="boot"><div class="dot"></div><div class="t">마음 곳간을 여는 중…</div></div>
