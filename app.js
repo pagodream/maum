@@ -3198,10 +3198,10 @@ function CoachPage({
   const breathText = breath.done ? "준비됐어요" : breath.phase === "in" ? "천천히 들이쉬고" : breath.phase === "hold" ? "잠깐 멈춰요" : "길게 — 내쉬고";
   const breathDur = breath.phase === "in" ? 4 : breath.phase === "hold" ? 1 : 6;
   return /*#__PURE__*/React.createElement("div", {
-    style: vvh && (stage === "chat" || stage === "schat") ? { ...CS.root, minHeight: 0, height: vvh, maxHeight: "100dvh", overflow: "hidden" } : CS.root
+    style: (stage === "chat" || stage === "schat") ? { ...CS.root, minHeight: 0, height: "100dvh", overflow: "hidden" } : CS.root
   }, /*#__PURE__*/React.createElement("style", null, COACH_CSS), /*#__PURE__*/React.createElement("div", {
     className: "cFrame",
-    style: vvh && (stage === "chat" || stage === "schat") ? { ...CS.frame, minHeight: 0, height: vvh - 52, maxHeight: "calc(100dvh - 52px)" } : CS.frame
+    style: (stage === "chat" || stage === "schat") ? { ...CS.frame, minHeight: 0, height: "calc(100dvh - 52px)" } : CS.frame
   }, stage !== "chat" && stage !== "schat" && /*#__PURE__*/React.createElement("button", {
     style: CS.homeBtn,
     onClick: onHome
