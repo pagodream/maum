@@ -3201,7 +3201,7 @@ function CoachPage({
     style: (stage === "chat" || stage === "schat") ? { ...CS.root, minHeight: 0, height: "100dvh", overflow: "hidden" } : CS.root
   }, /*#__PURE__*/React.createElement("style", null, COACH_CSS), /*#__PURE__*/React.createElement("div", {
     className: "cFrame",
-    style: (stage === "chat" || stage === "schat") ? { ...CS.frame, minHeight: 0, height: "calc(100dvh - 52px)" } : CS.frame
+    style: (stage === "chat" || stage === "schat") ? { ...CS.frame, minHeight: 0, height: "calc(100dvh - 52px)", boxSizing: "border-box", paddingBottom: "env(keyboard-inset-height, 0px)" } : CS.frame
   }, stage !== "chat" && stage !== "schat" && /*#__PURE__*/React.createElement("button", {
     style: CS.homeBtn,
     onClick: onHome

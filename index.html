@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-content" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <script>
     // ───── 인앱 브라우저(카톡·인스타·페북·라인 등) 탈출 ─────
     // 인앱에선 저장(localStorage)이 휘발되고 앱 설치가 안 되므로, 외부 브라우저로 강제 이동.
@@ -87,6 +87,10 @@
     @keyframes spin { to { transform: rotate(360deg); } }
     #boot .t { font-size: 13px; color: #9AA3C7; letter-spacing: 1px; }
   </style>
+  <script>
+    // 키보드가 채팅을 가리지 않도록 — 키보드 높이를 앱이 직접 받아 입력칸을 그만큼 위로 띄움
+    try { if (navigator.virtualKeyboard) navigator.virtualKeyboard.overlaysContent = true; } catch (e) {}
+  </script>
 </head>
 <body>
   <div id="boot"><div class="dot"></div><div class="t">마음 곳간을 여는 중…</div></div>
