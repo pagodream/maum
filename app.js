@@ -3198,10 +3198,10 @@ function CoachPage({
   const breathText = breath.done ? "준비됐어요" : breath.phase === "in" ? "천천히 들이쉬고" : breath.phase === "hold" ? "잠깐 멈춰요" : "길게 — 내쉬고";
   const breathDur = breath.phase === "in" ? 4 : breath.phase === "hold" ? 1 : 6;
   return /*#__PURE__*/React.createElement("div", {
-    style: vvh && (stage === "chat" || stage === "schat") ? { ...CS.root, minHeight: 0, height: vvh, overflow: "hidden" } : CS.root
+    style: vvh && (stage === "chat" || stage === "schat") ? { ...CS.root, minHeight: 0, height: vvh, maxHeight: "100dvh", overflow: "hidden" } : CS.root
   }, /*#__PURE__*/React.createElement("style", null, COACH_CSS), /*#__PURE__*/React.createElement("div", {
     className: "cFrame",
-    style: vvh && (stage === "chat" || stage === "schat") ? { ...CS.frame, minHeight: 0, height: vvh - 52 } : CS.frame
+    style: vvh && (stage === "chat" || stage === "schat") ? { ...CS.frame, minHeight: 0, height: vvh - 52, maxHeight: "calc(100dvh - 52px)" } : CS.frame
   }, stage !== "chat" && stage !== "schat" && /*#__PURE__*/React.createElement("button", {
     style: CS.homeBtn,
     onClick: onHome
@@ -5587,6 +5587,7 @@ function TestPage({
   return /*#__PURE__*/React.createElement("div", {
     style: TS.root
   }, /*#__PURE__*/React.createElement("style", null, TEST_CSS), /*#__PURE__*/React.createElement("div", {
+    className: "tFrame",
     style: TS.frame
   }, view.s !== "home" ? /*#__PURE__*/React.createElement("button", {
     style: TS.topHome,
@@ -6812,7 +6813,8 @@ const TEST_CSS = `*{box-sizing:border-box;}
 .heroZone{transition:opacity .6s ease, filter .6s ease;cursor:pointer;}
 @media (prefers-reduced-motion: reduce){.heroBird,.tw1,.tw2,.tw3{animation:none;}.fade{animation:none;}}
 ::-webkit-scrollbar{width:0;}
-input::placeholder{color:#6b74a0;}`;
+input::placeholder{color:#6b74a0;}
+@media (min-width: 521px){ .tFrame{ max-width:min(92vw, 1200px) !important; } }`;
 const TS = {
   root: {
     minHeight: "100vh",
